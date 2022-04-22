@@ -1,0 +1,26 @@
+{
+  "name": "dev-cli",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "fast-fuzzy": "^1.11.1",
+    "zx": "^6.1.0"
+  },
+  "bin": {
+    "dev-cli": "./index.mjs"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amir-s/dev.git"
+  },
+  "author": "Amir Saboury",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amir-s/dev/issues"
+  },
+  "homepage": "https://github.com/amir-s/dev#readme"
+}
