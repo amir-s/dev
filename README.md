@@ -67,7 +67,8 @@ Run `dev update` to check for updates. You can select to automatially apply the 
 
 ## TODO
 
++ [ ] More documentation! and have help commands for the current modules.
 + [ ] Notify the user about shell module not being installed when using `dev cd`.
 + [ ] `dev open pr` ask to push the current branch to remote and open a browser to create a PR.
 + [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
-+ [ ] More documentation! and have help commands for the current modules.
++ [ ] Have a `dev shell local` command to point the current installation version to the local copy for development and testing purposes.
