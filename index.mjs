@@ -2,7 +2,7 @@
 
 import { load } from "./config/index.mjs";
 
-const { config } = load();
+const { config, writeConfig } = load();
 const modules = ["config", "default", "clone", "cd", "shell", "update", "open"];
 
 const cd = (path) => {
@@ -25,7 +25,7 @@ const execute = async () => {
 
   const moduleExports = await import(`./${module}/index.mjs`);
 
-  await moduleExports.run({ args: args.slice(1), config, cd });
+  await moduleExports.run({ args: args.slice(1), config, writeConfig, cd });
 };
 
 execute();

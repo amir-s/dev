@@ -19,7 +19,17 @@ const getShellProfile = () => {
   return null;
 };
 
-export const run = async ({ config, args }) => {
+const isDevFolder = () => {
+  try {
+    const packageFile = path.resolve("./package.json");
+    const { name } = JSON.parse(fs.readFileSync(packageFile));
+    return name === "dev-cli";
+  } catch (e) {
+    return false;
+  }
+};
+
+export const run = async ({ config, writeConfig, args }) => {
   if (args.length === 0) {
     help.generic();
     return;
@@ -29,10 +39,12 @@ export const run = async ({ config, args }) => {
 
   if (command === "init") {
     const functionName = config("shell.function", "dev");
+    const binaryPath = config("shell.binary.path", "dev-cli");
 
     const script = fs
       .readFileSync(path.join(__dirname, "./install.sh"), "utf8")
-      .replace("<$SHELL_FN_NAME$>", functionName);
+      .replaceAll("<$SHELL_FN_NAME$>", functionName)
+      .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
     console.log(script);
 
@@ -66,5 +78,56 @@ export const run = async ({ config, args }) => {
     fs.writeFileSync(file, newScript);
 
     help.shellInstallSuccess(installCommand, file);
+
+    return;
+  }
+
+  if (command === "use") {
+    const type = args[1];
+
+    if (type !== "local" && type !== "prod") {
+      console.log(
+        `\n Invalid type "${type}". You can use either "local" or "prod".`.red
+      );
+      return;
+    }
+
+    if (type === "local") {
+      if (!isDevFolder()) {
+        console.log(
+          `\n The current directory (${path.resolve()}) does not seem to be a dev-cli project.`
+            .red
+        );
+        return;
+      }
+
+      writeConfig("shell.binary.path", path.resolve("./index.mjs"));
+      console.log(`\n Updated config to use LOCAL DEV.`.green);
+      console.log(
+        `\n You will need to restart your terminal for changes to take effect.`
+          .yellow
+      );
+      console.log(
+        ` Verify which version you are using by running "dev-cli" with no arguments`
+          .yellow
+      );
+
+      return;
+    }
+
+    if (type === "prod") {
+      writeConfig("shell.binary.path", undefined);
+      console.log(`\n Updated config to use PRODUCTION.`.green);
+      console.log(
+        `\n You will need to restart your terminal for changes to take effect.`
+          .yellow
+      );
+      console.log(
+        ` Verify which version you are using by running "dev-cli" with no arguments`
+          .yellow
+      );
+
+      return;
+    }
   }
 };

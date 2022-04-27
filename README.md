@@ -71,9 +71,25 @@ You can also read the config file with `dev config read`.
 
 Run `dev update` to check for updates. You can select to automatially apply the updates, or do it manually with `npm install dev-cli -g`.
 
+## Development
+
+You can clone this repo (using `dev-cli` itself, of course) and make changes.
+Assuming you have installed the [shell module](https://github.com/amir-s/dev-cli/#install), you can swap out the production version with your local version of `dev-cli` by `cd`ing into your local copy and running:
+
+```
+dev shell use local
+```
+
+After restarting your terminal (or `source`ing your shell profile file), `dev` would point to your local copy across your system. You can verify this by running `dev` by itself.
+
+To reset and use production binary run:
+
+```
+dev shell use prod
+```
+
 ## TODO
 
 - [ ] More documentation! and have help commands for the current modules.
 - [ ] Notify the user about shell module not being installed when using `dev cd`.
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
-- [ ] Have a `dev shell local` command to point the current installation version to the local copy for development and testing purposes.

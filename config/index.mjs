@@ -36,6 +36,10 @@ export const load = () => {
       }
       return config[key];
     },
+    writeConfig: (key, value) => {
+      config[key] = value;
+      fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
+    },
   };
 };
 
