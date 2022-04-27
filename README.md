@@ -10,13 +10,17 @@ This tool does not live on the npm registery just yet. But you can install it wi
 npm i -g amir-s/dev-cli
 ```
 
-To unlock the full potential of `dev-cli`, you might want to install the shell module too, simply add 
+To unlock the full potential of `dev-cli`, you might want to install the shell module too, simply run
 
 ```
-eval "$(dev-cli shell-init)"
+dev-cli shell install
 ```
 
-add the end of your shell profile file (`~/.zshrc` or `~/.bashrc`).
+This would automatically add the following line to your shell profile file (`~/.zshrc` or `~/.bashrc`):
+```
+eval "$(dev-cli shell init)"
+```
+
 After restarting your shell (or running equivalent of `source ~/.zshrc`), `dev-cli` creates a function for you called `dev`, which you can use instead of `dev-cli`. You can also [customize the name of the function](https://github.com/amir-s/dev-cli/#global-configs).
 
 
@@ -62,9 +66,7 @@ You can also read the config file with `dev config read`.
 
 ## TODO
 
-+ [ ] Warn the user to not rename the shell function to `dev-cli`.
 + [ ] `dev update` to update `dev` to the latest version, or check to see if an update is available.
-+ [ ] `dev-cli install-shell-module` to install the shell module automatically.
 + [ ] Notify the user about shell module not being installed when using `dev cd`.
 + [ ] `dev open pr` ask to push the current branch to remote and open a browser to create a PR.
 + [ ] Separate config keys to another methos so user can see all possible config keys with `dev config list`.

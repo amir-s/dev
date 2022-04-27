@@ -1,3 +1,5 @@
+import "colors";
+
 import os from "os";
 import path from "path";
 import fs from "fs";
@@ -66,6 +68,13 @@ export const run = ({ args }) => {
       console.log("Key not specified.");
       return;
     } else {
+      if (key === "shell.function" && args[2] === "dev-cli") {
+        console.log(
+          '\n Cannot set shell.function to "dev-cli"\n Please use some other name.'
+            .red
+        );
+        return;
+      }
       config[key] = gracefulParse(args[2]);
       fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
       console.log(`${key}: ${JSON.stringify(config[key])}`);
