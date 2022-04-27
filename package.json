@@ -1,7 +1,7 @@
 {
   "name": "dev-cli",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "dependencies": {
     "colors": "^1.4.0",

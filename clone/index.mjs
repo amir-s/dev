@@ -2,6 +2,8 @@ import os from "os";
 import fs from "fs";
 import { $, globby, question } from "zx";
 
+$.verbose = false;
+
 import * as help from "./help.mjs";
 
 const isUrl = (string) => {
@@ -115,6 +117,8 @@ export const run = async ({ config, args, cd }) => {
     }
     return;
   }
+
+  console.log(`\n Cloning into "${clonePath}"`.gray);
 
   if (ssh) {
     await $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`;
