@@ -1,3 +1,8 @@
+# TLDR
+This is a command-line tool for you to do `dev clone user/repo` to clone repos into structured folders, do `dev cd repo` to go to those directories without navigating a million folders, `dev open pr` to open a browser window to open the recently pushed branch.
+
+It's easy to add features and stuff to it too if you continue reading.
+
 # dev-cli
 
 I made the `dev` (`dev-cli`) tool to make my life easier. The goal is for `dev-cli` to help me navigate different git projects and automate some processes that I do a lot!
