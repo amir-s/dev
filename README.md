@@ -93,3 +93,7 @@ dev shell use prod
 - [ ] More documentation! and have help commands for the current modules.
 - [ ] Notify the user about shell module not being installed when using `dev cd`.
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
+- [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev-cli.json`
+- [ ] Make color of the output lines more consistent.
+- [ ] Fuzzy match for the command, like `dev o p` should be translated to `dev open pr`.
+
