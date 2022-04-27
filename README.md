@@ -62,11 +62,11 @@ You can also read the config file with `dev config read`.
 + `shell.function` (default: `dev`): You can rename the [shell module](https://github.com/amir-s/dev-cli/#install) function with `dev config set shell.function whatever`. After restarting your shell, you can use `whatever` instead of `dev`.
   Do not rename the function to `dev-cli`. It'll conflict with the binary in `npm` and causes function to call itself recursively. It doesn't break your system, but it makes `dev-cli` not work.
 
-
+### `update`
+Run `dev update` to check for updates. You can select to automatially apply the updates, or do it manually with `npm install dev-cli -g`.
 
 ## TODO
 
-+ [ ] `dev update` to update `dev` to the latest version, or check to see if an update is available.
 + [ ] Notify the user about shell module not being installed when using `dev cd`.
 + [ ] `dev open pr` ask to push the current branch to remote and open a browser to create a PR.
 + [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.

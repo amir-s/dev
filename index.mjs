@@ -3,7 +3,7 @@
 import { load } from "./config/index.mjs";
 
 const { config } = load();
-const modules = ["config", "default", "clone", "cd", "shell"];
+const modules = ["config", "default", "clone", "cd", "shell", "update"];
 
 const cd = (path) => {
   console.error(`COMMAND cd ${path}`);
