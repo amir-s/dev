@@ -2,12 +2,21 @@
 
 import { Searcher } from "fast-fuzzy";
 import { load } from "./config/index.mjs";
+import fs from "fs";
 
 const { config, writeConfig } = load();
 const modules = ["config", "default", "clone", "cd", "shell", "update", "open"];
 
-const cd = (path) => {
-  console.error(`COMMAND cd ${path}`);
+const writeToFD = async (fd, str) => {
+  return new Promise((resolve) => {
+    fs.write(fd, str, () => {
+      resolve();
+    });
+  });
+};
+
+const cd = async (path) => {
+  return await writeToFD(9, `cd:${path}\n`);
 };
 
 const findModule = (name) => {
