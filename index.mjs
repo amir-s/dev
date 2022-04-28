@@ -36,7 +36,7 @@ const execute = async () => {
   const module = findModule(args[0]);
 
   if (!module) {
-    console.log(`Module "${module}" not found.`);
+    console.log(`Module "${args[0]}" not found.`);
     return;
   }
 
