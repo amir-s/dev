@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { Searcher } from "fast-fuzzy";
 import { load } from "./config/index.mjs";
 
 const { config, writeConfig } = load();
@@ -9,6 +10,13 @@ const cd = (path) => {
   console.error(`COMMAND cd ${path}`);
 };
 
+const findModule = (name) => {
+  if (modules.includes(name)) return name;
+  const searcher = new Searcher(modules);
+  const [match] = searcher.search(name);
+  return match;
+};
+
 const execute = async () => {
   const args = process.argv.slice(2);
 
@@ -16,9 +24,9 @@ const execute = async () => {
     args.push("default");
   }
 
-  const module = args[0];
+  const module = findModule(args[0]);
 
-  if (!modules.includes(module)) {
+  if (!module) {
     console.log(`Module "${module}" not found.`);
     return;
   }
