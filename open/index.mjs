@@ -83,16 +83,18 @@ export const run = async ({ args }) => {
     }
 
     if (!(await remoteExists(branch))) {
+      report.info(`branch "${branch.bold}" does not exist on remote.`);
       const push = await report.question(
-        `branch "${branch.bold}" does not exist on remote.\n Do you want to create it? (y/n)`
+        `do you want to push this branch on remote? (y/n)`
       );
 
       if (["y", "yes"].includes(push.toLocaleLowerCase())) {
         await spinner(`pushing ${branch} to origin`, async () => {
           await $`git push origin ${branch}`;
         });
+        report.success(`pushed branch ${branch.bold} to origin.`);
       } else {
-        report.error("aborted.".red);
+        report.info("aborting.");
         return;
       }
     }
