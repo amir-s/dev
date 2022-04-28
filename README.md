@@ -1,4 +1,5 @@
 # TLDR
+
 This is a command-line tool for you to do `dev clone user/repo` to clone repos into structured folders, do `dev cd repo` to go to those directories without navigating a million folders, `dev open pr` to open a browser window to open the recently pushed branch.
 
 It's easy to add features and stuff to it too if you continue reading.
@@ -100,5 +101,3 @@ dev shell use prod
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
 - [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev-cli.json`
 - [ ] Make color of the output lines more consistent.
-- [ ] Fuzzy match for the command, like `dev o p` should be translated to `dev open pr`.
-
