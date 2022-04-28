@@ -1,15 +1,25 @@
 export DEV_CLI_BIN_PATH="<$SHELL_BIN_PATH$>"
 
-<$SHELL_FN_NAME$> () {
-  exec 3>&1
-  output=$(<$SHELL_BIN_PATH$> $* 2>&1 1>&3) 
-  exec 3>&-
-  
-  if [[ ! -z "$output" ]] && [[ $output == COMMAND* ]]; then
-    command=$(echo "$output" | cut -c 9-)
-    eval "$command"
-  else
-    echo "$output"
-  fi
-  return 0
+<$SHELL_FN_NAME$>() {
+  local tempfile exitcode cmd
+
+  tempfile="$(mktemp -u)"
+  exec 9>"${tempfile}"
+  exec 8<"${tempfile}"
+  rm -f "${tempfile}"
+
+  <$SHELL_BIN_PATH$> "$@"
+  exitcode=$?
+
+  while read -r cmd; do
+    case "${cmd}" in
+      cd:*) cd "${cmd//cd:/}" ;;
+      *) ;;
+    esac
+  done <&8
+
+  exec 8<&-
+  exec 9<&-
+
+  return ${exitcode}
 }

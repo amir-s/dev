@@ -54,5 +54,5 @@ export const run = async ({ config, args, cd }) => {
     return;
   }
 
-  cd(mathced.path);
+  await cd(mathced.path);
 };

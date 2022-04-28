@@ -113,7 +113,7 @@ export const run = async ({ config, args, cd }) => {
   if (fs.existsSync(clonePath)) {
     console.log(`Clone path "${clonePath}" already exists.`);
     if (changeDirectory) {
-      cd(clonePath);
+      await cd(clonePath);
     }
     return;
   }
@@ -127,6 +127,6 @@ export const run = async ({ config, args, cd }) => {
   }
 
   if (changeDirectory) {
-    cd(clonePath);
+    await cd(clonePath);
   }
 };
