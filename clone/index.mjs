@@ -1,6 +1,8 @@
 import os from "os";
 import fs from "fs";
-import { $, globby, question } from "zx";
+import { $ } from "zx";
+import report from "yurnalist";
+import { spinner } from "../utils/spinner.mjs";
 
 $.verbose = false;
 
@@ -98,7 +100,7 @@ export const run = async ({ config, args, cd }) => {
   const parts = parseArgument(args[0]);
 
   if (!parts) {
-    console.log(`Invalid argument: ${args[0]}`);
+    report.error(`invalid argument: ${args[0]}`);
     return;
   }
 
@@ -111,22 +113,25 @@ export const run = async ({ config, args, cd }) => {
     .replace("<repo>", repo);
 
   if (fs.existsSync(clonePath)) {
-    console.log(`Clone path "${clonePath}" already exists.`);
+    report.warn(`clone path "${clonePath}" already exists.`);
+    report.command(`cd ${clonePath}`);
     if (changeDirectory) {
       await cd(clonePath);
     }
     return;
   }
 
-  console.log(`\n Cloning into "${clonePath}"`.gray);
-
-  if (ssh) {
-    await $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`;
-  } else {
-    await $`git clone --depth 1 --single-branch --no-tags https://${org}/${user}/${repo}.git ${clonePath}`;
-  }
+  await spinner(`cloning ${user}/${repo} into ${clonePath}`, async () => {
+    if (ssh) {
+      await $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`;
+    } else {
+      await $`git clone --depth 1 --single-branch --no-tags https://${org}/${user}/${repo}.git ${clonePath}`;
+    }
+  });
+  report.success("clone complete");
 
   if (changeDirectory) {
+    report.command(`cd ${clonePath}`);
     await cd(clonePath);
   }
 };

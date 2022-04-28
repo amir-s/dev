@@ -1,10 +1,13 @@
 import "colors";
 
 import fs from "fs";
-import { $, question } from "zx";
+import { $ } from "zx";
 import path from "path";
 import open from "open";
 import { Searcher } from "fast-fuzzy";
+import report from "yurnalist";
+
+import { spinner } from "../utils/spinner.mjs";
 import * as help from "./help.mjs";
 
 $.verbose = false;
@@ -19,12 +22,17 @@ const PROTECTED_BRANCHES = [
 ];
 
 const remoteExists = async (branch) => {
-  try {
-    await $`git ls-remote --heads --exit-code origin ${branch}`;
-    return true;
-  } catch (e) {
-    return false;
-  }
+  return await spinner(
+    `checking if branch ${branch} exists on remote.`,
+    async () => {
+      try {
+        await $`git ls-remote --heads --exit-code origin ${branch}`;
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+  );
 };
 
 const getRemoteUrl = async () => {
@@ -60,34 +68,31 @@ export const run = async ({ args }) => {
   if (command === "pr") {
     const repoPath = path.resolve(".git");
     if (!fs.existsSync(repoPath)) {
-      console.error("\n You are not in a git repository.".red);
-      console.error(` ${repoPath} does not exist`.gray);
+      report.error("you are not in a git repository.");
+      report.error(`${repoPath} does not exist`.gray);
       return;
     }
 
     const branch = (await $`git branch --show-current`).toString().trim();
 
     if (PROTECTED_BRANCHES.includes(branch.toLowerCase())) {
-      console.error(
-        `\n You cannot create a pull request on the ${branch.bold} branch.`.red
+      report.error(
+        `you cannot create a pull request on the ${branch.bold} branch.`
       );
       return;
     }
 
     if (!(await remoteExists(branch))) {
-      const push = await question(
-        `\n Branch "${branch.bold}" does not exist on remote.\n Do you want to create it? (y/n) `
-          .white,
-        {
-          choices: ["y", "n"],
-        }
+      const push = await report.question(
+        `branch "${branch.bold}" does not exist on remote.\n Do you want to create it? (y/n)`
       );
 
       if (["y", "yes"].includes(push.toLocaleLowerCase())) {
-        console.log(`\n Pushing ${branch} to origin`.green);
-        await $`git push origin ${branch}`;
+        await spinner(`pushing ${branch} to origin`, async () => {
+          await $`git push origin ${branch}`;
+        });
       } else {
-        console.log(`\n Aborting.`.red);
+        report.error("aborted.".red);
         return;
       }
     }
