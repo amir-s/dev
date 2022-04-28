@@ -5,6 +5,10 @@ import fs from "fs";
 import { $, question } from "zx";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import { spinner } from "../utils/spinner.mjs";
+import report from "yurnalist";
+
+$.verbose = false;
 
 const URL =
   "https://raw.githubusercontent.com/amir-s/dev-cli/main/package.json";
@@ -20,38 +24,43 @@ const getCurrentVersion = () => {
 };
 
 export const run = async ({ config }) => {
-  const currentVersion = getCurrentVersion();
-
-  console.log(`\n Checking for updates`.green);
-  console.log(` Fetching ${URL}`.gray);
+  report.info("checking for updates...");
 
   try {
-    const resp = await fetch(URL);
-    const { version } = await resp.json();
+    const currentVersion = getCurrentVersion();
+
+    const version = await spinner(`fetching ${URL}`.gray, async () => {
+      const resp = await fetch(URL);
+      const { version } = await resp.json();
+      return version;
+    });
+
+    report.success(`found version ${version}`);
 
     if (version === currentVersion) {
-      console.log(
-        `\n You are using the latest version (${version.bold}) of dev-cli.`
-          .green
+      report.success(
+        `You are using the latest version (${version.bold}) of dev-cli.`.green
       );
       return;
     }
 
-    const response = await question(
-      `\n Update available. Would you like to update ${currentVersion.green} to ${version.green}? (y/n)? `
-        .white,
-      {
-        choices: ["y", "n"],
-      }
+    const response = await report.question(
+      `update available. update ${currentVersion.green} to ${version.green}? (y/n)`
     );
 
     if (["y", "yes"].includes(response.toLocaleLowerCase())) {
-      console.log(`\n Updating to ${version.bold}\n`.green);
+      report.info(`updating to ${version.bold}`);
+      report.command(`npm install -g ${PACKAGE}`);
 
-      $`npm install -g ${PACKAGE}`;
+      await spinner("installing", async () => {
+        await $`npm install -g ${PACKAGE}`;
+      });
+
+      report.success(`updated to ${version.bold}`);
+      report.warn("please restart your terminal to use the new version.");
     }
   } catch (e) {
-    console.log(`\n ${e.message}`.red);
+    report.error(e);
     return;
   }
 };

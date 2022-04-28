@@ -8,6 +8,7 @@
     "fast-fuzzy": "^1.11.1",
     "node-fetch": "^3.2.3",
     "open": "^8.4.0",
+    "yurnalist": "^2.1.0",
     "zx": "^6.1.0"
   },
   "bin": {

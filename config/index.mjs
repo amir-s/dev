@@ -3,6 +3,7 @@ import "colors";
 import os from "os";
 import path from "path";
 import fs from "fs";
+import report from "yurnalist";
 
 import * as help from "./help.mjs";
 
@@ -54,34 +55,34 @@ export const run = ({ args }) => {
   const key = args[1];
 
   if (command === "read") {
-    console.log(`${JSON.stringify(config, null, 2)}`);
+    report.inspect(config);
     return;
   }
 
   if (command === "get") {
     if (config[key] === undefined) {
-      console.log(`Key "${key}" not found.`);
+      report.error(`key "${key}" not found.`);
     } else {
-      console.log(`${key}: ${JSON.stringify(config[key])}`);
+      report.inspect(config[key]);
     }
     return;
   }
 
   if (command === "set") {
     if (key === undefined) {
-      console.log("Key not specified.");
+      report.error("key is not specified.");
       return;
     } else {
       if (key === "shell.function" && args[2] === "dev-cli") {
-        console.log(
-          '\n Cannot set shell.function to "dev-cli"\n Please use some other name.'
-            .red
+        report.error(
+          'cannot set shell.function to "dev-cli". please use some other name.'
         );
         return;
       }
       config[key] = gracefulParse(args[2]);
       fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
-      console.log(`${key}: ${JSON.stringify(config[key])}`);
+      report.inspect(config[key]);
+      report.success(`configuration ${key} is updated.`);
       return;
     }
   }

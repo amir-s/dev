@@ -1,6 +1,7 @@
 import { Searcher } from "fast-fuzzy";
 import os from "os";
-import { $, globby, question } from "zx";
+import { globby } from "zx";
+import report from "yurnalist";
 
 import * as help from "./help.mjs";
 
@@ -50,9 +51,10 @@ export const run = async ({ config, args, cd }) => {
   const [mathced] = searcher.search(args.join(""));
 
   if (!mathced) {
-    console.log("No repo found");
+    report.error(`no repo found for ${args.join(" ")}`);
     return;
   }
 
+  report.command(`cd ${mathced.path}`);
   await cd(mathced.path);
 };
