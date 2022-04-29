@@ -9,6 +9,7 @@ It's easy to add features and stuff to it too if you continue reading.
 I made the `dev` tool to make my life easier. The goal is for `dev` to help me navigate different git projects and automate some processes that I do a lot!
 
 ## Install
+You would need a recent version of `node` and `npm`. I would recommend using [nvm](https://github.com/nvm-sh/nvm) to install them.
 
 This tool does not live on the npm registery just yet. But you can install it with
 
