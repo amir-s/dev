@@ -28,7 +28,7 @@ This would automatically add the following line to your shell profile file (`~/.
 eval "$(dev-cli shell init)"
 ```
 
-After restarting your shell (or running equivalent of `source ~/.zshrc`), `dev-cli` creates a function for you called `dev` instead of directly executing the `dev` binary. This allows commands like `dev cd` to work.
+After restarting your shell (or running equivalent of `source ~/.zshrc`), this allows commands like `dev cd` to work.
 
 You can also [customize the name of the function](https://github.com/amir-s/dev/#global-configs).
 
