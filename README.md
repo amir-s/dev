@@ -47,7 +47,7 @@ By default, it'll use `ssh` and also it `cd`s into that said directory (only if 
 
 #### configs
 
-- `dev clone.path` (default: `"<home>/src/<org>/<user>/<repo>"`)
+- `clone.path` (default: `"<home>/src/<org>/<user>/<repo>"`)
   The clone path.
 - `clone.cd` (default: `true`)
   If `dev` needs to `cd` into the cloned project after it is done.
