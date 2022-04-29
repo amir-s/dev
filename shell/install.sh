@@ -1,6 +1,6 @@
-export DEV_CLI_BIN_PATH="<$SHELL_BIN_PATH$>"
-
 <$SHELL_FN_NAME$>() {
+  export DEV_CLI_BIN_PATH="<$SHELL_BIN_PATH$>"
+
   local tempfile exitcode cmd
 
   tempfile="$(mktemp -u)"
