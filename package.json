@@ -1,5 +1,5 @@
 {
-  "name": "dev-cli",
+  "name": "dev",
   "type": "module",
   "version": "0.0.10",
   "description": "",
@@ -12,18 +12,18 @@
     "zx": "^6.1.0"
   },
   "bin": {
-    "dev-cli": "./index.mjs"
+    "dev-cli": "./index.mjs",
+    "dev": "./index.mjs"
   },
   "devDependencies": {},
-  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amir-s/dev-cli.git"
+    "url": "git+https://github.com/amir-s/dev.git"
   },
   "author": "Amir Saboury",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amir-s/dev-cli/issues"
+    "url": "https://github.com/amir-s/dev/issues"
   },
-  "homepage": "https://github.com/amir-s/dev-cli#readme"
+  "homepage": "https://github.com/amir-s/dev#readme"
 }

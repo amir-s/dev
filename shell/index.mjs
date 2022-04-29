@@ -1,5 +1,6 @@
 import os from "os";
 import path, { dirname } from "path";
+import report from "yurnalist";
 import { fileURLToPath } from "url";
 import { fs } from "zx";
 
@@ -23,7 +24,7 @@ const isDevFolder = () => {
   try {
     const packageFile = path.resolve("./package.json");
     const { name } = JSON.parse(fs.readFileSync(packageFile));
-    return name === "dev-cli";
+    return name === "dev";
   } catch (e) {
     return false;
   }
@@ -55,20 +56,20 @@ export const run = async ({ config, writeConfig, args }) => {
     const installCommand = `eval "$(dev-cli shell init)"`;
     const file = getShellProfile();
     if (!file) {
-      console.log("Unable to find shell profile!");
+      report.error("unable to find shell profile!");
       return;
     }
 
     if (!fs.existsSync(file)) {
-      console.log(`File "${file}" does not exist.`);
+      report.error(`file "${file}" does not exist.`);
       return;
     }
 
     const script = fs.readFileSync(file, "utf8");
 
     if (script.includes(installCommand)) {
-      console.log(
-        `Command \`${installCommand}\` already exists in "${file}".`.yellow
+      report.success(
+        `command \`${installCommand}\` already exists in "${file}".`.yellow
       );
       return;
     }

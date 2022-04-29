@@ -4,7 +4,7 @@ import fs from "fs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const URL = "https://github.com/amir-s/dev-cli";
+const URL = "https://github.com/amir-s/dev";
 
 const getCurrentVersion = () => {
   const __filename = fileURLToPath(import.meta.url);
@@ -23,8 +23,17 @@ export const run = ({ config }) => {
   if (binaryPath && binaryPath !== "dev-cli") {
     console.log(`\n -> ${"Using LOCAL DEV".inverse} @ ${binaryPath.gray}`);
   }
-  console.log(`\n The documentation and this messages are still WIP`.gray);
+  if (binaryPath === undefined) {
+    console.log(
+      "\n Shell module is not installed. Some commands do not work without it."
+        .yellow
+    );
+    console.log(
+      ` You can install it by running ${"dev shell install".inverse}.`.yellow
+    );
+  }
+  console.log(`\n The documentation and this messages are still WIP.`.gray);
   console.log(
-    ` ${"You can check".gray} ${URL.white.underline} ${"to learn more".gray}`
+    ` ${"You can check".gray} ${URL.white.underline} ${"to learn more.".gray}`
   );
 };
