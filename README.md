@@ -103,3 +103,8 @@ dev shell use prod
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
 - [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev.json`
 - [ ] Make color of the output lines more consistent.
+- [ ] Use [terminal-link](https://github.com/sindresorhus/terminal-link) for links in the terminal.
+- [ ] Use [yn](https://github.com/sindresorhus/yn) to parse yes/no responses.
+- [ ] Integrate with [insight](https://github.com/yeoman/insight) for telemetry.
+- [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
+- [ ] Use [sudo-block](https://github.com/sindresorhus/sudo-block)
