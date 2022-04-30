@@ -57,7 +57,9 @@ export const run = async ({ config }) => {
       });
 
       report.success(`updated to ${version.bold}`);
-      report.warn("please restart your terminal to use the new version.");
+      report.warn(
+        "you may need to restart your terminal to use the new version."
+      );
     }
   } catch (e) {
     report.error(e);

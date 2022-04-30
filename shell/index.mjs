@@ -109,7 +109,7 @@ export const run = async ({ config, writeConfig, args }) => {
           .yellow
       );
       console.log(
-        ` Verify which version you are using by running "dev-cli" with no arguments`
+        ` Verify which version you are using by running "dev" with no arguments`
           .yellow
       );
 
@@ -124,7 +124,7 @@ export const run = async ({ config, writeConfig, args }) => {
           .yellow
       );
       console.log(
-        ` Verify which version you are using by running "dev-cli" with no arguments`
+        ` Verify which version you are using by running "dev" with no arguments`
           .yellow
       );
 
