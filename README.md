@@ -54,14 +54,18 @@ By default, it'll use `ssh` and also it `cd`s into that said directory (only if 
 - `clone.ssh` (default: `true`)
   If `dev` is forced to use `ssh` to clone the repo. If set to `false`, it'll use `https`.
 
-### `open pr`
+### `dev open pr`
 
 Opens the default browser to view or create the PR for the current git branch. If the current branch is not on remote yet, `dev` asks you if you want to push it automatically.
 If a pull request is already made but you want to create a new one, you can run `dev open pr --new` to force create a pull request.
 
-### `cd <name>` (_Only works if [shell module](https://github.com/amir-s/dev/#install) is installed_)
+### `dev cd <name>` (_Only works if [shell module](https://github.com/amir-s/dev/#install) is installed_)
 
 `dev cd <name>` changes the current working directory to a cloned repo by fuzzy matching the input name.
+
+### `dev up`
+
+Run `dev up` in your project to install dependencies, as long as you are using node (`package.json` via `yarn` or `npm`), ruby (`Gemfile` via `bundle`) or pythong (`requirements.txt` via `pip`).
 
 ### `dev config`
 
