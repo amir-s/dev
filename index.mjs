@@ -5,7 +5,16 @@ import { load } from "./config/index.mjs";
 import fs from "fs";
 
 const { config, writeConfig } = load();
-const modules = ["config", "default", "clone", "cd", "shell", "update", "open"];
+const modules = [
+  "config",
+  "default",
+  "clone",
+  "cd",
+  "shell",
+  "update",
+  "open",
+  "up",
+];
 
 const writeToFD = async (fd, str) => {
   return new Promise((resolve) => {
