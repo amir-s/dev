@@ -1,6 +1,6 @@
 import os from "os";
 import fs from "fs";
-import { $ } from "zx";
+import { $, nothrow } from "zx";
 import report from "yurnalist";
 import { spinner } from "../utils/spinner.mjs";
 
@@ -121,13 +121,27 @@ export const run = async ({ config, args, cd }) => {
     return;
   }
 
-  await spinner(`cloning ${user}/${repo} into ${clonePath}`, async () => {
-    if (ssh) {
-      await $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`;
-    } else {
-      await $`git clone --depth 1 --single-branch --no-tags https://${org}/${user}/${repo}.git ${clonePath}`;
+  const result = await spinner(
+    `cloning ${user}/${repo} into ${clonePath}`,
+    async () => {
+      if (ssh) {
+        return await nothrow(
+          $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`
+        );
+      } else {
+        return await nothrow(
+          $`git clone --depth 1 --single-branch --no-tags https://${org}/${user}/${repo}.git ${clonePath}`
+        );
+      }
     }
-  });
+  );
+
+  if (result.exitCode !== 0) {
+    report.error(`failed to clone ${user}/${repo} into ${clonePath}`);
+    report.error(result.stderr);
+    return;
+  }
+
   report.success("clone complete");
 
   if (changeDirectory) {
