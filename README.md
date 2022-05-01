@@ -122,12 +122,14 @@ dev shell use prod
 ## TODO
 
 - [ ] More documentation! and have help commands for the current modules.
+- [ ] Make sure `dev` has correct exit codes and actually fails when it should.
 - [ ] Notify the user about shell module not being installed when using `dev cd`.
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
-- [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev.json`
+- [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev.json`, or a `dev` section in package.json.
 - [ ] Make color of the output lines more consistent.
 - [ ] Use [terminal-link](https://github.com/sindresorhus/terminal-link) for links in the terminal.
 - [ ] Use [yn](https://github.com/sindresorhus/yn) to parse yes/no responses.
 - [ ] Integrate with [insight](https://github.com/yeoman/insight) for telemetry.
 - [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
 - [ ] Use [sudo-block](https://github.com/sindresorhus/sudo-block)
+- [ ] Make the website https://amir-s.github.io/dev better! Include examples, configuration and help.
