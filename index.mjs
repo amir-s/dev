@@ -2,6 +2,7 @@
 
 import { Searcher } from "fast-fuzzy";
 import { load } from "./config/index.mjs";
+import { list as getContextualCommands } from "./contextual/list.mjs";
 import fs from "fs";
 
 const { config, writeConfig } = load();
@@ -14,6 +15,7 @@ const modules = [
   "update",
   "open",
   "up",
+  // "contextual", this module can not be called directly
 ];
 
 const writeToFD = async (fd, str) => {
@@ -42,7 +44,16 @@ const execute = async () => {
     args.push("default");
   }
 
-  const module = findModule(args[0]);
+  let module = findModule(args[0]);
+  const isFuzzy = module !== args[0];
+  const contextualCommands = await getContextualCommands();
+
+  // execute contextual command only when
+  // there is no built-in module OR module is fuzzy matched but the exact command exists in contextual commands
+  if (!module || (isFuzzy && contextualCommands.includes(args[0]))) {
+    args.unshift("contextual");
+    module = args[0];
+  }
 
   if (!module) {
     console.log(`Module "${args[0]}" not found.`);
