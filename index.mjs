@@ -15,6 +15,7 @@ const modules = [
   "update",
   "open",
   "up",
+  "ls",
   // "contextual", this module can not be called directly
 ];
 

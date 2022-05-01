@@ -1,6 +1,5 @@
 import fs from "fs";
 import { $ } from "zx";
-import path from "path";
 
 $.verbose = false;
 
@@ -11,4 +10,10 @@ export const list = async () => {
     return Object.keys(pkg.scripts);
   }
   return [];
+};
+
+export const commands = async () => {
+  if (!fs.existsSync("package.json")) return {};
+  const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+  return pkg.scripts || {};
 };
