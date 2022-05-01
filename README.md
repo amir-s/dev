@@ -9,6 +9,7 @@ It's easy to add features and stuff to it too if you continue reading.
 I made the `dev` tool to make my life easier. The goal is for `dev` to help me navigate different git projects and automate some processes that I do a lot!
 
 ## Install
+
 You would need a recent version of `node` and `npm`. I would recommend using [nvm](https://github.com/nvm-sh/nvm) to install them.
 
 This tool does not live on the npm registery just yet. But you can install it with
@@ -66,6 +67,24 @@ If a pull request is already made but you want to create a new one, you can run 
 ### `dev up`
 
 Run `dev up` in your project to install dependencies, as long as you are using node (`package.json` via `yarn` or `npm`), ruby (`Gemfile` via `bundle`) or pythong (`requirements.txt` via `pip`).
+
+### `dev <contextual-command>`
+
+You can run any command that is available in the script section of `package.json` in the current working directory, if there is one. For example, if you have a `package.json` file like this:
+
+```
+{
+  "scripts": {
+    "build": "react-scripts build",
+  }
+}
+```
+
+then you can run `dev build` to execute it.
+
+#### configs
+
+- `contextual.node.yarn` (default: `false`) if `dev` is forced to run `yarn run` instead of `npm run` to execute the command.
 
 ### `dev config`
 
