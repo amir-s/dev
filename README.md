@@ -82,13 +82,13 @@ You can run any command that is available in the script section of `package.json
 
 then you can run `dev build` to execute it.
 
-### `dev ls`
-
-List all the contextual commands.
-
 #### configs
 
 - `contextual.node.yarn` (default: `false`) if `dev` is forced to run `yarn run` instead of `npm run` to execute the command.
+
+### `dev ls`
+
+List all the contextual commands.
 
 ### `dev config`
 
