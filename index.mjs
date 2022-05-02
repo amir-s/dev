@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import { Searcher } from "fast-fuzzy";
 import { load } from "./config/index.mjs";
+import { stringCloseness } from "./internals/index.mjs";
 import { list as getContextualCommands } from "./contextual/list.mjs";
+
 import fs from "fs";
 
 const { config, writeConfig } = load();
@@ -33,9 +34,24 @@ const cd = async (path) => {
 
 const findModule = (name) => {
   if (modules.includes(name)) return name;
-  const searcher = new Searcher(modules);
-  const [match] = searcher.search(name);
-  return match;
+  const { module, closeness } = modules.reduce(
+    (candidate, module) => {
+      const closeness = stringCloseness(module, name);
+      if (closeness > candidate.closeness) return { closeness, module };
+      if (
+        closeness === candidate.closeness &&
+        module.length > candidate.module.length
+      )
+        return { closeness, module };
+      return candidate;
+    },
+    {
+      closeness: -Infinity,
+      module: "",
+    }
+  );
+  if (module && closeness > -Infinity) return module;
+  return null;
 };
 
 const execute = async () => {
