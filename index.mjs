@@ -51,7 +51,10 @@ const execute = async () => {
 
   // execute contextual command only when
   // there is no built-in module OR module is fuzzy matched but the exact command exists in contextual commands
-  if (!module || (isFuzzy && contextualCommands.includes(args[0]))) {
+  if (
+    (!module && contextualCommands.includes(module)) ||
+    (isFuzzy && contextualCommands.includes(args[0]))
+  ) {
     args.unshift("contextual");
     module = args[0];
   }
