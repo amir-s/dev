@@ -136,4 +136,6 @@ dev shell use prod
 - [ ] Integrate with [insight](https://github.com/yeoman/insight) for telemetry.
 - [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
 - [ ] Use [sudo-block](https://github.com/sindresorhus/sudo-block)
+- [ ] Use (inquirer)[https://www.npmjs.com/package/inquirer] to ask about options that can be picked from a list.
+- [ ] Periodically check for updates and print "update available" messages, with options to suppress it for a version or forever.
 - [ ] Make the website https://amir-s.github.io/dev better! Include examples, configuration and help.
