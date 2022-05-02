@@ -17,6 +17,7 @@ const modules = [
   "open",
   "up",
   "ls",
+  "projects",
   // "contextual", this module can not be called directly
 ];
 
