@@ -66,7 +66,7 @@ If a pull request is already made but you want to create a new one, you can run 
 
 ### `dev up`
 
-Run `dev up` in your project to install dependencies, as long as you are using node (`package.json` via `yarn` or `npm`), ruby (`Gemfile` via `bundle`) or pythong (`requirements.txt` via `pip`).
+Run `dev up` in your project to install dependencies, as long as you are using node (`package.json` via `yarn` or `npm`), ruby (`Gemfile` via `bundle`) or python (`requirements.txt` via `pip`).
 
 ### `dev <contextual-command>`
 
