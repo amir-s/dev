@@ -90,6 +90,10 @@ then you can run `dev build` to execute it.
 
 List all the contextual commands.
 
+### `dev projects`
+
+Run `dev ps` (fuzzy matched to `projects`) to list all the cloned repos you have on your local machine.
+
 ### `dev config`
 
 You can set overrides for the configuration of `dev`. The configuration files lives in `~/.dev.config.json`.
