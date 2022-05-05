@@ -81,7 +81,12 @@ export const run = async ({ config, writeConfig, args }) => {
 
       console.log(script);
     } else if (shellType === "fish") {
-      console.log(/* fish script */);
+      const script = fs
+        .readFileSync(path.join(__dirname, "./install.fish"), "utf8")
+        .replaceAll("<$SHELL_FN_NAME$>", functionName)
+        .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
+
+      console.log(script);
     }
 
     return;
