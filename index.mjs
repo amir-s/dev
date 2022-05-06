@@ -30,7 +30,14 @@ const writeToFD = async (fd, str) => {
 };
 
 const cd = async (path) => {
-  return await writeToFD(9, `cd:${path}\n`);
+  const { DEV_CLI_CMD_EXEC_FILE } = process.env;
+  const command = `cd:${path}\n`;
+
+  if (DEV_CLI_CMD_EXEC_FILE) {
+    return fs.appendFileSync(DEV_CLI_CMD_EXEC_FILE, command);
+  }
+
+  return writeToFD(9, command);
 };
 
 const findModule = (name) => {
