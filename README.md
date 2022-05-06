@@ -119,7 +119,7 @@ Assuming you have installed the [shell module](https://github.com/amir-s/dev/#in
 dev shell use local
 ```
 
-After restarting your terminal (or `source`ing your shell profile file), `dev` would point to your local copy across your system. You can verify this by running `dev` by itself.
+`dev` will try to `source` your shell profile file by itself, but you may still need to restart your terminal. Then `dev` would point to your local copy across your system. You should verify this by running `dev` by itself.
 
 To reset and use production binary run:
 

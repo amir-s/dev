@@ -10,7 +10,7 @@ import * as help from "./help.mjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const SHELLS = [
+export const SHELLS = [
   {
     name: "bash",
     path: "/bin/bash",
@@ -59,7 +59,7 @@ const isDevFolder = () => {
   }
 };
 
-export const run = async ({ config, writeConfig, args }) => {
+export const run = async ({ config, writeConfig, args, source }) => {
   if (args.length === 0) {
     help.generic();
     return;
@@ -77,6 +77,7 @@ export const run = async ({ config, writeConfig, args }) => {
       const script = fs
         .readFileSync(path.join(__dirname, "./install.sh"), "utf8")
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
+        .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
       console.log(script);
@@ -84,6 +85,7 @@ export const run = async ({ config, writeConfig, args }) => {
       const script = fs
         .readFileSync(path.join(__dirname, "./install.fish"), "utf8")
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
+        .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
       console.log(script);
@@ -148,13 +150,14 @@ export const run = async ({ config, writeConfig, args }) => {
       writeConfig("shell.binary.path", path.resolve("./index.mjs"));
       console.log(`\n Updated config to use LOCAL DEV.`.green);
       console.log(
-        `\n You will need to restart your terminal for changes to take effect.`
+        `\n You may need to restart your terminal for changes to take effect.`
           .yellow
       );
       console.log(
         ` Verify which version you are using by running "dev" with no arguments`
           .yellow
       );
+      await source();
 
       return;
     }
@@ -163,13 +166,14 @@ export const run = async ({ config, writeConfig, args }) => {
       writeConfig("shell.binary.path", undefined);
       console.log(`\n Updated config to use PRODUCTION.`.green);
       console.log(
-        `\n You will need to restart your terminal for changes to take effect.`
+        `\n You may need to restart your terminal for changes to take effect.`
           .yellow
       );
       console.log(
         ` Verify which version you are using by running "dev" with no arguments`
           .yellow
       );
+      await source();
 
       return;
     }

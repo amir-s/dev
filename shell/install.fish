@@ -1,7 +1,7 @@
 function <$SHELL_FN_NAME$>
     set -l tempfile (mktemp -u)
   
-    env DEV_CLI_BIN_PATH="<$SHELL_BIN_PATH$>" DEV_CLI_CMD_EXEC_FILE="$tempfile" <$SHELL_BIN_PATH$> $argv
+    env DEV_CLI_BIN_PATH="<$SHELL_BIN_PATH$>" DEV_CLI_CMD_EXEC_FILE="$tempfile" DEV_CLI_SHELL_TYPE="<$SHELL_TYPE$>" <$SHELL_BIN_PATH$> $argv
     set -l exitcode $status
   
     if test -f $tempfile
@@ -9,6 +9,8 @@ function <$SHELL_FN_NAME$>
             switch $cmd
                 case "cd:*"
                 cd (string replace -r "cd:" "" -- $cmd)
+                case "source:*"
+                source (string replace -r "source:" "" -- $cmd)
                 case "*"
                 # echo do nothing
             end

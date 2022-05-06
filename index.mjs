@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
+import fs from "fs";
+import os from "os";
+import path from "path";
+
 import { load } from "./config/index.mjs";
 import { stringCloseness } from "./internals/index.mjs";
 import { list as getContextualCommands } from "./contextual/list.mjs";
 
-import fs from "fs";
+import { SHELLS } from "./shell/index.mjs";
 
 const { config, writeConfig } = load();
 const modules = [
@@ -29,15 +33,28 @@ const writeToFD = async (fd, str) => {
   });
 };
 
-const cd = async (path) => {
+const shellExec = async (cmd) => {
   const { DEV_CLI_CMD_EXEC_FILE } = process.env;
-  const command = `cd:${path}\n`;
+  const command = `${cmd}\n`;
 
   if (DEV_CLI_CMD_EXEC_FILE) {
     return fs.appendFileSync(DEV_CLI_CMD_EXEC_FILE, command);
   }
 
   return writeToFD(9, command);
+};
+
+const cd = (path) => shellExec(`cd:${path}`);
+
+const source = () => {
+  const currentShellType = (
+    process.env.DEV_CLI_SHELL_TYPE || "unknown"
+  ).toLowerCase();
+
+  const shell = SHELLS.find((shell) => shell.name === currentShellType);
+  if (!shell) return;
+
+  return shellExec(`source:${path.resolve(os.homedir(), shell.profile)}`);
 };
 
 const findModule = (name) => {
@@ -90,7 +107,13 @@ const execute = async () => {
 
   const moduleExports = await import(`./${module}/index.mjs`);
 
-  await moduleExports.run({ args: args.slice(1), config, writeConfig, cd });
+  await moduleExports.run({
+    args: args.slice(1),
+    config,
+    writeConfig,
+    cd,
+    source,
+  });
 };
 
 execute();
