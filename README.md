@@ -131,7 +131,6 @@ dev shell use prod
 
 - [ ] More documentation! and have help commands for the current modules.
 - [ ] Make sure `dev` has correct exit codes and actually fails when it should.
-- [ ] Notify the user about shell module not being installed when using `dev cd`.
 - [ ] Separate config keys to another method so user can see all possible config keys with `dev config list`.
 - [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev.json`, or a `dev` section in package.json.
 - [ ] Make color of the output lines more consistent.
