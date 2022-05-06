@@ -23,7 +23,7 @@ const getCurrentVersion = () => {
   return version;
 };
 
-export const run = async ({ config }) => {
+export const run = async ({ source }) => {
   report.info("checking for updates...");
 
   try {
@@ -60,6 +60,7 @@ export const run = async ({ config }) => {
       report.warn(
         "you may need to restart your terminal to use the new version."
       );
+      await source();
     }
   } catch (e) {
     report.error(e);
