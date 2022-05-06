@@ -18,16 +18,16 @@ This tool does not live on the npm registery just yet. But you can install it wi
 npm i -g amir-s/dev
 ```
 
-To unlock the full potential of `dev`, you might want to install the shell module too, simply run
+To unlock the full potential of `dev` on bash, zsh or fish, you might want to install the shell module, simply run
 
 ```
 dev shell install
 ```
 
-This would automatically add the following line to your shell profile file (`~/.zshrc` or `~/.bashrc`):
+This would automatically add the following line to your shell profile file:
 
 ```
-eval "$(dev-cli shell init)"
+eval "$(dev-cli shell init <shelltype>)"
 ```
 
 After restarting your shell (or running equivalent of `source ~/.zshrc`), this allows commands like `dev cd` to work.
@@ -140,6 +140,5 @@ dev shell use prod
 - [ ] Integrate with [insight](https://github.com/yeoman/insight) for telemetry.
 - [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
 - [ ] Use [sudo-block](https://github.com/sindresorhus/sudo-block)
-- [ ] Use (inquirer)[https://www.npmjs.com/package/inquirer] to ask about options that can be picked from a list.
 - [ ] Periodically check for updates and print "update available" messages, with options to suppress it for a version or forever.
 - [ ] Make the website https://amir-s.github.io/dev better! Include examples, configuration and help.
