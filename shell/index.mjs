@@ -1,6 +1,7 @@
 import os from "os";
 import path, { dirname } from "path";
 import report from "yurnalist";
+import inquirer from "inquirer";
 import { fileURLToPath } from "url";
 import { fs } from "zx";
 
@@ -9,15 +10,43 @@ import * as help from "./help.mjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const getShellProfile = () => {
-  const shellType = process.env.SHELL;
-  if (shellType === "/bin/bash") {
-    return path.resolve(os.homedir(), ".bashrc");
-  }
-  if (shellType === "/bin/zsh") {
-    return path.resolve(os.homedir(), ".zshrc");
-  }
-  return null;
+const SHELLS = [
+  {
+    name: "bash",
+    path: "/bin/bash",
+    profile: ".bashrc",
+  },
+  {
+    name: "zsh",
+    path: "/bin/zsh",
+    profile: ".zshrc",
+  },
+  {
+    name: "fish",
+    path: "/bin/fish",
+    profile: ".config/fish/config.fish",
+  },
+];
+
+const getShellProfile = async () => {
+  const { type } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "type",
+      message: "Which shell do you want to install to?",
+      choices: SHELLS.map((shell) => {
+        const path = ` ~/${shell.profile}`.gray;
+        return `${shell.name.padEnd(
+          SHELLS.reduce((max, { name }) => Math.max(max, name.length), 0)
+        )} ${path}`;
+      }),
+      default: () =>
+        SHELLS.findIndex((shell) => shell.path === process.env.SHELL),
+      filter: (shell) => shell.split(" ")[0],
+    },
+  ]);
+
+  return SHELLS.find((shell) => shell.name === type);
 };
 
 const isDevFolder = () => {
@@ -39,46 +68,60 @@ export const run = async ({ config, writeConfig, args }) => {
   const [command] = args;
 
   if (command === "init") {
+    const shellType = args[1] || "bash";
+
     const functionName = config("shell.function", "dev");
     const binaryPath = config("shell.binary.path", "dev-cli");
 
-    const script = fs
-      .readFileSync(path.join(__dirname, "./install.sh"), "utf8")
-      .replaceAll("<$SHELL_FN_NAME$>", functionName)
-      .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
+    if (shellType === "bash" || shellType === "zsh") {
+      const script = fs
+        .readFileSync(path.join(__dirname, "./install.sh"), "utf8")
+        .replaceAll("<$SHELL_FN_NAME$>", functionName)
+        .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
-    console.log(script);
+      console.log(script);
+    } else if (shellType === "fish") {
+      const script = fs
+        .readFileSync(path.join(__dirname, "./install.fish"), "utf8")
+        .replaceAll("<$SHELL_FN_NAME$>", functionName)
+        .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
+
+      console.log(script);
+    }
 
     return;
   }
 
   if (command === "install") {
-    const installCommand = `eval "$(dev-cli shell init)"`;
-    const file = getShellProfile();
-    if (!file) {
+    const shell = await getShellProfile();
+    const shellProfile = path.resolve(os.homedir(), shell.profile);
+
+    if (!shellProfile) {
       report.error("unable to find shell profile!");
       return;
     }
 
-    if (!fs.existsSync(file)) {
-      report.error(`file "${file}" does not exist.`);
+    if (!fs.existsSync(shellProfile)) {
+      report.error(`file "${shellProfile}" does not exist.`);
       return;
     }
 
-    const script = fs.readFileSync(file, "utf8");
+    const installCommand = `eval "$(dev-cli shell init ${shell.name})"`;
 
+    const script = fs.readFileSync(shellProfile, "utf8");
     if (script.includes(installCommand)) {
       report.success(
-        `command \`${installCommand}\` already exists in "${file}".`.yellow
+        `command \`${installCommand}\` already exists in "${shellProfile}".`
+          .yellow
       );
       return;
     }
 
     const newScript = `${script}\n${installCommand}\n`;
 
-    fs.writeFileSync(file, newScript);
+    fs.writeFileSync(shellProfile, newScript);
 
-    help.shellInstallSuccess(installCommand, file);
+    help.shellInstallSuccess(installCommand, shellProfile);
 
     return;
   }
