@@ -38,8 +38,7 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
 
 ### `dev clone <repo>`
 
-`dev clone <repo>` clones a git repo locally into `~/src/<org>/<user>/<repo>`.
-By default, it'll use `ssh` and also it `cd`s into that said directory (only if shell-module is installed).
+`dev clone <repo>` clones a git repo locally into `~/src/<org>/<user>/<repo>` and then `cd`s into that said directory (only if shell-module is installed).
 
 `<repo>` can be either full git URL or just the username and repo name:
 
@@ -53,7 +52,7 @@ By default, it'll use `ssh` and also it `cd`s into that said directory (only if 
 - `clone.cd` (default: `true`)
   If `dev` needs to `cd` into the cloned project after it is done.
 - `clone.ssh` (default: `true`)
-  If `dev` is forced to use `ssh` to clone the repo. If set to `false`, it'll use `https`.
+  If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
 
 ### `dev open pr`
 
