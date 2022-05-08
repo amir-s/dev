@@ -20,17 +20,24 @@ const isUrl = (string) => {
   return url.protocol === "http:" || url.protocol === "https:";
 };
 
+const removeGitPostfix = (str) => {
+  if (str.endsWith(".git")) {
+    return str.slice(0, -4);
+  }
+  return str;
+};
+
 const parseUrl = (urlString) => {
   const url = new URL(urlString);
 
   const org = url.host;
-  const [user, repo] = url.pathname.split("/").slice(1);
+  const [user, repo] = url.pathname.split("/").slice(-2);
 
   return {
     org,
     user,
-    repo,
-    url,
+    repo: removeGitPostfix(repo),
+    remote: urlString,
   };
 };
 
@@ -49,7 +56,8 @@ const parseSsh = (str) => {
   return {
     org,
     user,
-    repo,
+    repo: removeGitPostfix(repo),
+    remote: str,
   };
 };
 
@@ -59,19 +67,27 @@ const isShort = (string) => {
   return GIT_SHORT_REGEX.test(string);
 };
 
-const parseShort = (str) => {
+const parseShort = (str, ssh) => {
+  const org = "github.com";
   const {
     groups: { user, repo },
   } = str.match(GIT_SHORT_REGEX);
 
+  const sanitizedRepo = removeGitPostfix(repo);
+
+  const remote = ssh
+    ? `git@${org}:${user}/${sanitizedRepo}.git`
+    : `https://${org}/${user}/${sanitizedRepo}.git`;
+
   return {
+    org,
     user,
-    repo,
-    org: "github.com",
+    repo: sanitizedRepo,
+    remote,
   };
 };
 
-const parseArgument = (str) => {
+export const parseArgument = (str, { ssh }) => {
   if (isUrl(str)) {
     return parseUrl(str);
   }
@@ -81,7 +97,7 @@ const parseArgument = (str) => {
   }
 
   if (isShort(str)) {
-    return parseShort(str);
+    return parseShort(str, ssh);
   }
 
   return null;
@@ -97,14 +113,14 @@ export const run = async ({ config, args, cd }) => {
     return;
   }
 
-  const parts = parseArgument(args[0]);
+  const parts = parseArgument(args[0], { ssh });
 
   if (!parts) {
     report.error(`invalid argument: ${args[0]}`);
     return;
   }
 
-  const { org, user, repo } = parts;
+  const { org, user, repo, remote } = parts;
 
   const clonePath = path
     .replace("<home>", os.homedir())
@@ -124,15 +140,9 @@ export const run = async ({ config, args, cd }) => {
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
-      if (ssh) {
-        return await nothrow(
-          $`git clone --depth 1 --single-branch --no-tags git@${org}:${user}/${repo}.git ${clonePath}`
-        );
-      } else {
-        return await nothrow(
-          $`git clone --depth 1 --single-branch --no-tags https://${org}/${user}/${repo}.git ${clonePath}`
-        );
-      }
+      return await nothrow(
+        $`git clone --depth 1 --single-branch --no-tags ${remote} ${clonePath}`
+      );
     }
   );
 
