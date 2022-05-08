@@ -1,7 +1,7 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "",
   "dependencies": {
     "colors": "^1.4.0",
@@ -15,6 +15,9 @@
   "bin": {
     "dev-cli": "./index.mjs",
     "dev": "./index.mjs"
+  },
+  "scripts": {
+    "test": "node test.mjs */tests/*.test.mjs"
   },
   "devDependencies": {},
   "repository": {
