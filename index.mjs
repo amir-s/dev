@@ -11,19 +11,19 @@ import { list as getContextualCommands } from "./contextual/list.mjs";
 import { SHELLS } from "./shell/index.mjs";
 
 const { config, writeConfig } = load();
-const modules = [
-  "config",
-  "default",
-  "clone",
-  "cd",
-  "shell",
-  "update",
-  "open",
-  "up",
-  "ls",
-  "projects",
-  // "contextual", this module can not be called directly
-];
+const modules = {
+  config: {},
+  default: { indirect: true },
+  clone: {},
+  cd: {},
+  shell: {},
+  update: {},
+  open: {},
+  up: {},
+  ls: {},
+  projects: {},
+  contextual: { indirect: true },
+};
 
 const writeToFD = async (fd, str) => {
   return new Promise((resolve) => {
@@ -58,23 +58,25 @@ const source = () => {
 };
 
 const findModule = (name) => {
-  if (modules.includes(name)) return name;
-  const { module, closeness } = modules.reduce(
-    (candidate, module) => {
-      const closeness = stringCloseness(module, name);
-      if (closeness > candidate.closeness) return { closeness, module };
-      if (
-        closeness === candidate.closeness &&
-        module.length > candidate.module.length
-      )
-        return { closeness, module };
-      return candidate;
-    },
-    {
-      closeness: -Infinity,
-      module: "",
-    }
-  );
+  if (modules[name] && !modules[name].indirect) return name;
+  const { module, closeness } = Object.keys(modules)
+    .filter((name) => !modules[name].indirect)
+    .reduce(
+      (candidate, module) => {
+        const closeness = stringCloseness(module, name);
+        if (closeness > candidate.closeness) return { closeness, module };
+        if (
+          closeness === candidate.closeness &&
+          module.length > candidate.module.length
+        )
+          return { closeness, module };
+        return candidate;
+      },
+      {
+        closeness: -Infinity,
+        module: "",
+      }
+    );
   if (module && closeness > -Infinity) return module;
   return null;
 };

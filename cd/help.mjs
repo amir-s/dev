@@ -1,5 +1,5 @@
 import "colors";
 
 export const generic = () => {
-  console.log("No command specified.".gray);
+  console.log("no project name specified.".gray);
 };
