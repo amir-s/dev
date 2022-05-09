@@ -1,6 +1,7 @@
 import fs from "fs";
 import { $ } from "zx";
 import report from "yurnalist";
+import semver from "semver";
 import { spinner } from "../utils/spinner.mjs";
 
 const isInstalled = async (name) => {
@@ -12,7 +13,39 @@ const isInstalled = async (name) => {
   }
 };
 
+const checkVersion = async () => {
+  if (!fs.existsSync(".nvmrc")) return true;
+  const requiredVersion = fs.readFileSync(".nvmrc", "utf8").trim();
+  try {
+    const installedVersion = (await $`node -v`).stdout.trim();
+    if (semver.satisfies(installedVersion, requiredVersion)) return true;
+
+    report.info(
+      `node ${requiredVersion.green} is required ${
+        "(via .nvmrc)".gray
+      }, but you have ${installedVersion.green}`
+    );
+
+    const install = await report.question(
+      `install the dependencies anyway? (y/n)`
+    );
+
+    if (["y", "yes"].includes(install.toLocaleLowerCase())) return true;
+
+    return false;
+  } catch (e) {
+    report.error("executable node not found.");
+    report.error(e.stderr);
+    return false;
+  }
+};
+
 export const installNodeDependencies = async () => {
+  if (!(await checkVersion())) {
+    report.error("abort installing node dependencies.");
+    return;
+  }
+
   if (fs.existsSync("yarn.lock")) {
     if (!(await isInstalled("yarn"))) {
       report.error("`yarn.lock` is found but `yarn` is not installed.");
