@@ -84,22 +84,25 @@ const findModule = (name) => {
 const execute = async () => {
   const args = process.argv.slice(2);
 
+  let module = null;
+
   if (args.length === 0) {
-    args.push("default");
-  }
+    module = "default";
+  } else {
+    module = findModule(args[0]);
 
-  let module = findModule(args[0]);
-  const isFuzzy = module !== args[0];
-  const contextualCommands = await getContextualCommands();
+    const isFuzzy = module !== args[0];
+    const contextualCommands = await getContextualCommands();
 
-  // execute contextual command only when
-  // there is no built-in module OR module is fuzzy matched but the exact command exists in contextual commands
-  if (
-    (!module && contextualCommands.includes(module)) ||
-    (isFuzzy && contextualCommands.includes(args[0]))
-  ) {
-    args.unshift("contextual");
-    module = args[0];
+    // execute contextual command only when
+    // there is no built-in module OR module is fuzzy matched but the exact command exists in contextual commands
+    if (
+      (!module && contextualCommands.includes(module)) ||
+      (isFuzzy && contextualCommands.includes(args[0]))
+    ) {
+      args.unshift("contextual");
+      module = args[0];
+    }
   }
 
   if (!module) {
