@@ -10,9 +10,8 @@ import report from "yurnalist";
 
 $.verbose = false;
 
-const URL =
-  "https://raw.githubusercontent.com/amir-s/dev-cli/main/package.json";
-const PACKAGE = "amir-s/dev-cli";
+const URL = "https://raw.githubusercontent.com/amir-s/dev/main/package.json";
+const PACKAGE = "amir-s/dev";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
