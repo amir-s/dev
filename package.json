@@ -1,9 +1,10 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "",
   "dependencies": {
+    "arpjs": "^1.2.0",
     "colors": "^1.4.0",
     "fast-fuzzy": "^1.11.1",
     "inquirer": "^8.2.4",
