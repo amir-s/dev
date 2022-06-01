@@ -23,6 +23,7 @@ const modules = {
   ls: {},
   projects: {},
   contextual: { indirect: true },
+  lan: {},
 };
 
 const writeToFD = async (fd, str) => {

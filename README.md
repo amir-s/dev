@@ -93,6 +93,22 @@ List all the contextual commands.
 
 Run `dev ps` (fuzzy matched to `projects`) to list all the cloned repos you have on your local machine.
 
+### `dev lan scan`
+
+Scan your local network for active devices and get a list of IP addresses, MAC addresses and their vendor. Plus, it does a reverse mDNS lookup on the IP addresses and shows the local domain if there is any.
+
+#### arguments
+
+By default `dev lan scan` groups the devices by vendor.
+
+- `--no-mac` skip MAC address vendor check.
+- `--no-mdns` skip reverse mDNS lookup.
+- `--list | -l | ls` generates a list sorted by IP address.
+
+#### configs
+
+- `lan.scan.lookup.timeout` (default: `3000`ms) the default timeout for reverse mDNS lookup and MAC address vendor check.
+
 ### `dev config`
 
 You can set overrides for the configuration of `dev`. The configuration files lives in `~/.dev.config.json`.
