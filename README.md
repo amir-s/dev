@@ -104,6 +104,7 @@ By default `dev lan scan` groups the devices by vendor.
 - `--no-mac` skip MAC address vendor check.
 - `--no-mdns` skip reverse mDNS lookup.
 - `--list | -l | ls` generates a list sorted by IP address.
+- `--services | -s` use `dns-sd` to discover services on the network.
 
 #### configs
 

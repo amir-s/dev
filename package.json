@@ -1,11 +1,12 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "",
   "dependencies": {
     "arpjs": "^1.2.0",
     "colors": "^1.4.0",
+    "dns-zonefile": "^0.3.0",
     "fast-fuzzy": "^1.11.1",
     "inquirer": "^8.2.4",
     "node-fetch": "^3.2.3",

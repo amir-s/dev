@@ -234,6 +234,11 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
+dns-zonefile@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/dns-zonefile/-/dns-zonefile-0.3.0.tgz#57d0870cfa2ea0dd7675dc72f6bb1a41d848d794"
+  integrity sha512-Dv6/ovxV+HjHQxtZNgUOisHacXzVrdF351fbRzdOF1MTyk9h6Tjd+bHkn/vLjzFx8HNRutra5Stm9FVWTuEoCg==
+
 duplexer@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
@@ -661,7 +666,7 @@ pause-stream@0.0.11:
   dependencies:
     through "~2.3"
 
-"pcap@github:mranney/node_pcap":
+pcap@mranney/node_pcap:
   version "3.1.0"
   resolved "https://codeload.github.com/mranney/node_pcap/tar.gz/5a88ce16b4e83cd7120008c993ed2c59de55f50c"
   dependencies:
