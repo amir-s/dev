@@ -110,6 +110,14 @@ By default `dev lan scan` groups the devices by vendor.
 
 - `lan.scan.lookup.timeout` (default: `3000`ms) the default timeout for reverse mDNS lookup and MAC address vendor check.
 
+### `dev ip [ip address]`
+
+Get information about an IP address. If no IP address is provided, it'll use the current IP address.
+
+#### configs
+
+- `ip.ipinfoio.token` (default: `null`) the token for the ipinfo.io API.
+
 ### `dev config`
 
 You can set overrides for the configuration of `dev`. The configuration files lives in `~/.dev.config.json`.
