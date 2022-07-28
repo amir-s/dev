@@ -107,6 +107,9 @@ export const run = async ({ config, args, cd }) => {
   const path = config("clone.path", "<home>/src/<org>/<user>/<repo>");
   const changeDirectory = config("clone.cd", true);
   const ssh = config("clone.ssh", true);
+  const singleBranch = config("clone.branch.single", false);
+  const depth = config("clone.depth", null);
+  const tags = config("clone.tags", true);
 
   if (args.length === 0) {
     help.generic();
@@ -137,11 +140,15 @@ export const run = async ({ config, args, cd }) => {
     return;
   }
 
+  const singleBranchArg = singleBranch ? "--single-branch" : "";
+  const depthArg = depth !== null ? `--depth ${depth}` : "";
+  const tagsArg = tags ? "" : "--no-tags";
+
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
       return await nothrow(
-        $`git clone --depth 1 --single-branch --no-tags ${remote} ${clonePath}`
+        $`git clone ${depthArg} ${singleBranchArg} ${tagsArg} ${remote} ${clonePath}`
       );
     }
   );

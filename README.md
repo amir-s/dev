@@ -53,6 +53,12 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
   If `dev` needs to `cd` into the cloned project after it is done.
 - `clone.ssh` (default: `true`)
   If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
+- `clone.branch.single` (default: `false`)
+  If `--single-branch` should be passed to `git clone`.
+- `clone.depth` (default: `null`)
+  If `--depth <number>` should be passed to `git clone`. Set the config to the `<number>` you desire.
+- `clone.tags` (default: `true`)
+  If set to `false` then `--no-tags` will be provided to `git clone`.
 
 ### `dev open pr`
 
