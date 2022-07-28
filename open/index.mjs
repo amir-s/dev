@@ -4,7 +4,6 @@ import fs from "fs";
 import { $ } from "zx";
 import path from "path";
 import open from "open";
-import { Searcher } from "fast-fuzzy";
 import report from "yurnalist";
 
 import { spinner } from "../utils/spinner.mjs";
@@ -44,28 +43,20 @@ const getRemoteUrl = async () => {
   return url.trim().slice(0, -4);
 };
 
-const COMMANDS = ["pr"];
-const findCommand = (name) => {
-  if (COMMANDS.includes(name)) return name;
-  const searcher = new Searcher(COMMANDS);
-  const [match] = searcher.search(name);
-  return match;
-};
-
 export const run = async ({ args }) => {
   if (args.length === 0) {
     help.generic();
     return;
   }
 
-  const command = findCommand(args[0]);
+  const command = args[0];
 
   if (!command) {
     help.generic();
     return;
   }
 
-  if (command === "pr") {
+  if (command === "pr" || command === "p") {
     const repoPath = path.resolve(".git");
     if (!fs.existsSync(repoPath)) {
       report.error("you are not in a git repository.");

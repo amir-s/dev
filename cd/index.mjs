@@ -1,7 +1,7 @@
-import { Searcher } from "fast-fuzzy";
 import os from "os";
 import { globby } from "zx";
 import report from "yurnalist";
+import { stringCloseness } from "../internals/index.mjs";
 
 import * as help from "./help.mjs";
 
@@ -56,17 +56,27 @@ export const run = async ({ config, args, cd }) => {
     })
     .filter((x) => x);
 
-  const searcher = new Searcher(allRepos, {
-    keySelector: (x) => `${x.user} ${x.repo}`,
-  });
+  const requestedString = args.join("").toLocaleLowerCase();
+  const matched = allRepos.reduce(
+    (candidate, repo) => {
+      const closeness = stringCloseness(
+        `${repo.user}${repo.repo}`.toLocaleLowerCase(),
+        requestedString
+      );
+      if (closeness > candidate.closeness) return { closeness, repo };
+      return candidate;
+    },
+    {
+      closeness: -Infinity,
+      repo: null,
+    }
+  );
 
-  const [mathced] = searcher.search(args.join(""));
-
-  if (!mathced) {
+  if (!matched.repo) {
     report.error(`no repo found for ${args.join(" ")}`);
     return;
   }
 
-  report.command(`cd ${mathced.path}`);
-  await cd(mathced.path);
+  report.command(`cd ${matched.repo.path}`);
+  await cd(matched.repo.path);
 };
