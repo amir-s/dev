@@ -38,7 +38,9 @@ export const run = async ({ config, args }) => {
 
   for (let key in info) {
     const value = info[key];
-    console.log(` ${key.padEnd(maxWidth, " ").green}  ${value.bold}`);
+    console.log(
+      ` ▸ ${key.padEnd(maxWidth, " ").green}  ${value.toString().bold}`
+    );
   }
 
   process.exit(0);
