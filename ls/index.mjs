@@ -18,7 +18,7 @@ export const run = async ({ args, config }) => {
 
   const list = Object.keys(localCommands)
     .map((key) => {
-      return `\n + ${key.padEnd(maxLength, " ")} ${"$ ".gray}${
+      return `\n ▸ ${key.padEnd(maxLength, " ").green} ${"$ ".gray}${
         localCommands[key].gray
       }`;
     })
