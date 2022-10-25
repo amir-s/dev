@@ -7,6 +7,8 @@ import { spinner } from "../utils/spinner.mjs";
 import { Writable } from "stream";
 import zonefile from "dns-zonefile";
 import { isIPv4 } from "net";
+import chokidar from "chokidar";
+import path from "path";
 
 const getTable = async () => {
   return new Promise((resolve, reject) => {
@@ -256,90 +258,132 @@ const discoverServices = async (timeout) => {
 export const run = async ({ config, args }) => {
   const [command, ...flags] = args;
 
-  if (command !== "scan") {
+  if (!["scan", "sync"].includes(command)) {
     help.generic();
     return;
   }
 
-  const discovery = flags.includes("--services") || flags.includes("-s");
-  const skipMDNS = flags.includes("--no-mdns");
-  const skipMacLookup = flags.includes("--no-mac");
-  const outputList =
-    flags.includes("--list") || flags.includes("-l") || flags.includes("ls");
+  if (command === "scan") {
+    const discovery = flags.includes("--services") || flags.includes("-s");
+    const skipMDNS = flags.includes("--no-mdns");
+    const skipMacLookup = flags.includes("--no-mac");
+    const outputList =
+      flags.includes("--list") || flags.includes("-l") || flags.includes("ls");
 
-  const timeout = config("lan.scan.lookup.timeout", 3000);
+    const timeout = config("lan.scan.lookup.timeout", 3000);
 
-  const ip2service = discovery ? await discoverServices(timeout) : {};
+    const ip2service = discovery ? await discoverServices(timeout) : {};
 
-  const table = await spinner("getting arp table", async () => {
-    return await getTable();
-  });
+    const table = await spinner("getting arp table", async () => {
+      return await getTable();
+    });
 
-  const domains = skipMDNS ? [] : await getDomains(table, timeout);
-  const vendors = skipMacLookup ? [] : await getMacVendors(table, timeout);
+    const domains = skipMDNS ? [] : await getDomains(table, timeout);
+    const vendors = skipMacLookup ? [] : await getMacVendors(table, timeout);
 
-  const maxWith = Math.max(...vendors.map((i) => (i ? i.length : 0)));
+    const maxWith = Math.max(...vendors.map((i) => (i ? i.length : 0)));
 
-  if (outputList || skipMacLookup) {
-    console.log();
-    for (let i = 0; i < table.length; i++) {
-      const { ip, mac } = table[i];
-      const domain = domains[i] || "";
-      const vendor = vendors[i] || "";
+    if (outputList || skipMacLookup) {
+      console.log();
+      for (let i = 0; i < table.length; i++) {
+        const { ip, mac } = table[i];
+        const domain = domains[i] || "";
+        const vendor = vendors[i] || "";
 
-      console.log(
-        `⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
-          vendor.padEnd(maxWith, " ").gray
-        } ${domain.yellow}`
-      );
-    }
-  } else {
-    const groups = {};
-    const unknowns = [];
-    for (let i = 0; i < table.length; i++) {
-      const { ip, mac } = table[i];
-      const domain = domains[i] || "";
-      const vendor = vendors[i];
-
-      if (vendor) {
-        groups[vendor] = groups[vendor] || [];
-        groups[vendor].push({ ip, mac, domain });
-      } else {
-        unknowns.push({ ip, mac, domain });
-      }
-    }
-    groups["unknown"] = unknowns;
-
-    console.log();
-    for (const vendor in groups) {
-      const group = groups[vendor];
-      console.log(` 🏢 ${vendor.bold} ${`(${group.length})`.gray}`);
-
-      for (const { ip, mac, domain } of group) {
-        let serviceDomains = "";
-        let services = "";
-        if (ip2service[ip]) {
-          const domains = Object.keys(ip2service[ip].domains).filter(
-            (d) => d != domain
-          );
-          if (domains.length) {
-            serviceDomains = `${domains.join(" ")} `;
-          }
-
-          const servicesList = Object.keys(ip2service[ip].services);
-          if (servicesList.length) {
-            services = `(${servicesList.join(" ")})`;
-          }
-        }
         console.log(
-          ` ⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${domain.green} ${
-            serviceDomains.yellow
-          }${services.blue}`
+          `⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
+            vendor.padEnd(maxWith, " ").gray
+          } ${domain.yellow}`
         );
       }
-      console.log();
-    }
-  }
+    } else {
+      const groups = {};
+      const unknowns = [];
+      for (let i = 0; i < table.length; i++) {
+        const { ip, mac } = table[i];
+        const domain = domains[i] || "";
+        const vendor = vendors[i];
 
-  process.exit(0);
+        if (vendor) {
+          groups[vendor] = groups[vendor] || [];
+          groups[vendor].push({ ip, mac, domain });
+        } else {
+          unknowns.push({ ip, mac, domain });
+        }
+      }
+      groups["unknown"] = unknowns;
+
+      console.log();
+      for (const vendor in groups) {
+        const group = groups[vendor];
+        console.log(` 🏢 ${vendor.bold} ${`(${group.length})`.gray}`);
+
+        for (const { ip, mac, domain } of group) {
+          let serviceDomains = "";
+          let services = "";
+          if (ip2service[ip]) {
+            const domains = Object.keys(ip2service[ip].domains).filter(
+              (d) => d != domain
+            );
+            if (domains.length) {
+              serviceDomains = `${domains.join(" ")} `;
+            }
+
+            const servicesList = Object.keys(ip2service[ip].services);
+            if (servicesList.length) {
+              services = `(${servicesList.join(" ")})`;
+            }
+          }
+          console.log(
+            ` ⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
+              domain.green
+            } ${serviceDomains.yellow}${services.blue}`
+          );
+        }
+        console.log();
+      }
+    }
+    process.exit(0);
+  } else if (command === "sync") {
+    const [source, target] = args
+      .slice(1)
+      .map((p) => (p.includes("@") ? p : path.resolve(p)));
+    if (!source || !target) {
+      return report.error("missing source and/or target");
+    }
+
+    const ignoreDotFiles = !args.includes("--dot");
+    const ignoreNodeModules = !args.includes("--node_modules");
+
+    const ignore = [];
+    if (ignoreDotFiles) {
+      ignore.push("**/.*");
+    }
+    if (ignoreNodeModules) {
+      ignore.push("**/node_modules/**");
+    }
+
+    let syncing = false;
+    const sync = async () => {
+      return await $`rsync --exclude ${
+        ignoreDotFiles ? "**/.*" : "_nonex_"
+      } --exclude ${
+        ignoreNodeModules ? "**/node_modules/**" : "_nonex_"
+      } -ah ${source} ${target}`;
+    };
+
+    chokidar
+      .watch(source, {
+        ignored: ignore,
+        ignoreInitial: true,
+      })
+      .on("all", (event, path) => {
+        report.info(`${event} ${path}`);
+        sync();
+      })
+      .on("ready", () => {
+        report.info(`📦 ${source} -> ${target}`);
+        sync();
+      });
+  }
 };

@@ -1,10 +1,11 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "",
   "dependencies": {
     "arpjs": "^1.2.0",
+    "chokidar": "^3.5.3",
     "colors": "^1.4.0",
     "dns-zonefile": "^0.3.0",
     "inquirer": "^9.1.0",
