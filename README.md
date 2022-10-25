@@ -116,6 +116,15 @@ By default `dev lan scan` groups the devices by vendor.
 
 - `lan.scan.lookup.timeout` (default: `3000`ms) the default timeout for reverse mDNS lookup and MAC address vendor check.
 
+### `dev lan sync [local] [remote]` (experimental)
+
+Syncs a local folder on a remote folder with `rsync`. It will watch for changes and sync them automatically.
+
+#### arguments
+
+- `--dot` force `rsync` to sync dot files.
+- `--node_modules` force `rsync` to sync `node_modules` folder.
+
 ### `dev ip [ip address]`
 
 Get information about an IP address. If no IP address is provided, it'll use the current IP address.
