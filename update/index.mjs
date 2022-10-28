@@ -2,11 +2,12 @@ import "colors";
 
 import fetch from "node-fetch";
 import fs from "fs";
-import { $, question } from "zx";
+import { $ } from "zx";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { spinner } from "../utils/spinner.mjs";
 import report from "yurnalist";
+import yn from "yn";
 
 $.verbose = false;
 
@@ -36,18 +37,20 @@ export const run = async ({ source }) => {
 
     report.success(`found version ${version}`);
 
-    if (version === currentVersion) {
+    if (version !== currentVersion) {
       report.success(
         `You are using the latest version (${version.bold}) of dev-cli.`.green
       );
       return;
     }
 
-    const response = await report.question(
-      `update available. update ${currentVersion.green} to ${version.green}? (y/n)`
+    const runUpdate = yn(
+      await report.question(
+        `update available. update ${currentVersion.green} to ${version.green}? (y/n)`
+      )
     );
 
-    if (["y", "yes"].includes(response.toLocaleLowerCase())) {
+    if (runUpdate) {
       report.info(`updating to ${version.bold}`);
       report.command(`npm install -g ${PACKAGE}`);
 

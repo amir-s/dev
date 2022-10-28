@@ -174,7 +174,6 @@ dev shell use prod
 - [ ] Run project specific commands, reading scripts from `package.json` or some sort of custom scripts file like `.dev.json`, or a `dev` section in package.json.
 - [ ] Make color of the output lines more consistent.
 - [ ] Use [terminal-link](https://github.com/sindresorhus/terminal-link) for links in the terminal.
-- [ ] Use [yn](https://github.com/sindresorhus/yn) to parse yes/no responses.
 - [ ] Integrate with [insight](https://github.com/yeoman/insight) for telemetry.
 - [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
 - [ ] Periodically check for updates and print "update available" messages, with options to suppress it for a version or forever.
