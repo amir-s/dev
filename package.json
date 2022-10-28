@@ -1,7 +1,7 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "",
   "dependencies": {
     "arpjs": "^1.2.0",
@@ -13,6 +13,7 @@
     "open": "^8.4.0",
     "semver": "^7.3.8",
     "sudo-block": "^4.0.0",
+    "yn": "^5.0.0",
     "yurnalist": "^2.1.0",
     "zx": "^7.1.1"
   },

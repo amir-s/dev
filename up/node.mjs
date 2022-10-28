@@ -2,6 +2,8 @@ import fs from "fs";
 import { $ } from "zx";
 import report from "yurnalist";
 import semver from "semver";
+import yn from "yn";
+
 import { spinner } from "../utils/spinner.mjs";
 
 const isInstalled = async (name) => {
@@ -26,13 +28,11 @@ const checkVersion = async () => {
       }, but you have ${installedVersion.green}`
     );
 
-    const install = await report.question(
-      `install the dependencies anyway? (y/n)`
+    const install = yn(
+      await report.question(`install the dependencies anyway? (y/n)`)
     );
 
-    if (["y", "yes"].includes(install.toLocaleLowerCase())) return true;
-
-    return false;
+    return install;
   } catch (e) {
     report.error("executable node not found.");
     report.error(e.stderr);

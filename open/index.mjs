@@ -5,6 +5,7 @@ import { $ } from "zx";
 import path from "path";
 import open from "open";
 import report from "yurnalist";
+import yn from "yn";
 
 import { spinner } from "../utils/spinner.mjs";
 import * as help from "./help.mjs";
@@ -75,11 +76,13 @@ export const run = async ({ args }) => {
 
     if (!(await remoteExists(branch))) {
       report.info(`branch "${branch.bold}" does not exist on remote.`);
-      const push = await report.question(
-        `do you want to push this branch on remote? (y/n)`
+      const push = yn(
+        await report.question(
+          `do you want to push this branch on remote? (y/n)`
+        )
       );
 
-      if (["y", "yes"].includes(push.toLocaleLowerCase())) {
+      if (push) {
         await spinner(`pushing ${branch} to origin`, async () => {
           await $`git push origin ${branch}`;
         });
