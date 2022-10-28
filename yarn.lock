@@ -169,7 +169,7 @@ chalk@^2.4.2:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.1.0:
+chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -565,7 +565,7 @@ is-ci@^2.0.0:
   dependencies:
     ci-info "^2.0.0"
 
-is-docker@^2.0.0, is-docker@^2.1.1:
+is-docker@^2.0.0, is-docker@^2.1.1, is-docker@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
@@ -596,6 +596,11 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+
+is-root@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-root/-/is-root-3.0.0.tgz#ec4822f88e0b5af0731bd6da5122fc993d83a61e"
+  integrity sha512-C13bL54yQdgniduW8KFe81ttgQINcwMgil/zyNuDzr/xjIyDMkcvcc9dON62RH9VBAHOI7le+lTo/U3PY3irwg==
 
 is-unicode-supported@^1.1.0, is-unicode-supported@^1.2.0:
   version "1.2.0"
@@ -933,6 +938,15 @@ strip-ansi@^7.0.1:
   integrity sha512-cXNxvT8dFNRVfhVME3JAe98mkXDYN2O1l7jmcwMnOslDeESg1rF/OZMtK0nRAhiari1unG5cD4jG3rapUAkLbw==
   dependencies:
     ansi-regex "^6.0.1"
+
+sudo-block@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/sudo-block/-/sudo-block-4.0.0.tgz#1674c5c26a6974a0307afa7b7b228116d8d493a1"
+  integrity sha512-bjCE4CcLPEX7K9aCOc9Z4iyNmi1bgEcjS11DU20IbhjxiY2CHwxP7Dy+JlXlGHRq47+wmVr8zmixfELWq+hKBQ==
+  dependencies:
+    chalk "^4.1.1"
+    is-docker "^2.2.1"
+    is-root "^3.0.0"
 
 supports-color@^5.3.0:
   version "5.5.0"

@@ -4,6 +4,8 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
+import sudoBlock from "sudo-block";
+
 import { load } from "./config/index.mjs";
 import { stringCloseness } from "./internals/index.mjs";
 import { list as getContextualCommands } from "./contextual/list.mjs";
@@ -83,7 +85,19 @@ const findModule = (name) => {
   return null;
 };
 
+const checkForSudo = () => {
+  sudoBlock(
+    `\n${
+      "You are running `dev` with sudo. This is not recommended".red.bold
+    }.\nIf need this, please provide feedback at ${
+      "https://github.com/amir-s/dev/issues/new".blue
+    } so we can improve the experience.\n`
+  );
+};
+
 const execute = async () => {
+  checkForSudo();
+
   const args = process.argv.slice(2);
 
   let module = null;
