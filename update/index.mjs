@@ -37,7 +37,7 @@ export const run = async ({ source }) => {
 
     report.success(`found version ${version}`);
 
-    if (version !== currentVersion) {
+    if (version === currentVersion) {
       report.success(
         `You are using the latest version (${version.bold}) of dev-cli.`.green
       );
