@@ -178,3 +178,4 @@ dev shell use prod
 - [ ] Use [omelette](https://github.com/f/omelette) for autocomplete
 - [ ] Periodically check for updates and print "update available" messages, with options to suppress it for a version or forever.
 - [ ] Make the website https://amir-s.github.io/dev better! Include examples, configuration and help.
+- [ ] Make `dev <contextual-command>` work with interactive commands like `ssh`.
