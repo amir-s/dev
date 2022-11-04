@@ -24,7 +24,7 @@ export const SHELLS = [
   {
     name: "fish",
     path: "/bin/fish",
-    profile: ".config/fish/config.fish",
+    profile: ".config/fish/conf.d/dev.fish",
   },
 ];
 
@@ -103,23 +103,39 @@ export const run = async ({ config, writeConfig, args, source }) => {
       return;
     }
 
-    if (!fs.existsSync(shellProfile)) {
-      report.error(`file "${shellProfile}" does not exist.`);
-      return;
-    }
-
     const installCommand = `eval "$(dev-cli shell init ${shell.name})"`;
 
-    const script = fs.readFileSync(shellProfile, "utf8");
-    if (script.includes(installCommand)) {
-      report.success(
-        `command \`${installCommand}\` already exists in "${shellProfile}".`
-          .yellow
-      );
-      return;
+    let script = "";
+    if (shell.name == "fish") {
+      if (fs.existsSync(shellProfile)) {
+        script += fs.readFileSync(shellProfile, "utf8");
+        if (script.includes(installCommand)) {
+          report.success(
+            `command \`${installCommand}\` already exists in "${shellProfile}".`
+              .yellow
+          );
+          return;
+        }
+      }
+    }
+    else {
+      if (!fs.existsSync(shellProfile)) {
+        report.error(`file "${shellProfile}" does not exist.`);
+        return;
+      }
+
+      script += fs.readFileSync(shellProfile, "utf8");
+      if (script.includes(installCommand)) {
+        report.success(
+          `command \`${installCommand}\` already exists in "${shellProfile}".`
+            .yellow
+        );
+        return;
+      }
     }
 
-    const newScript = `${script}\n${installCommand}\n`;
+    if (script) script += "\n";
+    const newScript = `${script}${installCommand}\n`;
 
     fs.writeFileSync(shellProfile, newScript);
 
