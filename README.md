@@ -60,6 +60,9 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
 - `clone.tags` (default: `true`)
   If set to `false` then `--no-tags` will be provided to `git clone`.
 
+### `dev open`
+Opens the remote URL if the current working directory is a git repository.
+
 ### `dev open pr`
 
 Opens the default browser to view or create the PR for the current git branch. If the current branch is not on remote yet, `dev` asks you if you want to push it automatically.

@@ -45,26 +45,24 @@ const getRemoteUrl = async () => {
 };
 
 export const run = async ({ args }) => {
-  if (args.length === 0) {
-    help.generic();
+  const repoPath = path.resolve(".git");
+  if (!fs.existsSync(repoPath)) {
+    report.error("you are not in a git repository.");
+    report.error(`${repoPath} does not exist`.gray);
     return;
   }
 
   const command = args[0];
 
+  const remoteUrl = await getRemoteUrl();
+  const newPath = args[1] === "--new" ? "/new" : "";
+
   if (!command) {
-    help.generic();
+    open(`${remoteUrl}`);
     return;
   }
 
   if (command === "pr" || command === "p") {
-    const repoPath = path.resolve(".git");
-    if (!fs.existsSync(repoPath)) {
-      report.error("you are not in a git repository.");
-      report.error(`${repoPath} does not exist`.gray);
-      return;
-    }
-
     const branch = (await $`git branch --show-current`).toString().trim();
 
     if (PROTECTED_BRANCHES.includes(branch.toLowerCase())) {
@@ -92,9 +90,6 @@ export const run = async ({ args }) => {
         return;
       }
     }
-
-    const remoteUrl = await getRemoteUrl();
-    const newPath = args[1] === "--new" ? "/new" : "";
 
     open(`${remoteUrl}/pull${newPath}/${branch}`);
     return;
