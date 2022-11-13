@@ -107,9 +107,6 @@ export const run = async ({ config, args, cd }) => {
   const path = config("clone.path", "<home>/src/<org>/<user>/<repo>");
   const changeDirectory = config("clone.cd", true);
   const ssh = config("clone.ssh", true);
-  const singleBranch = config("clone.branch.single", false);
-  const depth = config("clone.depth", null);
-  const tags = config("clone.tags", true);
 
   if (args.length === 0) {
     help.generic();
@@ -133,22 +130,22 @@ export const run = async ({ config, args, cd }) => {
 
   if (fs.existsSync(clonePath)) {
     report.warn(`clone path "${clonePath}" already exists.`);
-    report.command(`cd ${clonePath}`);
     if (changeDirectory) {
+      report.command(`cd ${clonePath}`);
       await cd(clonePath);
     }
     return;
   }
 
-  const singleBranchArg = singleBranch ? "--single-branch" : "";
-  const depthArg = depth !== null ? `--depth ${depth}` : "";
-  const tagsArg = tags ? "" : "--no-tags";
-
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
+      const forwardedArgs = args.slice(1);
+      report.command(
+        `git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`
+      );
       return await nothrow(
-        $`git clone ${depthArg} ${singleBranchArg} ${tagsArg} ${remote} ${clonePath}`
+        $`git clone ${forwardedArgs} ${remote} ${clonePath}`
       );
     }
   );

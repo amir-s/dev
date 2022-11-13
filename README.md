@@ -36,9 +36,10 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
 
 ## Commands
 
-### `dev clone <repo>`
+### `dev clone <repo> [forward args]`
 
 `dev clone <repo>` clones a git repo locally into `~/src/<org>/<user>/<repo>` and then `cd`s into that said directory (only if shell-module is installed).
+Any other provided arguments are forwarded to `git clone` command. For example to clone shallowly and only the single branch, you can run `dev clone amir-s/dev --depth 1 --single-branch`.
 
 `<repo>` can be either full git URL or just the username and repo name:
 
@@ -53,14 +54,9 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
   If `dev` needs to `cd` into the cloned project after it is done.
 - `clone.ssh` (default: `true`)
   If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
-- `clone.branch.single` (default: `false`)
-  If `--single-branch` should be passed to `git clone`.
-- `clone.depth` (default: `null`)
-  If `--depth <number>` should be passed to `git clone`. Set the config to the `<number>` you desire.
-- `clone.tags` (default: `true`)
-  If set to `false` then `--no-tags` will be provided to `git clone`.
 
 ### `dev open`
+
 Opens the remote URL if the current working directory is a git repository.
 
 ### `dev open pr`
