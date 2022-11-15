@@ -98,6 +98,10 @@ List all the contextual commands.
 
 Run `dev ps` (fuzzy matched to `projects`) to list all the cloned repos you have on your local machine.
 
+#### arguments
+
+- `-p` to show each project's path.
+
 ### `dev lan scan`
 
 Scan your local network for active devices and get a list of IP addresses, MAC addresses and their vendor. Plus, it does a reverse mDNS lookup on the IP addresses and shows the local domain if there is any.
