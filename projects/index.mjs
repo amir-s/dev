@@ -11,7 +11,7 @@ const group = (repos, key) => {
   return groups;
 };
 
-export const run = async ({ config }) => {
+export const run = async ({ args, config }) => {
   const path = config("clone.path", "<home>/src/<org>/<user>/<repo>");
 
   const clonePath = path
@@ -25,6 +25,8 @@ export const run = async ({ config }) => {
     .replace("<org>", "(?<org>[\\w.\\-]+)")
     .replace("<user>", "(?<user>[\\w.\\-]+)")
     .replace("<repo>", "(?<repo>[\\w.\\-]+)");
+
+  const showPaths = args.includes("-p");
 
   const paths = await globby([clonePath], {
     onlyDirectories: true,
@@ -41,6 +43,9 @@ export const run = async ({ config }) => {
         org,
         user,
         repo,
+        friendlyPath: path.startsWith(os.homedir())
+          ? `~${path.slice(os.homedir().length)}`
+          : path,
       };
     })
     .filter((x) => x);
@@ -55,7 +60,9 @@ export const run = async ({ config }) => {
       output += `   ${arrow} ${user.green}\n`;
       const repos = users[user];
       repos.forEach((repo) => {
-        output += `     ${arrow} ${repo.repo.white}\n`;
+        output += `     ${arrow} ${repo.repo.white}`;
+        if (showPaths) output += ` ${repo.friendlyPath.gray}`;
+        output += "\n";
       });
       output += "\n";
     });
