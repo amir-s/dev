@@ -101,6 +101,8 @@ Run `dev ps` (fuzzy matched to `projects`) to list all the cloned repos you have
 #### arguments
 
 - `-p` to show each project's path.
+- `-u <user>`/`--user <user>` to filter projects by user.
+- `-o <org>`/`--org <org>` to filter projects by organization.
 
 ### `dev lan scan`
 

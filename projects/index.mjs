@@ -28,6 +28,15 @@ export const run = async ({ args, config }) => {
 
   const showPaths = args.includes("-p");
 
+  const userFilterIndex = args.findIndex(
+    (arg) => arg === "-u" || arg === "--user"
+  );
+  const orgFilterIndex = args.findIndex(
+    (arg) => arg === "-o" || arg === "--org"
+  );
+  const userFilter = userFilterIndex < 0 ? null : args[userFilterIndex + 1];
+  const orgFilter = orgFilterIndex < 0 ? null : args[orgFilterIndex + 1];
+
   const paths = await globby([clonePath], {
     onlyDirectories: true,
     onlyFiles: false,
@@ -48,7 +57,12 @@ export const run = async ({ args, config }) => {
           : path,
       };
     })
-    .filter((x) => x);
+    .filter((x) => {
+      if (x === null) return false;
+      if (orgFilter && x.org !== orgFilter) return false;
+      if (userFilter && x.user !== userFilter) return false;
+      return true;
+    });
 
   let output = "";
   const groups = group(allRepos, "org");
