@@ -9,6 +9,24 @@ const shellModuleInstalled = () => {
   return !!process.env["DEV_CLI_BIN_PATH"];
 };
 
+export const findMatch = (allRepos, requestedString) => {
+  return allRepos.reduce(
+    (candidate, repo) => {
+      const closeness = stringCloseness(
+        `${repo.user}${repo.repo}`.toLocaleLowerCase(),
+        requestedString
+      );
+
+      if (closeness > candidate.closeness) return { closeness, repo };
+      return candidate;
+    },
+    {
+      closeness: -Infinity,
+      repo: null,
+    }
+  );
+};
+
 export const run = async ({ config, args, cd }) => {
   if (!shellModuleInstalled()) {
     report.error("shell module is not installed.");
@@ -57,20 +75,8 @@ export const run = async ({ config, args, cd }) => {
     .filter((x) => x);
 
   const requestedString = args.join("").toLocaleLowerCase();
-  const matched = allRepos.reduce(
-    (candidate, repo) => {
-      const closeness = stringCloseness(
-        `${repo.user}${repo.repo}`.toLocaleLowerCase(),
-        requestedString
-      );
-      if (closeness > candidate.closeness) return { closeness, repo };
-      return candidate;
-    },
-    {
-      closeness: -Infinity,
-      repo: null,
-    }
-  );
+
+  const matched = findMatch(allRepos, requestedString);
 
   if (!matched.repo) {
     report.error(`no repo found for ${args.join(" ")}`);
