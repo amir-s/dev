@@ -2,21 +2,31 @@ import path from "path";
 import report from "yurnalist";
 
 const tests = [];
-
+let testNamePrefix = "";
 function test(name, fn) {
-  tests.push({ name, fn });
+  tests.push({
+    prefix: testNamePrefix,
+    name,
+    fn,
+  });
+}
+
+function describe(name, fn) {
+  testNamePrefix = name;
+  fn();
+  testNamePrefix = "";
 }
 
 const failed = [];
 
 async function run() {
-  for (const { name, fn } of tests) {
+  for (const { prefix, name, fn } of tests) {
     try {
       await fn();
-      report.success(`${name} ✅`);
+      report.success(`${prefix ? `${prefix.blue} ` : ""}${name} ✅`);
     } catch (e) {
-      failed.push({ name, e });
-      report.error(`${name} 💥`);
+      failed.push({ prefix, name, e });
+      report.error(`${prefix ? `${prefix.blue} ` : ""}${name} 💥`);
     }
   }
 }
@@ -24,6 +34,7 @@ async function run() {
 const files = process.argv.slice(2);
 
 global.test = test;
+global.describe = describe;
 
 async function runFiles() {
   for (const file of files) {
@@ -37,8 +48,8 @@ runFiles()
     if (failed.length > 0) {
       console.log("\n\n\n\n");
       report.info(`${failed.length} test(s) failed:\n`);
-      failed.forEach(({ name, e }) => {
-        report.error(`${name}`);
+      failed.forEach(({ prefix, name, e }) => {
+        report.error(`${prefix ? `${prefix.blue} ` : ""}${name}`);
         report.error(e);
         console.log("\n");
       });
