@@ -12,10 +12,21 @@ const shellModuleInstalled = () => {
 export const findMatch = (allRepos, requestedString) => {
   return allRepos.reduce(
     (candidate, repo) => {
-      const closeness = stringCloseness(
+      // calculate closeness for both full path and repo name
+      // we get the maximum of the two and add 1 if both are > 0 to give a slight preference
+      // to strings that match both the full path and the repo name
+
+      const fullPathCloseness = stringCloseness(
         `${repo.user}${repo.repo}`.toLocaleLowerCase(),
         requestedString
       );
+      const repoNameCloseness = stringCloseness(
+        `${repo.repo}`.toLocaleLowerCase(),
+        requestedString
+      );
+
+      let closeness = Math.max(fullPathCloseness, repoNameCloseness);
+      if (fullPathCloseness > 0 && repoNameCloseness > 0) closeness += 1;
 
       if (closeness > candidate.closeness) return { closeness, repo };
       return candidate;
