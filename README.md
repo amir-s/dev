@@ -154,7 +154,7 @@ You can also read the config file with `dev config read`.
 
 Run `dev update` to check for updates. You can select to automatially apply the updates, or do it manually with `npm install amir-s/dev -g`.
 
-## Development
+## Development ![GitHub CI](https://github.com/amir-s/dev/actions/workflows/run_tests.yml/badge.svg)
 
 You can clone this repo (using `dev` itself, of course) and make changes.
 Assuming you have installed the [shell module](https://github.com/amir-s/dev/#install), you can swap out the production version with your local version of `dev` by `cd`ing into your local copy and running:
