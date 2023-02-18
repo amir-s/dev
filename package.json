@@ -21,6 +21,9 @@
     "dev-cli": "./index.mjs",
     "dev": "./index.mjs"
   },
+  "engines": {
+    "node": ">= 17.0.0"
+  },
   "scripts": {
     "test": "node test.mjs */tests/*.test.mjs"
   },
