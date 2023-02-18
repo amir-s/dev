@@ -51,25 +51,28 @@ const tests = {
     remote: "https://git.somewhere.co.uk/one-1/~two/Three/user/repo",
   },
 };
-Object.keys(tests).forEach((url) => {
-  const testcase = tests[url];
-  test(`parseArgument ${url}`, () => {
-    const { org, user, repo, remote } = parseArgument(url, { ssh: true });
-    assert.deepEqual({ org, user, repo, remote }, testcase);
-  });
-});
 
-test("parseArgument with ssh=false", () => {
-  const { org, user, repo, remote } = parseArgument("amir-s/dev.git", {
-    ssh: false,
+describe("parseArgument", () => {
+  Object.keys(tests).forEach((url) => {
+    const testcase = tests[url];
+    test(url, () => {
+      const { org, user, repo, remote } = parseArgument(url, { ssh: true });
+      assert.deepEqual({ org, user, repo, remote }, testcase);
+    });
   });
-  assert.deepEqual(
-    { org, user, repo, remote },
-    {
-      org: "github.com",
-      user: "amir-s",
-      repo: "dev",
-      remote: "https://github.com/amir-s/dev.git",
-    }
-  );
+
+  test("with ssh=false", () => {
+    const { org, user, repo, remote } = parseArgument("amir-s/dev.git", {
+      ssh: false,
+    });
+    assert.deepEqual(
+      { org, user, repo, remote },
+      {
+        org: "github.com",
+        user: "amir-s",
+        repo: "dev",
+        remote: "https://github.com/amir-s/dev.git",
+      }
+    );
+  });
 });

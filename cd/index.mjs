@@ -9,6 +9,35 @@ const shellModuleInstalled = () => {
   return !!process.env["DEV_CLI_BIN_PATH"];
 };
 
+export const findMatch = (allRepos, requestedString) => {
+  return allRepos.reduce(
+    (candidate, repo) => {
+      // calculate closeness for both full path and repo name
+      // we get the maximum of the two and add 1 if both are > 0 to give a slight preference
+      // to strings that match both the full path and the repo name
+
+      const fullPathCloseness = stringCloseness(
+        `${repo.user}${repo.repo}`.toLocaleLowerCase(),
+        requestedString
+      );
+      const repoNameCloseness = stringCloseness(
+        `${repo.repo}`.toLocaleLowerCase(),
+        requestedString
+      );
+
+      let closeness = Math.max(fullPathCloseness, repoNameCloseness);
+      if (fullPathCloseness > 0 && repoNameCloseness > 0) closeness += 1;
+
+      if (closeness > candidate.closeness) return { closeness, repo };
+      return candidate;
+    },
+    {
+      closeness: -Infinity,
+      repo: null,
+    }
+  );
+};
+
 export const run = async ({ config, args, cd }) => {
   if (!shellModuleInstalled()) {
     report.error("shell module is not installed.");
@@ -57,20 +86,8 @@ export const run = async ({ config, args, cd }) => {
     .filter((x) => x);
 
   const requestedString = args.join("").toLocaleLowerCase();
-  const matched = allRepos.reduce(
-    (candidate, repo) => {
-      const closeness = stringCloseness(
-        `${repo.user}${repo.repo}`.toLocaleLowerCase(),
-        requestedString
-      );
-      if (closeness > candidate.closeness) return { closeness, repo };
-      return candidate;
-    },
-    {
-      closeness: -Infinity,
-      repo: null,
-    }
-  );
+
+  const matched = findMatch(allRepos, requestedString);
 
   if (!matched.repo) {
     report.error(`no repo found for ${args.join(" ")}`);
