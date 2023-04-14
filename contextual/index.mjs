@@ -1,4 +1,4 @@
-import { $, nothrow } from "zx";
+import { $ } from "zx";
 
 $.verbose = true;
 
