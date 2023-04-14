@@ -1,8 +1,9 @@
 import os from "os";
 import fs from "fs";
-import { $, nothrow } from "zx";
+import { $ } from "zx";
 import report from "yurnalist";
 import { spinner } from "../utils/spinner.mjs";
+import { isKnownHost } from "../utils/knownhosts.mjs";
 
 $.verbose = false;
 
@@ -137,6 +138,14 @@ export const run = async ({ config, args, cd }) => {
     return;
   }
 
+  if (ssh && !isKnownHost(org)) {
+    report.warn(`using ssh but ${org} is not in the known hosts.`);
+    await spinner(`adding ${org} to known hosts`, async () => {
+      report.command(`ssh-keyscan ${org} >> ~/.ssh/known_hosts`);
+      await $`ssh-keyscan ${org} >> ~/.ssh/known_hosts`;
+    });
+  }
+
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
@@ -144,9 +153,7 @@ export const run = async ({ config, args, cd }) => {
       report.command(
         `git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`
       );
-      return await nothrow(
-        $`git clone ${forwardedArgs} ${remote} ${clonePath}`
-      );
+      return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`.nothrow();
     }
   );
 
