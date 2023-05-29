@@ -332,9 +332,9 @@ dir-glob@^3.0.1:
     path-type "^4.0.0"
 
 dns-zonefile@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/dns-zonefile/-/dns-zonefile-0.3.0.tgz#57d0870cfa2ea0dd7675dc72f6bb1a41d848d794"
-  integrity sha512-Dv6/ovxV+HjHQxtZNgUOisHacXzVrdF351fbRzdOF1MTyk9h6Tjd+bHkn/vLjzFx8HNRutra5Stm9FVWTuEoCg==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/dns-zonefile/-/dns-zonefile-0.3.2.tgz#52b5a3d5eff61b5d2818ab0aba98689feb9b31d6"
+  integrity sha512-dHeztCHUexop8cEfR5qsG9PFFH+cqBgtuxKRZc3p6LY2boAuPsO8rz6xAejJi74gbC8gsGE7neJpJ5n6NSe6rA==
 
 duplexer@~0.1.1:
   version "0.1.2"
