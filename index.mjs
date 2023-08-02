@@ -13,7 +13,7 @@ import { list as getContextualCommands } from "./contextual/list.mjs";
 import { SHELLS } from "./shell/index.mjs";
 
 const { config, writeConfig } = load();
-const modules = {
+export const modules = {
   config: {},
   default: { indirect: true },
   clone: {},
@@ -27,6 +27,7 @@ const modules = {
   contextual: { indirect: true },
   lan: {},
   ip: {},
+  help: {},
 };
 
 const writeToFD = async (fd, str) => {

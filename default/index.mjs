@@ -36,4 +36,9 @@ export const run = ({ config }) => {
   console.log(
     ` ${"You can check".gray} ${URL.white.underline} ${"to learn more.".gray}`
   );
+  console.log(
+    ` ${"You can also run".gray} ${"dev help".yellow} ${
+      "to see a summary of all the available commands.".gray
+    }`
+  );
 };
