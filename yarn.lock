@@ -179,7 +179,7 @@ chalk@^2.4.2:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -630,7 +630,7 @@ is-ci@^2.0.0:
   dependencies:
     ci-info "^2.0.0"
 
-is-docker@^2.0.0, is-docker@^2.2.1:
+is-docker@^2.0.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
@@ -1097,13 +1097,13 @@ strip-final-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/strip-final-newline/-/strip-final-newline-3.0.0.tgz#52894c313fbff318835280aed60ff71ebf12b8fd"
   integrity sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==
 
-sudo-block@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/sudo-block/-/sudo-block-4.0.0.tgz#1674c5c26a6974a0307afa7b7b228116d8d493a1"
-  integrity sha512-bjCE4CcLPEX7K9aCOc9Z4iyNmi1bgEcjS11DU20IbhjxiY2CHwxP7Dy+JlXlGHRq47+wmVr8zmixfELWq+hKBQ==
+sudo-block@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/sudo-block/-/sudo-block-5.0.0.tgz#4176f46140e6c3ace9adccf115e6e4e6ffadc7cd"
+  integrity sha512-G0WeSL7midyz10FMKtgjXOBZpv9ZM9y++zGideqHIZ+qrzB8wMrCzMxTJgREAY35zPfkqVZBxaYjzteO9H6iQw==
   dependencies:
-    chalk "^4.1.1"
-    is-docker "^2.2.1"
+    chalk "^5.3.0"
+    is-docker "^3.0.0"
     is-root "^3.0.0"
 
 supports-color@^5.3.0:
