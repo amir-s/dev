@@ -12,7 +12,7 @@
     "node-fetch": "^3.2.10",
     "open": "^9.0.0",
     "semver": "^7.3.8",
-    "sudo-block": "^4.0.0",
+    "sudo-block": "^5.0.0",
     "yn": "^5.0.0",
     "yurnalist": "^2.1.0",
     "zx": "^7.1.1"
