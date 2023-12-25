@@ -10,7 +10,7 @@
     "dns-zonefile": "^0.3.0",
     "inquirer": "^9.1.4",
     "node-fetch": "^3.2.10",
-    "open": "^9.0.0",
+    "open": "^10.0.1",
     "semver": "^7.3.8",
     "sudo-block": "^5.0.0",
     "yn": "^5.0.0",
