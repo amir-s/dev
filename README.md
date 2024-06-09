@@ -96,7 +96,7 @@ List all the contextual commands.
 
 ### `dev projects`
 
-Run `dev ps` (fuzzy matched to `projects`) to list all the cloned repos you have on your local machine.
+Run `dev ps [name]` (fuzzy matched to `projects`) to list all the cloned repos you have on your local machine. if `[name]` is provided, it'll filter the list by fuzzy matching the name of the project.
 
 #### arguments
 

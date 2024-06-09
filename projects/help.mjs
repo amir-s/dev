@@ -1,5 +1,6 @@
-export const cmd = "projects -p -u <user> -o <org>";
-export const description = "list all cloned repositories for a user or org";
+export const cmd = "projects [name] -p -u <user> -o <org>";
+export const description =
+  "search the name and list all cloned repositories for a user or org";
 
 export const help = (DEV) => ({
   description: [
@@ -9,12 +10,17 @@ export const help = (DEV) => ({
   ],
   commands: [
     {
-      cmd: "projects [-p] [-u <user> | --user <user>] [-o <org> | --org <org>]",
-      description: "list all cloned repositories for a user or org",
+      cmd: "projects [name] [-p] [-u <user> | --user <user>] [-o <org> | --org <org>]",
+      description:
+        "search the name and list all cloned repositories for a user or org",
       examples: [
         {
           cmd: "projects",
           description: "list all cloned repositories",
+        },
+        {
+          cmd: "projects rct",
+          description: "list all cloned repositories that fuzzy match to rct",
         },
         {
           cmd: "projects -p",
@@ -23,6 +29,11 @@ export const help = (DEV) => ({
         {
           cmd: "projects -u amir-s",
           description: "list all cloned repositories for user amir-s",
+        },
+        {
+          cmd: "projects nxt -u amir-s",
+          description:
+            "list all cloned repositories for user amir-s that fuzzy match to nxt",
         },
         {
           cmd: "projects -o github.com",
