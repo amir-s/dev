@@ -1,6 +1,7 @@
 import os from "os";
 import { globby } from "zx";
 import report from "yurnalist";
+import { calculateCloseness } from "../cd/index.mjs";
 
 const group = (repos, key) => {
   const groups = {};
@@ -37,6 +38,12 @@ export const run = async ({ args, config }) => {
   const userFilter = userFilterIndex < 0 ? null : args[userFilterIndex + 1];
   const orgFilter = orgFilterIndex < 0 ? null : args[orgFilterIndex + 1];
 
+  const searchIndex = args.findIndex(
+    (arg, i) =>
+      !arg.startsWith("-") && (i - 1 < 0 || !args[i - 1].startsWith("-"))
+  );
+  const search = searchIndex < 0 ? null : args[searchIndex];
+
   const paths = await globby([clonePath], {
     onlyDirectories: true,
     onlyFiles: false,
@@ -62,6 +69,19 @@ export const run = async ({ args, config }) => {
       if (orgFilter && x.org !== orgFilter) return false;
       if (userFilter && x.user !== userFilter) return false;
       return true;
+    })
+    .map((repo) => {
+      if (search) {
+        const closeness = calculateCloseness(repo, search);
+        return { ...repo, closeness };
+      }
+      return repo;
+    })
+    .filter((repo) => {
+      if (search) {
+        return repo.closeness > 0;
+      }
+      return true;
     });
 
   let output = "";
@@ -73,6 +93,12 @@ export const run = async ({ args, config }) => {
     Object.keys(users).forEach((user) => {
       output += `   ${arrow} ${user.green}\n`;
       const repos = users[user];
+      repos.sort((a, b) => {
+        if (a.closeness && b.closeness) {
+          return b.closeness - a.closeness;
+        }
+        return a.repo.localeCompare(b.repo);
+      });
       repos.forEach((repo) => {
         output += `     ${arrow} ${repo.repo.white}`;
         if (showPaths) output += ` ${repo.friendlyPath.gray}`;
