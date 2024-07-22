@@ -8,7 +8,7 @@
     "chokidar": "^3.5.3",
     "colors": "^1.4.0",
     "dns-zonefile": "^0.3.0",
-    "inquirer": "^9.1.4",
+    "inquirer": "^10.1.0",
     "node-fetch": "^3.2.10",
     "open": "^9.0.0",
     "semver": "^7.3.8",
