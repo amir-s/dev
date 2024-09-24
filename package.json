@@ -1,7 +1,7 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "description": "",
   "dependencies": {
     "arpjs": "^1.2.0",
@@ -22,7 +22,7 @@
     "dev": "./index.mjs"
   },
   "engines": {
-    "node": ">= 17.0.0"
+    "node": ">= 18.0.0"
   },
   "scripts": {
     "test": "node test.mjs */tests/*.test.mjs"
