@@ -22,7 +22,7 @@
     "dev": "./index.mjs"
   },
   "engines": {
-    "node": ">= 17.0.0"
+    "node": ">= 18.0.0"
   },
   "scripts": {
     "test": "node test.mjs */tests/*.test.mjs"
