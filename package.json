@@ -15,7 +15,7 @@
     "sudo-block": "^5.0.0",
     "yn": "^5.0.0",
     "yurnalist": "^2.1.0",
-    "zx": "^7.1.1"
+    "zx": "^8.1.9"
   },
   "bin": {
     "dev-cli": "./index.mjs",
