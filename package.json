@@ -1,13 +1,14 @@
 {
   "name": "dev",
   "type": "module",
-  "version": "0.0.53",
+  "version": "0.0.54",
   "description": "",
   "dependencies": {
-    "arpjs": "^1.2.0",
+    "@network-utils/vendor-lookup": "^1.0.8",
     "chokidar": "^3.5.3",
     "colors": "^1.4.0",
     "dns-zonefile": "^0.3.0",
+    "esrun": "^3.2.26",
     "inquirer": "^11.0.2",
     "node-fetch": "^3.2.10",
     "open": "^10.1.0",
@@ -15,19 +16,19 @@
     "sudo-block": "^5.0.0",
     "yn": "^5.0.0",
     "yurnalist": "^2.1.0",
-    "zx": "^7.1.1"
+    "zx": "^7.1.1",
+    "tsx": "^4.19.2"
   },
   "bin": {
-    "dev-cli": "./index.mjs",
-    "dev": "./index.mjs"
+    "dev-cli": "./main.ts",
+    "dev": "./main.ts"
   },
   "engines": {
     "node": ">= 18.0.0"
   },
   "scripts": {
-    "test": "node test.mjs */tests/*.test.mjs"
+    "test": "tsx test.ts */tests/*.test.ts"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amir-s/dev.git"
