@@ -40,14 +40,6 @@ export const modules = {
 
 const { config, writeConfig } = load();
 
-const writeToFD = (fd: number, str: string) => {
-  return new Promise((resolve) => {
-    fs.write(fd, str, () => {
-      resolve(undefined);
-    });
-  });
-};
-
 const shellExec = (cmd: string): unknown => {
   const { DEV_CLI_CMD_EXEC_FILE } = process.env;
   const command = `${cmd}\n`;
@@ -56,7 +48,11 @@ const shellExec = (cmd: string): unknown => {
     return fs.appendFileSync(DEV_CLI_CMD_EXEC_FILE, command);
   }
 
-  return writeToFD(9, command);
+  console.log(
+    "DEV_CLI_CMD_EXEC_FILE has no value, possibly because shell module is not installed"
+  );
+
+  return null;
 };
 
 const cd = (path: string): unknown => shellExec(`cd:${path}`);
