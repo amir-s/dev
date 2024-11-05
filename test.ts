@@ -43,9 +43,7 @@ async function run() {
 const files = process.argv.slice(2);
 
 declare global {
-  // deno-lint-ignore no-var
   var test: (name: string, fn: () => unknown) => void;
-  // deno-lint-ignore no-var
   var describe: (name: string, fn: () => void) => void;
 }
 globalThis.test = test;
