@@ -119,7 +119,7 @@ By default `dev lan scan` groups the devices by vendor.
 
 #### configs
 
-- `lan.scan.lookup.timeout` (default: `3000`ms) the default timeout for reverse mDNS lookup and MAC address vendor check.
+- `lan.scan.lookup.timeout` (default: `3000`ms) the default timeout for reverse mDNS lookup.
 
 ### `dev lan sync [local] [remote]` (experimental)
 
