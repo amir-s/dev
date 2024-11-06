@@ -1,6 +1,7 @@
 node_modules/
 .next/
 out/
+dist/
 logs
 *.log
 npm-debug.log*

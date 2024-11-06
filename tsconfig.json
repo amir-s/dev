@@ -4,10 +4,10 @@
     "module": "es2022",
     "allowJs": true,
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "strict": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "lib"]
 }
