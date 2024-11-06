@@ -9,7 +9,7 @@
     "colors": "^1.4.0",
     "dns-zonefile": "^0.3.0",
     "esrun": "^3.2.26",
-    "inquirer": "^11.0.2",
+    "inquirer": "^12.0.0",
     "node-fetch": "^3.2.10",
     "open": "^10.1.0",
     "semver": "^7.3.8",
