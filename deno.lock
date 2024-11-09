@@ -2,6 +2,7 @@
   "version": "4",
   "specifiers": {
     "npm:@network-utils/vendor-lookup@^1.0.8": "1.0.8",
+    "npm:@types/node@*": "22.5.4",
     "npm:chokidar@^3.5.3": "3.6.0",
     "npm:colors@^1.4.0": "1.4.0",
     "npm:dns-zonefile@0.3": "0.3.2",
