@@ -178,6 +178,8 @@ Run `dev update` to check for updates. You can select to automatially apply the 
 
 ## Development ![GitHub CI](https://github.com/amir-s/dev/actions/workflows/run_tests.yml/badge.svg)
 
+Install deno 2.x first if you haven't already.
+
 You can clone this repo (using `dev` itself, of course) and make changes.
 
 Assuming you have installed the [shell module](https://github.com/amir-s/dev/#install), you can swap out the production version with your local version of `dev` by `cd`ing into your local copy and running:

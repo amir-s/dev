@@ -1,9 +1,9 @@
 {
   "name": "@amir-s/dev",
   "exports": "./main.ts",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "tasks": {
-    "test": "deno run -A test.ts */tests/*.test.ts",
+    "test": "deno run -A test.ts modules/*/tests/*.test.ts",
     "release": "deno run -A release.ts"
   },
   "imports": {
