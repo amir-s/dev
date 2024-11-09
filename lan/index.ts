@@ -1,7 +1,7 @@
 import { $ } from "zx";
 import report from "yurnalist";
-import * as help from "./help";
-import { spinner } from "../utils/spinner";
+import * as help from "./help.ts";
+import { spinner } from "../utils/spinner.ts";
 import { Writable } from "stream";
 import zonefile from "dns-zonefile";
 import { isIPv4 } from "net";
@@ -9,7 +9,7 @@ import chokidar from "chokidar";
 import { toVendor } from "@network-utils/vendor-lookup";
 import path from "path";
 import process from "process";
-import { ModuleRunOptions } from "../main";
+import type { ModuleRunOptions } from "../main.ts";
 
 interface Server {
   name: string;

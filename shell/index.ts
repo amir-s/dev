@@ -1,16 +1,13 @@
 import os from "os";
-import path, { dirname } from "path";
+import path from "path";
 import report from "yurnalist";
 import inquirer from "inquirer";
 import fs from "fs";
 import process from "process";
-import * as help from "./help";
-import type { ModuleRunOptions } from "../main";
-
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import * as help from "./help.ts";
+import type { ModuleRunOptions } from "../main.ts";
+import { script as scriptSH } from "./sh.ts";
+import { script as scriptFISH } from "./fish.ts";
 
 export const SHELLS = [
   {
@@ -81,16 +78,14 @@ export const run = async ({
     const binaryPath: string = config("shell.binary.path", "dev-cli")!;
 
     if (shellType === "bash" || shellType === "zsh") {
-      const script = fs
-        .readFileSync(path.join(__dirname, "./install.sh"), "utf8")
+      const script = scriptSH
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
         .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
       console.log(script);
     } else if (shellType === "fish") {
-      const script = fs
-        .readFileSync(path.join(__dirname, "./install.fish"), "utf8")
+      const script = scriptFISH
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
         .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);

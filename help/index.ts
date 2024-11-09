@@ -5,8 +5,8 @@ import { fileURLToPath } from "node:url";
 import "colors";
 
 import path, { dirname } from "path";
-import { modules, type ModuleRunOptions } from "../main";
-import type { HelpDoc } from "./help";
+import { modules, type ModuleRunOptions } from "../main.ts";
+import type { HelpDoc } from "./help.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

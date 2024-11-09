@@ -2,10 +2,10 @@ import os from "os";
 import { globby } from "zx";
 import report from "yurnalist";
 import process from "process";
-import { stringCloseness } from "../internals/index";
+import { stringCloseness } from "../internals/index.ts";
 
-import * as help from "./help";
-import type { ModuleRunOptions } from "../main";
+import * as help from "./help.ts";
+import type { ModuleRunOptions } from "../main.ts";
 
 function notEmpty<TValue>(value: TValue): value is NonNullable<TValue> {
   return value !== null && value !== undefined;

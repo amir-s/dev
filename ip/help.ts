@@ -1,8 +1,10 @@
+import type { HelpDocFN } from "../help/help.ts";
+
 export const cmd = "ip <ip>";
 export const description =
   "show information about an IP address or the current IP address";
 
-export const help = (DEV) => ({
+export const help: HelpDocFN = () => ({
   description: [
     `get information about your own IP address or any other IP address.`,
   ],

@@ -1,6 +1,6 @@
 import { $ } from "zx";
 import report from "yurnalist";
-import { commands } from "../contextual/list";
+import { commands } from "../contextual/list.ts";
 
 $.verbose = true;
 

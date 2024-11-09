@@ -7,11 +7,11 @@ import process from "process";
 
 import sudoBlock from "sudo-block";
 
-import { load, type ConfigFN, type WriteConfigFN } from "./config/index";
-import { stringCloseness } from "./internals/index";
-import { list as getContextualCommands } from "./contextual/list";
+import { load, type ConfigFN, type WriteConfigFN } from "./config/index.ts";
+import { stringCloseness } from "./internals/index.ts";
+import { list as getContextualCommands } from "./contextual/list.ts";
 
-import { SHELLS } from "./shell/index";
+import { SHELLS } from "./shell/index.ts";
 
 export interface ModuleRunOptions {
   args: string[];

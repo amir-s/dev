@@ -1,5 +1,5 @@
 import "colors";
-import { HelpDocFN } from "../help/help";
+import type { HelpDocFN } from "../help/help.ts";
 
 export const cmd = ["open", "open pr"];
 export const description =

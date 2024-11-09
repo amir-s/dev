@@ -3,9 +3,9 @@ import { $ } from "zx";
 import path from "path";
 import report from "yurnalist";
 
-import { installNodeDependencies } from "./node";
-import { installRubyDependencies } from "./ruby";
-import { installPythonDependencies } from "./python";
+import { installNodeDependencies } from "./node.ts";
+import { installRubyDependencies } from "./ruby.ts";
+import { installPythonDependencies } from "./python.ts";
 
 $.verbose = false;
 

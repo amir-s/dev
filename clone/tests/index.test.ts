@@ -1,5 +1,5 @@
 import assert from "assert";
-import { parseArgument } from "../index";
+import { parseArgument } from "../index.ts";
 
 interface Testcase {
   org: string;

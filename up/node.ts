@@ -4,7 +4,7 @@ import report from "yurnalist";
 import semver from "semver";
 import yn from "yn";
 
-import { spinner } from "../utils/spinner";
+import { spinner } from "../utils/spinner.ts";
 
 const isInstalled = async (name: string) => {
   try {

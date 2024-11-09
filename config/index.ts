@@ -5,8 +5,8 @@ import path from "path";
 import fs from "fs";
 import report from "yurnalist";
 
-import * as help from "./help";
-import type { ModuleRunOptions } from "../main";
+import * as help from "./help.ts";
+import type { ModuleRunOptions } from "../main.ts";
 
 const homedir = os.homedir();
 const configFile = path.join(homedir, ".dev.config.json");
