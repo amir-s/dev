@@ -10,7 +10,7 @@ const version = Deno.args[0];
 
 // Run the git commit command
 const commitCommand = new Deno.Command("git", {
-  args: ["commit", "-am", `Release ${version}`],
+  args: ["commit", "--allow-empty", "-am", `Release ${version}`],
   stdout: "piped",
   stderr: "piped",
 });
