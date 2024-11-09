@@ -37,6 +37,7 @@ export const modules = {
   lan: {},
   ip: {},
   help: {},
+  debug: {},
 } as Record<string, { indirect?: boolean }>;
 
 const { config, writeConfig } = load();
