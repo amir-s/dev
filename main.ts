@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S deno run -A
 
 import fs from "fs";
 import os from "os";

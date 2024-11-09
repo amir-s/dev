@@ -50,9 +50,9 @@ const getShellProfile = async () => {
 
 const isDevFolder = () => {
   try {
-    const packageFile = path.resolve("./package.json");
+    const packageFile = path.resolve("./deno.json");
     const { name } = JSON.parse(fs.readFileSync(packageFile, "utf-8"));
-    return name === "dev";
+    return name === "@amir-s/dev";
   } catch (_) {
     return false;
   }

@@ -10,27 +10,42 @@ I made the `dev` tool to make my life easier. The goal is for `dev` to help me n
 
 ## Install
 
-You would need a recent version of `node` and `npm`. I would recommend using [nvm](https://github.com/nvm-sh/nvm) to install them.
+### Easy way
 
-This tool does not live on the npm registery just yet. But you can install it with
+Run the [install script](https://github.com/amir-s/dev/blob/main/install.sh).
 
-```
-npm i -g amir-s/dev
-```
-
-To unlock the full potential of `dev` on bash, zsh or fish, you might want to install the shell module, simply run
-
-```
-dev shell install
+```sh
+curl -o- https://raw.githubusercontent.com/amir-s/dev/refs/heads/main/install.sh | bash
 ```
 
-This would automatically add the following line to your shell profile file:
+Restart your terminal. You can use `dev` now.
+
+<details>
+<summary>Show me what this does ^.</summary>
+This script will download [the latest release](https://github.com/amir-s/dev/releases) of `dev` binary according to your OS and architecture, and place it in `~/.local/bin`. It will also add `~/.local/bin` to your `PATH` so you can run `dev` from anywhere.
+
+This also installs the shell module by adding this line to your shell profile:
 
 ```
 eval "$(dev-cli shell init <shelltype>)"
 ```
 
-After restarting your shell (or running equivalent of `source ~/.zshrc`), this allows commands like `dev cd` to work.
+</details>
+
+### DIY way
+
+You can clone the repo and use `deno` to compile the script:
+
+```sh
+# git clone && cd dev
+deno compile --output dev-cli -A main.ts
+
+```
+
+This will create `dev-cli` binary. Do not rename this to `dev` as it will conflict with the shell module we'll create later.
+Move the `dev-cli` binary to a directory in your `PATH`. Restart your shell and run `dev-cli shell install` and follow the prompts.
+
+This will create the shell module as a function called `dev`. After restarting your shell (or running equivalent of `source ~/.zshrc`), this allows commands like `dev cd` to work.
 
 You can also [customize the name of the function](https://github.com/amir-s/dev/#global-configs).
 
@@ -39,6 +54,7 @@ You can also [customize the name of the function](https://github.com/amir-s/dev/
 ### `dev clone <repo> [forward args]`
 
 `dev clone <repo>` clones a git repo locally into `~/src/<org>/<user>/<repo>` and then `cd`s into that said directory (only if shell-module is installed).
+
 Any other provided arguments are forwarded to `git clone` command. For example to clone shallowly and only the single branch, you can run `dev clone amir-s/dev --depth 1 --single-branch`.
 
 `<repo>` can be either full git URL or just the username and repo name:
@@ -49,11 +65,16 @@ Any other provided arguments are forwarded to `git clone` command. For example t
 #### configs
 
 - `clone.path` (default: `"<home>/src/<org>/<user>/<repo>"`)
-  The clone path.
+
+The clone path.
+
 - `clone.cd` (default: `true`)
-  If `dev` needs to `cd` into the cloned project after it is done.
+
+If `dev` needs to `cd` into the cloned project after it is done.
+
 - `clone.ssh` (default: `true`)
-  If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
+
+If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
 
 ### `dev open`
 
@@ -62,6 +83,7 @@ Opens the remote URL if the current working directory is a git repository.
 ### `dev open pr`
 
 Opens the default browser to view or create the PR for the current git branch. If the current branch is not on remote yet, `dev` asks you if you want to push it automatically.
+
 If a pull request is already made but you want to create a new one, you can run `dev open pr --new` to force create a pull request.
 
 ### `dev cd <name>` (_Only works if [shell module](https://github.com/amir-s/dev/#install) is installed_)
@@ -76,10 +98,10 @@ Run `dev up` in your project to install dependencies, as long as you are using n
 
 You can run any command that is available in the script section of `package.json` in the current working directory, if there is one. For example, if you have a `package.json` file like this:
 
-```
+```json
 {
   "scripts": {
-    "build": "react-scripts build",
+    "build": "react-scripts build"
   }
 }
 ```
@@ -157,6 +179,7 @@ Run `dev update` to check for updates. You can select to automatially apply the 
 ## Development ![GitHub CI](https://github.com/amir-s/dev/actions/workflows/run_tests.yml/badge.svg)
 
 You can clone this repo (using `dev` itself, of course) and make changes.
+
 Assuming you have installed the [shell module](https://github.com/amir-s/dev/#install), you can swap out the production version with your local version of `dev` by `cd`ing into your local copy and running:
 
 ```
