@@ -1,8 +1,23 @@
 import { getCurrentVersion } from "./utils/version.ts";
 
+const denoConfig = JSON.parse(await Deno.readTextFile("deno.json"));
+const denoJsonVersion = `v${denoConfig.version}`;
+
 const decoder = new TextDecoder();
 
 const version = `v${getCurrentVersion()}`;
+
+if (version !== denoJsonVersion) {
+  console.error(
+    "Version mismatch between current version and deno.json version",
+    {
+      version,
+      denoJsonVersion,
+    }
+  );
+
+  Deno.exit(1);
+}
 
 const commitCommand = new Deno.Command("git", {
   args: ["commit", "--allow-empty", "-am", `Release ${version}`],
