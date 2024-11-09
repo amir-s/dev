@@ -2,30 +2,21 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
+          deno-version: 2.x
+
       - name: Run tests
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test
+        run: deno task test
