@@ -1,10 +1,10 @@
 import report from "yurnalist";
 import fetch from "node-fetch";
 import { isIP } from "net";
-import { spinner } from "../utils/spinner";
+import { spinner } from "../utils/spinner.ts";
 import { os } from "zx";
 import process from "process";
-import type { ModuleRunOptions } from "../main";
+import type { ModuleRunOptions } from "../main.ts";
 
 export const run = async ({ config, args }: ModuleRunOptions) => {
   const ApiToken = config("ip.ipinfoio.token", null);

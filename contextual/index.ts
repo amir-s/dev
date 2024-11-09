@@ -1,7 +1,7 @@
 import { $ } from "zx";
 import process from "process";
-import type { ModuleRunOptions } from "../main";
-import { commands } from "./list";
+import type { ModuleRunOptions } from "../main.ts";
+import { commands } from "./list.ts";
 
 $.verbose = true;
 

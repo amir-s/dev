@@ -2,11 +2,11 @@ import "colors";
 
 import fetch from "node-fetch";
 import { $ } from "zx";
-import { spinner } from "../utils/spinner";
+import { spinner } from "../utils/spinner.ts";
 import report from "yurnalist";
 import yn from "yn";
-import type { ModuleRunOptions } from "../main";
-import { getCurrentVersion } from "../utils/version";
+import type { ModuleRunOptions } from "../main.ts";
+import { getCurrentVersion } from "../utils/version.ts";
 
 $.verbose = false;
 
