@@ -12,6 +12,7 @@ import { stringCloseness } from "./internals/index.ts";
 import { list as getContextualCommands } from "./contextual/list.ts";
 
 import { SHELLS } from "./shell/index.ts";
+import { getCurrentVersion } from "./utils/version.ts";
 
 export interface ModuleRunOptions {
   args: string[];
@@ -108,6 +109,11 @@ const execute = async () => {
   const args = process.argv.slice(2);
 
   let module: string | null = null;
+
+  if (args[0] === "-v" || args[0] === "--version") {
+    console.log(getCurrentVersion());
+    process.exit(0);
+  }
 
   if (args.length === 0) {
     module = "default";

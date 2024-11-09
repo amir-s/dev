@@ -1,16 +1,11 @@
+import { getCurrentVersion } from "./utils/version.ts";
+
 const decoder = new TextDecoder();
 
-// Check if version argument is provided
-if (Deno.args.length < 1) {
-  console.error("Please provide a version number (e.g., v1.0.0).");
-  Deno.exit(1);
-}
+const version = `v${getCurrentVersion()}`;
 
-const version = Deno.args[0];
-
-// Run the git commit command
 const commitCommand = new Deno.Command("git", {
-  args: ["commit", "-am", `Release ${version}`],
+  args: ["commit", "--allow-empty", "-am", `Release ${version}`],
   stdout: "piped",
   stderr: "piped",
 });

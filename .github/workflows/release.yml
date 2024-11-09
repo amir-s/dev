@@ -11,12 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows, macos, linux]
-        architecture: [x86_64, arm64]
         include:
-          - os: windows
-            architecture: x86_64
-            target: x86_64-pc-windows-msvc
           - os: macos
             architecture: x86_64
             target: x86_64-apple-darwin
@@ -43,16 +38,11 @@ jobs:
         run: |
           deno compile -A --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
 
-      - name: Archive binary
-        run: |
-          zip -r dev-${{ matrix.os }}-${{ matrix.architecture }}.zip dev-${{ matrix.os }}-${{ matrix.architecture }}
-        shell: bash
-
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v3
         with:
           name: dev-${{ matrix.os }}-${{ matrix.architecture }}
-          path: dev-${{ matrix.os }}-${{ matrix.architecture }}.zip
+          path: dev-${{ matrix.os }}-${{ matrix.architecture }}
 
   release:
     needs: build
@@ -68,6 +58,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./artifacts/**/*.zip
+          files: ./artifacts/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

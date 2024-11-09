@@ -1,9 +1,10 @@
 {
   "name": "@amir-s/dev",
   "exports": "./main.ts",
-  "version": "1.0.10",
+  "version": "1.0.14",
   "tasks": {
-    "test": "deno run -A test.ts */tests/*.test.ts"
+    "test": "deno run -A test.ts */tests/*.test.ts",
+    "release": "deno run -A release.ts"
   },
   "imports": {
     "@network-utils/vendor-lookup": "npm:@network-utils/vendor-lookup@^1.0.8",
