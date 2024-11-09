@@ -15,18 +15,23 @@ jobs:
           - os: windows
             architecture: x86_64
             target: x86_64-pc-windows-msvc
+            extension: .exe
           - os: macos
             architecture: x86_64
             target: x86_64-apple-darwin
+            extension: ""
           - os: macos
             architecture: arm64
             target: aarch64-apple-darwin
+            extension: ""
           - os: linux
             architecture: x86_64
             target: x86_64-unknown-linux-gnu
+            extension: ""
           - os: linux
             architecture: arm64
             target: aarch64-unknown-linux-gnu
+            extension: ""
 
     steps:
       - name: Checkout code
@@ -39,11 +44,11 @@ jobs:
 
       - name: Build for ${{ matrix.os }}-${{ matrix.architecture }}
         run: |
-          deno compile -A --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
+          deno compile -A --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }}${{ matrix.extension }} main.ts
 
       - name: Archive binary
         run: |
-          zip -r dev-${{ matrix.os }}-${{ matrix.architecture }}.zip dev-${{ matrix.os }}-${{ matrix.architecture }}
+          zip -r dev-${{ matrix.os }}-${{ matrix.architecture }}.zip dev-${{ matrix.os }}-${{ matrix.architecture }}${{ matrix.extension }}
         shell: bash
 
       - name: Upload binary as artifact
