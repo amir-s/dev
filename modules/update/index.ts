@@ -10,8 +10,9 @@ import type { ModuleRunOptions } from "../../utils/types.ts";
 
 $.verbose = false;
 
-const URL = "https://raw.githubusercontent.com/amir-s/dev/main/package.json";
-const PACKAGE = "amir-s/dev";
+const URL = "https://raw.githubusercontent.com/amir-s/dev/main/deno.json";
+const INSTALL_SCRIPT =
+  "https://raw.githubusercontent.com/amir-s/dev/refs/heads/main/install.sh";
 
 export const run = async ({ source }: ModuleRunOptions) => {
   report.info("checking for updates...");
@@ -42,10 +43,10 @@ export const run = async ({ source }: ModuleRunOptions) => {
 
     if (runUpdate) {
       report.info(`updating to ${version.bold}`);
-      report.command(`npm install -g ${PACKAGE}`);
+      report.command(`curl -o- ${INSTALL_SCRIPT} | bash`);
 
       await spinner("installing", async () => {
-        await $`npm install -g ${PACKAGE}`;
+        await $`curl -o- ${INSTALL_SCRIPT} | bash`;
       });
 
       report.success(`updated to ${version.bold}`);
