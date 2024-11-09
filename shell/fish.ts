@@ -1,3 +1,4 @@
+export const script = `
 function <$SHELL_FN_NAME$>
     set -l tempfile (mktemp -u)
   
@@ -23,3 +24,4 @@ function <$SHELL_FN_NAME$>
     rm -f $tempfile
     return $exitcode
 end
+`;

@@ -1,8 +1,8 @@
 import os from "os";
 import { globby } from "zx";
 import report from "yurnalist";
-import { calculateCloseness } from "../cd/index";
-import { ModuleRunOptions } from "../main";
+import { calculateCloseness } from "../cd/index.ts";
+import type { ModuleRunOptions } from "../main.ts";
 
 function notEmpty<TValue>(value: TValue): value is NonNullable<TValue> {
   return value !== null && value !== undefined;
