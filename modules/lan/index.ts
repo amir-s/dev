@@ -1,7 +1,7 @@
 import { $ } from "zx";
 import report from "yurnalist";
 import * as help from "./help.ts";
-import { spinner } from "../utils/spinner.ts";
+import { spinner } from "../../utils/spinner.ts";
 import { Writable } from "stream";
 import zonefile from "dns-zonefile";
 import { isIPv4 } from "net";
@@ -9,7 +9,7 @@ import chokidar from "chokidar";
 import { toVendor } from "@network-utils/vendor-lookup";
 import path from "path";
 import process from "process";
-import type { ModuleRunOptions } from "../main.ts";
+import type { ModuleRunOptions } from "../../utils/types.ts";
 
 interface Server {
   name: string;
@@ -310,7 +310,7 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
     const domains = skipMDNS ? [] : await getDomains(table, timeout);
     const vendors = skipMacLookup ? [] : await getMacVendors(table);
 
-    const maxWith = Math.max(...vendors.map((i) => (i ? i.length : 0)));
+    const maxWith = Math.max(...vendors.map((i: string) => (i ? i.length : 0)));
 
     if (outputList || skipMacLookup) {
       console.log();
@@ -382,7 +382,7 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
   } else if (command === "sync") {
     const [source, target] = args
       .slice(1)
-      .map((p) => (p.includes("@") ? p : path.resolve(p)));
+      .map((p: string) => (p.includes("@") ? p : path.resolve(p)));
     if (!source || !target) {
       return report.error("missing source and/or target");
     }

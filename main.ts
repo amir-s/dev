@@ -7,20 +7,14 @@ import process from "process";
 
 import sudoBlock from "sudo-block";
 
-import { load, type ConfigFN, type WriteConfigFN } from "./config/index.ts";
+import { load } from "./modules/config/index.ts";
 import { stringCloseness } from "./internals/index.ts";
-import { list as getContextualCommands } from "./contextual/list.ts";
+import { list as getContextualCommands } from "./modules/contextual/list.ts";
 
-import { SHELLS } from "./shell/index.ts";
+import { SHELLS } from "./modules/shell/index.ts";
 import { getCurrentVersion } from "./utils/version.ts";
 
-export interface ModuleRunOptions {
-  args: string[];
-  config: ConfigFN;
-  writeConfig: WriteConfigFN;
-  cd: (path: string) => unknown;
-  source: () => unknown;
-}
+import type { ModuleRunOptions } from "./utils/types.ts";
 
 export const modules = {
   config: {},
@@ -140,7 +134,7 @@ const execute = async () => {
     return;
   }
 
-  const moduleExports = await import(`./${module}/index.ts`);
+  const moduleExports = await import(`./modules/${module}/index.ts`);
 
   await moduleExports.run({
     args: args.slice(1),

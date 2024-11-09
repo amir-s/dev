@@ -1,12 +1,13 @@
+import "colors";
+
 import report from "yurnalist";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 
-import "colors";
-
 import path, { dirname } from "path";
-import { modules, type ModuleRunOptions } from "../main.ts";
+import { modules } from "../../main.ts";
 import type { HelpDoc } from "./help.ts";
+import type { ModuleRunOptions } from "../../utils/types.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -5,7 +5,7 @@ import inquirer from "inquirer";
 import fs from "fs";
 import process from "process";
 import * as help from "./help.ts";
-import type { ModuleRunOptions } from "../main.ts";
+import type { ModuleRunOptions } from "../../utils/types.ts";
 import { script as scriptSH } from "./sh.ts";
 import { script as scriptFISH } from "./fish.ts";
 

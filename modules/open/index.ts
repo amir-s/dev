@@ -7,8 +7,8 @@ import open from "open";
 import report from "yurnalist";
 import yn from "yn";
 
-import { spinner } from "../utils/spinner.ts";
-import type { ModuleRunOptions } from "../main.ts";
+import { spinner } from "../../utils/spinner.ts";
+import type { ModuleRunOptions } from "../../utils/types.ts";
 
 $.verbose = false;
 

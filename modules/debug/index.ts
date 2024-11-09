@@ -1,9 +1,9 @@
 import "colors";
 
 import process from "process";
-import type { ModuleRunOptions } from "../main.ts";
-import { getCurrentVersion } from "../utils/version.ts";
-import { spinner } from "../utils/spinner.ts";
+import { getCurrentVersion } from "../../utils/version.ts";
+import { spinner } from "../../utils/spinner.ts";
+import type { ModuleRunOptions } from "../../utils/types.ts";
 
 const DEBUG_INFO = {
   OS: () => process.platform,
