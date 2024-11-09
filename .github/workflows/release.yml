@@ -11,8 +11,6 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows, macos, linux]
-        architecture: [x86_64, arm64]
         include:
           - os: windows
             architecture: x86_64
