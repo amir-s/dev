@@ -1,7 +1,7 @@
 import "colors";
 
 import fs from "fs";
-import { $ } from "zx";
+import { $, sleep } from "zx";
 import path from "path";
 import open from "open";
 import report from "yurnalist";
@@ -58,10 +58,8 @@ export const run = async ({ args }: ModuleRunOptions) => {
   const newPath = args[1] === "--new" ? "/new" : "";
 
   if (!command) {
-    console.log(remoteUrl);
-    await open(`${remoteUrl}`, {
-      wait: true,
-    });
+    await open(`${remoteUrl}`);
+    await sleep(100);
     return;
   }
 
@@ -95,6 +93,7 @@ export const run = async ({ args }: ModuleRunOptions) => {
     }
 
     await open(`${remoteUrl}/pull${newPath}/${branch}`);
+    await sleep(100);
     return;
   }
 };
