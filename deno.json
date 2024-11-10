@@ -1,7 +1,7 @@
 {
   "name": "@amir-s/dev",
   "exports": "./main.ts",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "tasks": {
     "test": "deno run -A test.ts modules/*/tests/*.test.ts",
     "release": "deno run -A release.ts"
