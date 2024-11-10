@@ -8,7 +8,7 @@ import process from "process";
 import sudoBlock from "sudo-block";
 
 import { load } from "./modules/config/index.ts";
-import { stringCloseness } from "./internals/index.ts";
+import { stringCloseness } from "./utils/stringCloseness.ts";
 import { list as getContextualCommands } from "./modules/contextual/list.ts";
 
 import { SHELLS } from "./modules/shell/index.ts";

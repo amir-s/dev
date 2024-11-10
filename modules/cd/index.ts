@@ -2,7 +2,7 @@ import os from "os";
 import { globby } from "zx";
 import report from "yurnalist";
 import process from "process";
-import { stringCloseness } from "../../internals/index.ts";
+import { stringCloseness } from "../../utils/stringCloseness.ts";
 
 import * as help from "./help.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";
