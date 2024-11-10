@@ -20,4 +20,12 @@ export const script = `
 
   return \${exitcode}
 }
+
+cd() {
+  builtin cd "$@" || return
+
+  if [[ -f "dev.json" ]]; then
+    dev _cd
+  fi
+}
 `;

@@ -172,6 +172,20 @@ You can also read the config file with `dev config read`.
 
 - `shell.function` (default: `dev`): You can rename the [shell module](https://github.com/amir-s/dev/#install) function with `dev config set shell.function whatever`. After restarting your shell, you can use `whatever` instead of `dev`.
 
+### `_cd scripts`
+
+`dev` can execute a script once you `cd` into your project. You can define a script in your `dev.json` file like this:
+
+```json
+{
+  "scripts": {
+    "_cd": "echo 'Welcome to the project!'"
+  }
+}
+```
+
+Once you `cd` into the project, `dev` will ask for permission to run the script. If you want to persist the permission for this project, a `.dev.json` file will be created in the project root. This file should not be committed to the repository and is only for local use.
+
 ### `dev update`
 
 Run `dev update` to check for updates. You can select to automatially apply the updates, or do it manually with `npm install amir-s/dev -g`.

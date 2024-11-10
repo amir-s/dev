@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "_cd": "curl -s -H \"Accept: text/plain\" https://icanhazdadjoke.com/ | awk '{print \"\\n\\n😂 \"$0\" 😂\\n\"}'"
+  }
+}
