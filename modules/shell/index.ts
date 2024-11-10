@@ -41,7 +41,7 @@ const getShellProfile = async () => {
       }),
       default: () =>
         SHELLS.findIndex((shell) => shell.path === process.env.SHELL),
-      filter: (shell) => shell.split(" ")[0],
+      filter: (shell: string) => shell.split(" ")[0],
     },
   ]);
 
