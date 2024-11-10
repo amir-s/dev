@@ -36,7 +36,11 @@ jobs:
 
       - name: Build for ${{ matrix.os }}-${{ matrix.architecture }}
         run: |
-          deno compile -A --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
+          # Find all .ts files in modules/ and construct include flags in a single line
+          INCLUDES=$(find modules -type f -name "*.ts" -exec echo --include={} \; | xargs)
+
+          # Compile with dynamically constructed include flags
+          deno compile -A $INCLUDES --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
 
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v3

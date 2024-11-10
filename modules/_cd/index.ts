@@ -1,3 +1,4 @@
+import "colors";
 import { $ } from "zx";
 import report from "yurnalist";
 import inquirer from "inquirer";
