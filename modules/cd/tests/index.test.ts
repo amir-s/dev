@@ -1,5 +1,6 @@
 import assert from "assert";
 import { findMatch } from "../index.ts";
+import { describe, test } from "../../../test.ts";
 
 describe("findMatch", () => {
   test("prefers repo and query to share the first letter", () => {

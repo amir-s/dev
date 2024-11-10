@@ -12,7 +12,7 @@ type FailedTest = Omit<Test & { e: Error }, "fn">;
 const tests: Test[] = [];
 
 let testNamePrefix = "";
-function test(name: string, fn: () => unknown) {
+export function test(name: string, fn: () => unknown) {
   tests.push({
     prefix: testNamePrefix,
     name,
@@ -20,7 +20,7 @@ function test(name: string, fn: () => unknown) {
   });
 }
 
-function describe(name: string, fn: () => void) {
+export function describe(name: string, fn: () => void) {
   testNamePrefix = name;
   fn();
   testNamePrefix = "";
@@ -41,13 +41,6 @@ async function run() {
 }
 
 const files = process.argv.slice(2);
-
-declare global {
-  var test: (name: string, fn: () => unknown) => void;
-  var describe: (name: string, fn: () => void) => void;
-}
-globalThis.test = test;
-globalThis.describe = describe;
 
 async function runFiles() {
   for (const file of files) {
