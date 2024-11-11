@@ -188,7 +188,7 @@ Once you `cd` into the project, `dev` will ask for permission to run the script.
 
 ### `dev update`
 
-Run `dev update` to check for updates. You can select to automatially apply the updates, or do it manually with `npm install amir-s/dev -g`.
+Run `dev update` to check for updates. You can select to automatially apply the updates, or run the install script manually.
 
 ## Development ![GitHub CI](https://github.com/amir-s/dev/actions/workflows/run_tests.yml/badge.svg)
 
