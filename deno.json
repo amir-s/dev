@@ -12,6 +12,7 @@
     "colors": "npm:colors@^1.4.0",
     "dns-zonefile": "npm:dns-zonefile@^0.3.0",
     "inquirer": "npm:inquirer@^11.0.2",
+    "javascript-time-ago": "npm:javascript-time-ago@^2.5.11",
     "node-fetch": "npm:node-fetch@^3.2.10",
     "open": "npm:open@^10.1.0",
     "semver": "npm:semver@^7.3.8",
