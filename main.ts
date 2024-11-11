@@ -20,6 +20,7 @@ export const modules = {
   config: {},
   default: { indirect: true },
   clone: {},
+  clean: {},
   cd: {},
   shell: {},
   update: {},

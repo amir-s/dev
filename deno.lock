@@ -6,6 +6,7 @@
     "npm:colors@^1.4.0": "1.4.0",
     "npm:dns-zonefile@0.3": "0.3.2",
     "npm:inquirer@^11.0.2": "11.1.0",
+    "npm:javascript-time-ago@^2.5.11": "2.5.11",
     "npm:node-fetch@^3.2.10": "3.3.1",
     "npm:open@^10.1.0": "10.1.0",
     "npm:semver@^7.3.8": "7.6.3",
@@ -548,6 +549,12 @@
     "isexe@2.0.0": {
       "integrity": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="
     },
+    "javascript-time-ago@2.5.11": {
+      "integrity": "sha512-Zeyf5R7oM1fSMW9zsU3YgAYwE0bimEeF54Udn2ixGd8PUwu+z1Yc5t4Y8YScJDMHD6uCx6giLt3VJR5K4CMwbg==",
+      "dependencies": [
+        "relative-time-format"
+      ]
+    },
     "jsonfile@6.1.0": {
       "integrity": "sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==",
       "dependencies": [
@@ -647,6 +654,9 @@
       "dependencies": [
         "picomatch"
       ]
+    },
+    "relative-time-format@1.1.6": {
+      "integrity": "sha512-aCv3juQw4hT1/P/OrVltKWLlp15eW1GRcwP1XdxHrPdZE9MtgqFpegjnTjLhi2m2WI9MT/hQQtE+tjEWG1hgkQ=="
     },
     "restore-cursor@3.1.0": {
       "integrity": "sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==",
@@ -852,6 +862,7 @@
       "npm:colors@^1.4.0",
       "npm:dns-zonefile@0.3",
       "npm:inquirer@^11.0.2",
+      "npm:javascript-time-ago@^2.5.11",
       "npm:node-fetch@^3.2.10",
       "npm:open@^10.1.0",
       "npm:semver@^7.3.8",
