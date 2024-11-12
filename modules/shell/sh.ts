@@ -12,6 +12,7 @@ export const script = `
     case "\${cmd}" in
       cd:*) cd "\${cmd//cd:/}" ;;
       source:*) source "\${cmd//source:/}" ;;
+      env:*) export $(xargs < "\${cmd//env:/}") ;;
       *) ;;
     esac
   done < "\${tempfile}"

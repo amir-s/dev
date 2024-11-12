@@ -12,6 +12,8 @@ function <$SHELL_FN_NAME$>
                 cd (string replace -r "cd:" "" -- $cmd)
                 case "source:*"
                 source (string replace -r "source:" "" -- $cmd)
+                case "env:*"
+                set cmd (string replace -r "env:" "" -- $cmd)
                 case "*"
                 # echo do nothing
             end

@@ -6,4 +6,5 @@ export interface ModuleRunOptions {
   writeConfig: WriteConfigFN;
   cd: (path: string) => unknown;
   source: () => unknown;
+  loadEnvFile: (path: string) => unknown;
 }
