@@ -21,6 +21,7 @@ export const modules = {
   default: { indirect: true },
   clone: {},
   clean: {},
+  checkout: {},
   cd: {},
   shell: {},
   update: {},
