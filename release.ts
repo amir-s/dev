@@ -2,10 +2,16 @@ import "colors";
 import inquirer from "inquirer";
 import { getCurrentVersion } from "./utils/version.ts";
 import semver from "semver";
+import {
+  commitAndTag,
+  ensureMainBranch,
+  ensureNoUncommitedChanges,
+  ensureUpdatedOrigin,
+  ensureUptodateMain,
+  pushChanges,
+} from "./utils/release.ts";
 
 const VERSION_TS_FILE = "./utils/version.ts";
-
-const decoder = new TextDecoder();
 
 const denoConfig = JSON.parse(await Deno.readTextFile("deno.json"));
 const denoJsonVersion = `v${denoConfig.version}`;
@@ -22,6 +28,11 @@ if (currentVersion !== denoJsonVersion) {
 
   Deno.exit(1);
 }
+
+await ensureMainBranch();
+await ensureNoUncommitedChanges();
+await ensureUpdatedOrigin();
+await ensureUptodateMain();
 
 const { releaseType } = await inquirer.prompt([
   {
@@ -61,63 +72,7 @@ await Deno.writeTextFile(VERSION_TS_FILE, newVersionFile);
 denoConfig.version = newVersion;
 await Deno.writeTextFile("deno.json", JSON.stringify(denoConfig, null, 2));
 
-const commitCommand = new Deno.Command("git", {
-  args: ["commit", "--allow-empty", "-am", `Release v${newVersion}`],
-  stdout: "piped",
-  stderr: "piped",
-});
-
-const {
-  code: commitCode,
-  stdout: commitOutput,
-  stderr: commitError,
-} = await commitCommand.output();
-
-if (commitCode !== 0 || commitError.length > 0) {
-  console.error(`exit code: ${commitCode}`);
-  console.error(decoder.decode(commitError));
-  Deno.exit(1);
-}
-
-console.log(decoder.decode(commitOutput));
-
-const tagCommand = new Deno.Command("git", {
-  args: ["tag", "-a", `v${newVersion}`, "-m", `Version v${newVersion} release`],
-  stdout: "piped",
-  stderr: "piped",
-});
-
-const {
-  code: tagCode,
-  stdout: tagOutput,
-  stderr: tagError,
-} = await tagCommand.output();
-
-if (tagCode !== 0 || tagError.length > 0) {
-  console.error(`exit code: ${tagCode}`);
-  console.error(decoder.decode(tagError));
-  Deno.exit(1);
-}
-
-console.log(decoder.decode(tagOutput));
-const pushCommand = new Deno.Command("git", {
-  args: ["push", "origin", "main", "--tags"],
-  stdout: "piped",
-  stderr: "piped",
-});
-
-const {
-  code: pushCode,
-  stdout: pushOutput,
-  stderr: pushError,
-} = await pushCommand.output();
-
-if (pushCode !== 0 || pushError.length > 0) {
-  console.error(`exit code: ${pushCode}`);
-  console.error(decoder.decode(pushError));
-  Deno.exit(1);
-}
-
-console.log(decoder.decode(pushOutput));
+await commitAndTag(newVersion);
+await pushChanges();
 
 console.log(`Successfully tagged and pushed ${newVersion.green}`);
