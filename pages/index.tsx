@@ -6,7 +6,7 @@ import tw from "tailwind-styled-components";
 const Section = tw.div`w-fill border-t-2 border-b-2 border-gray-200 flex flex-col justify-center items-center text-gray-900 opacity-80`;
 const MainSection = tw.div`w-fill h-screen border-t-2 border-b-2 border-gray-200 flex flex-col justify-center items-center text-gray-900 opacity-80`;
 const Keyword = tw.span`text-blue-800`;
-const Code = tw.code`text-blue-800 bg-gray-200 py-2 px-3 block-inline rounded-lg`;
+const Code = tw.code`text-blue-800 bg-gray-200 py-2 px-3 block-inline rounded-lg text-xs`;
 
 const items = [
   {
@@ -70,6 +70,18 @@ const items = [
     sampleArgs: ["build", "lint", "custom-command", "export", "..."],
     description: "run a custom script for the current project.",
   },
+  {
+    title: "clean",
+    prefix: "clean",
+    sampleArgs: [""],
+    description: "interactively deletes merged git branches.",
+  },
+  {
+    title: "help",
+    prefix: "help",
+    sampleArgs: ["", "clone", "cd", "up", "open", "lan", "projects"],
+    description: "get help for the dev cli or a specific command.",
+  },
 ];
 
 interface Props {
@@ -121,7 +133,11 @@ const Home: NextPage = () => {
             things.
           </div>
           <div className="mt-8">
-            <Code>npm i -g amir-s/dev</Code>
+            <Code>
+              curl -o-
+              https://raw.githubusercontent.com/amir-s/dev/refs/heads/main/install.sh
+              | bash
+            </Code>
           </div>
           <div className="opacity-60 mt-auto mb-10 pb-10">
             ▽ scroll down to see some examples
