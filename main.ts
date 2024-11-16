@@ -55,6 +55,7 @@ const shellExec = (cmd: string): unknown => {
 };
 
 const cd = (path: string): unknown => shellExec(`cd:${path}`);
+const loadEnvFile = (path: string): unknown => shellExec(`env:${path}`);
 
 const source = (): unknown => {
   const currentShellType = (
@@ -145,6 +146,7 @@ const execute = async () => {
     writeConfig,
     cd,
     source,
+    loadEnvFile,
   } as ModuleRunOptions);
 };
 

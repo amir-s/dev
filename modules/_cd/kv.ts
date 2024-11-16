@@ -65,3 +65,5 @@ export const kv = {
   read: readKV,
   write: writeKV,
 };
+
+export type KV = typeof kv;
