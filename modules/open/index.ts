@@ -35,13 +35,31 @@ const remoteExists = async (branch: string) => {
   );
 };
 
-const getRemoteUrl = async () => {
-  const { stdout } = await $`git config --get remote.origin.url`;
-  const url = stdout.trim();
-  if (url.trim().startsWith("git@")) {
-    return `https://${url.trim().replace(":", "/").slice(4, -4)}`;
+const getRemoteUrl = async (): Promise<string | null> => {
+  try {
+    const stdout = (await $`git config --get remote.origin.url`).toString();
+    const raw = stdout.trim();
+    if (!raw) return null;
+    if (raw.startsWith("git@")) {
+      const hostPath = raw.replace(":", "/").replace(/^git@/, "");
+      const withoutGit = hostPath.replace(/\.git$/, "");
+      return `https://${withoutGit}`;
+    }
+    return raw.replace(/\.git$/, "");
+  } catch (_) {
+    // No remote configured (or git returned non-zero)
+    return null;
   }
-  return url.trim().slice(0, -4);
+};
+
+const getCurrentBranch = async (): Promise<string | null> => {
+  try {
+    const out = (await $`git branch --show-current`).toString();
+    const b = out.trim();
+    return b.length > 0 ? b : null;
+  } catch (_) {
+    return null;
+  }
 };
 
 export const run = async ({ args }: ModuleRunOptions) => {
@@ -55,6 +73,15 @@ export const run = async ({ args }: ModuleRunOptions) => {
   const command = args[0];
 
   const remoteUrl = await getRemoteUrl();
+  if (!remoteUrl) {
+    const branch = await getCurrentBranch();
+    report.error('this repository does not have a git remote configured (missing "origin").');
+    report.info("tip: add a remote and push your branch:".gray);
+    report.info(`  ${"git remote add origin URL".bold}`);
+    report.info(`  ${`git push -u origin ${branch ?? "BRANCH_NAME"}`.bold}`);
+    return;
+  }
+
   const newPath = args[1] === "--new" ? "/new" : "";
 
   if (!command) {
