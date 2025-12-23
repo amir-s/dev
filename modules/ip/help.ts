@@ -27,9 +27,8 @@ export const help: HelpDocFN = () => ({
   configs: [
     {
       key: "ip.ipinfoio.token",
-      description: `the token to use to access ipinfo.io API. You can get one from ${
-        "https://ipinfo.io".green
-      }`,
+      description:
+        `the token to use to access ipinfo.io API. You can get one from ${"https://ipinfo.io".green}`,
       def: "null",
     },
   ],

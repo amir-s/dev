@@ -68,7 +68,7 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
     const value = info[key as keyof typeof info];
     if (!value) continue;
     console.log(
-      ` ▸ ${key.padEnd(maxWidth, " ").green}  ${value.toString().bold}`
+      ` ▸ ${key.padEnd(maxWidth, " ").green}  ${value.toString().bold}`,
     );
   }
 

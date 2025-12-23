@@ -44,14 +44,14 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
       console.log(
         ` ${paddedModule.green.bold} ${"-".gray} ${CMDS.join(", ")}${
           description ? `\n ${descriptionPad} ${description}` : ""
-        }\n`
+        }\n`,
       );
     }
 
     console.log(
       ` ⚠ You can run ${
         `${DEV} help <command>`.green.bold
-      } for more information and more examples about any of the listed commands.`
+      } for more information and more examples about any of the listed commands.`,
     );
     return;
   } else {
@@ -84,7 +84,7 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
       console.log("  configs available:\n".blue);
       configs.forEach(({ key, description, def }) => {
         console.log(
-          `  + ${key.yellow} ${def ? `${"default:".gray} ${def.cyan}` : ""}`
+          `  + ${key.yellow} ${def ? `${"default:".gray} ${def.cyan}` : ""}`,
         );
         console.log(`    ${description}\n`);
       });

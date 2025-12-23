@@ -14,7 +14,7 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
 
   const useDeno = config(
     "contextual.node.deno",
-    taskInfo.source === "deno.json"
+    taskInfo.source === "deno.json",
   );
   const useYarn = config("contextual.node.yarn", false);
 

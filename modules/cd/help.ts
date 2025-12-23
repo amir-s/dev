@@ -6,9 +6,7 @@ export const description =
 
 export const help = () => ({
   description: [
-    `changes the current working directory to a cloned repo by ${
-      "fuzzy matching".cyan
-    } the input name.`,
+    `changes the current working directory to a cloned repo by ${"fuzzy matching".cyan} the input name.`,
     `shell module must be installed for this command to work.`,
   ],
   commands: [

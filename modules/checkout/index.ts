@@ -38,13 +38,13 @@ export const run = async ({ args }: ModuleRunOptions) => {
 
   if (branchExistsRemotely.stdout.trim()) {
     report.success(
-      `branch ${branch.green} exists on ${remote.yellow}. checking it out with tracking.`
+      `branch ${branch.green} exists on ${remote.yellow}. checking it out with tracking.`,
     );
     report.command(`git checkout --track ${remote}/${branch}`);
     await $`git checkout --track ${remote}/${branch}`;
   } else {
     report.success(
-      `Creating a new branch ${branch} and setting it to track on ${remote}.`
+      `Creating a new branch ${branch} and setting it to track on ${remote}.`,
     );
     report.command(`git checkout -b ${branch}`);
     await $`git checkout -b ${branch}`;

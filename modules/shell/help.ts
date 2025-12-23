@@ -10,13 +10,13 @@ export const help = (DEV: string) => ({
   commands: [
     {
       cmd: "shell install",
-      description: `install shell integration for ${DEV.yellow}. this adds a script to your shell startup file to make ${DEV.yellow} a shell module. certain commands requires shell module to be active.`,
+      description:
+        `install shell integration for ${DEV.yellow}. this adds a script to your shell startup file to make ${DEV.yellow} a shell module. certain commands requires shell module to be active.`,
     },
     {
       cmd: "shell use <local|prod>",
-      description: `use local copy or the production version of the ${
-        DEV.yellow
-      }. learn more at ${"https://github.com/amir-s/dev".cyan}.`,
+      description:
+        `use local copy or the production version of the ${DEV.yellow}. learn more at ${"https://github.com/amir-s/dev".cyan}.`,
     },
   ],
 });
@@ -31,6 +31,6 @@ export const shellInstallSuccess = (installCommand: string, file: string) => {
 
   report.warn(
     `please restart your terminal or run ${sourceCommand.inverse} for the changes to take effect.`
-      .yellow
+      .yellow,
   );
 };

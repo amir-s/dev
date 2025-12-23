@@ -23,7 +23,7 @@ export const run = async () => {
 
   if (existingDependencyFiles.length > 1) {
     report.error(
-      "multiple dependency files found. dev does not support this yet."
+      "multiple dependency files found. dev does not support this yet.",
     );
     return;
   }

@@ -2,7 +2,7 @@ import report from "yurnalist";
 
 export const spinner = async <T>(
   title: string,
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> => {
   const spinner = report.activity();
   spinner.tick(title);

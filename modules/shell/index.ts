@@ -35,9 +35,11 @@ const getShellProfile = async () => {
       message: "Which shell do you want to install to?",
       choices: SHELLS.map((shell) => {
         const path = ` ~/${shell.profile}`.gray;
-        return `${shell.name.padEnd(
-          SHELLS.reduce((max, { name }) => Math.max(max, name.length), 0)
-        )} ${path}`;
+        return `${
+          shell.name.padEnd(
+            SHELLS.reduce((max, { name }) => Math.max(max, name.length), 0),
+          )
+        } ${path}`;
       }),
       default: () =>
         SHELLS.findIndex((shell) => shell.path === process.env.SHELL),
@@ -119,7 +121,7 @@ export const run = async ({
         if (script.includes(installCommand)) {
           report.success(
             `command \`${installCommand}\` already exists in "${shellProfile}".`
-              .yellow
+              .yellow,
           );
           return;
         }
@@ -134,7 +136,7 @@ export const run = async ({
       if (script.includes(installCommand)) {
         report.success(
           `command \`${installCommand}\` already exists in "${shellProfile}".`
-            .yellow
+            .yellow,
         );
         return;
       }
@@ -155,7 +157,7 @@ export const run = async ({
 
     if (type !== "local" && type !== "prod") {
       console.log(
-        `\n Invalid type "${type}". You can use either "local" or "prod".`.red
+        `\n Invalid type "${type}". You can use either "local" or "prod".`.red,
       );
       return;
     }
@@ -164,7 +166,7 @@ export const run = async ({
       if (!isDevFolder()) {
         console.log(
           `\n The current directory (${path.resolve()}) does not seem to be a dev-cli project.`
-            .red
+            .red,
         );
         return;
       }
@@ -173,11 +175,11 @@ export const run = async ({
       console.log(`\n Updated config to use LOCAL DEV.`.green);
       console.log(
         `\n You may need to restart your terminal for changes to take effect.`
-          .yellow
+          .yellow,
       );
       console.log(
         ` Verify which version you are using by running "dev" with no arguments`
-          .yellow
+          .yellow,
       );
       await source();
 
@@ -189,11 +191,11 @@ export const run = async ({
       console.log(`\n Updated config to use PRODUCTION.`.green);
       console.log(
         `\n You may need to restart your terminal for changes to take effect.`
-          .yellow
+          .yellow,
       );
       console.log(
         ` Verify which version you are using by running "dev" with no arguments`
-          .yellow
+          .yellow,
       );
       await source();
 

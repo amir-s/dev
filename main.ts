@@ -49,7 +49,7 @@ const shellExec = (cmd: string): unknown => {
   }
 
   console.log(
-    "DEV_CLI_CMD_EXEC_FILE has no value, possibly because shell module is not installed"
+    "DEV_CLI_CMD_EXEC_FILE has no value, possibly because shell module is not installed",
   );
 
   return null;
@@ -79,14 +79,15 @@ const findModule = (name: string) => {
         if (
           closeness === candidate.closeness &&
           module.length > candidate.module.length
-        )
+        ) {
           return { closeness, module };
+        }
         return candidate;
       },
       {
         closeness: -Infinity,
         module: "",
-      }
+      },
     );
   if (module && closeness > -Infinity) return module;
   return null;
@@ -94,11 +95,7 @@ const findModule = (name: string) => {
 
 const checkForSudo = () => {
   sudoBlock(
-    `\n${
-      "You are running `dev` with sudo. This is not recommended".red.bold
-    }.\nIf need this, please provide feedback at ${
-      "https://github.com/amir-s/dev/issues/new".blue
-    } so we can improve the experience.\n`
+    `\n${"You are running `dev` with sudo. This is not recommended".red.bold}.\nIf need this, please provide feedback at ${"https://github.com/amir-s/dev/issues/new".blue} so we can improve the experience.\n`,
   );
 };
 

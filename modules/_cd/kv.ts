@@ -28,14 +28,14 @@ const setupKV = () => {
     report.info(`${KV_FILE.green} was created.`);
   } else {
     report.info(
-      `${KV_FILE.green} was created and added to ${addedTo.join(", ")}.`
+      `${KV_FILE.green} was created and added to ${addedTo.join(", ")}.`,
     );
   }
   report.info(
-    `Please add ${KV_FILE.green} to the appropriate ignore file and commit it to git.`
+    `Please add ${KV_FILE.green} to the appropriate ignore file and commit it to git.`,
   );
   report.info(
-    `You will use this file to store your configuration for dev.json. You can modify it manually!`
+    `You will use this file to store your configuration for dev.json. You can modify it manually!`,
   );
   console.log();
 };

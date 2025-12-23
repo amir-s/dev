@@ -5,12 +5,10 @@ export const description = "create a GitHub repository and clone it locally";
 
 export const help = (DEV: string) => ({
   description: [
-    `${`${DEV} create <name>`.yellow} creates a GitHub repository (via ${
-      "gh api".green
-    }) and then runs ${"dev clone".green} on it.`,
-    `If visibility is not provided, you'll be prompted to choose between ${
-      "public".green
-    } and ${"private".green}.`,
+    `${
+      `${DEV} create <name>`.yellow
+    } creates a GitHub repository (via ${"gh api".green}) and then runs ${"dev clone".green} on it.`,
+    `If visibility is not provided, you'll be prompted to choose between ${"public".green} and ${"private".green}.`,
   ],
   commands: [
     {

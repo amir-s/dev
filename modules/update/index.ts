@@ -30,15 +30,15 @@ export const run = async ({ source }: ModuleRunOptions) => {
 
     if (version === currentVersion) {
       report.success(
-        `You are using the latest version (${version.bold}) of dev.`.green
+        `You are using the latest version (${version.bold}) of dev.`.green,
       );
       return;
     }
 
     const runUpdate = yn(
       await report.question(
-        `update available. update ${currentVersion.green} to ${version.green}? (y/n)`
-      )
+        `update available. update ${currentVersion.green} to ${version.green}? (y/n)`,
+      ),
     );
 
     if (runUpdate) {
@@ -51,7 +51,7 @@ export const run = async ({ source }: ModuleRunOptions) => {
 
       report.success(`updated to ${version.bold}`);
       report.warn(
-        "you may need to restart your terminal to use the new version."
+        "you may need to restart your terminal to use the new version.",
       );
       await source();
     }

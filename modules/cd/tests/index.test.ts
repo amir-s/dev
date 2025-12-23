@@ -17,7 +17,7 @@ describe("findMatch", () => {
           path: "2",
         },
       ],
-      "a1abc"
+      "a1abc",
     );
     assert.deepEqual({ user: "amir-s", repo: "123abc123", path: "2" }, repo);
   });
@@ -36,7 +36,7 @@ describe("findMatch", () => {
           path: "2",
         },
       ],
-      "abc0"
+      "abc0",
     );
     assert.deepEqual({ user: "amir-s", repo: "123abc1230", path: "2" }, repo);
   });
@@ -55,7 +55,7 @@ describe("findMatch", () => {
           path: "2",
         },
       ],
-      "saba"
+      "saba",
     );
     assert.deepEqual({ user: "amir-s", repo: "saba", path: "2" }, repo);
   });
@@ -74,11 +74,11 @@ describe("findMatch", () => {
           path: "2",
         },
       ],
-      "str"
+      "str",
     );
     assert.deepEqual(
       { user: "str-blah", repo: "blah-str-blah", path: "2" },
-      repo
+      repo,
     );
   });
 });
