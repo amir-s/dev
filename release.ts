@@ -71,7 +71,10 @@ await Deno.writeTextFile(VERSION_TS_FILE, newVersionFile);
 
 // change version in deno.json
 denoConfig.version = newVersion;
-await Deno.writeTextFile("deno.json", JSON.stringify(denoConfig, null, 2));
+await Deno.writeTextFile(
+  "deno.json",
+  JSON.stringify(denoConfig, null, 2) + "\n",
+);
 
 await commitAndTag(newVersion);
 await pushChanges();
