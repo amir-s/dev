@@ -23,7 +23,7 @@ if (currentVersion !== denoJsonVersion) {
     {
       currentVersion,
       denoJsonVersion,
-    }
+    },
   );
 
   Deno.exit(1);
@@ -38,7 +38,8 @@ const { releaseType } = await inquirer.prompt([
   {
     type: "list",
     name: "releaseType",
-    message: `What type of release is this? (Current version is ${currentVersion.green})`,
+    message:
+      `What type of release is this? (Current version is ${currentVersion.green})`,
     choices: ["patch", "minor", "major"].map((choice) => ({
       name: `${choice} (${semver.inc(denoConfig.version, choice)})`,
       value: choice,
@@ -64,7 +65,7 @@ console.log(` Releasing version v${newVersion.green}`);
 const versionFile = await Deno.readTextFile(VERSION_TS_FILE);
 const newVersionFile = versionFile.replace(
   `/**/ "${denoConfig.version}"; /**/`,
-  `/**/ "${newVersion}"; /**/`
+  `/**/ "${newVersion}"; /**/`,
 );
 await Deno.writeTextFile(VERSION_TS_FILE, newVersionFile);
 

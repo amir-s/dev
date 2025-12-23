@@ -91,7 +91,7 @@ export const parseArgument = (
     ssh,
   }: {
     ssh: boolean;
-  }
+  },
 ) => {
   if (isUrl(str)) {
     return parseUrl(str);
@@ -155,10 +155,11 @@ export const run = async ({ config, args, cd }: ModuleRunOptions) => {
     async () => {
       const forwardedArgs = args.slice(1);
       report.command(
-        `git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`
+        `git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`,
       );
-      return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`.nothrow();
-    }
+      return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`
+        .nothrow();
+    },
   );
 
   if (result.exitCode !== 0) {

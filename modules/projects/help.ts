@@ -12,7 +12,8 @@ export const help: HelpDocFN = (DEV: string) => ({
   ],
   commands: [
     {
-      cmd: "projects [name] [-p] [-u <user> | --user <user>] [-o <org> | --org <org>]",
+      cmd:
+        "projects [name] [-p] [-u <user> | --user <user>] [-o <org> | --org <org>]",
       description:
         "search the name and list all cloned repositories for a user or org",
       examples: [

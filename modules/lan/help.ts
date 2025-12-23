@@ -11,7 +11,8 @@ export const help: HelpDocFN = () => ({
   ],
   commands: [
     {
-      cmd: "lan scan [--no-mac] [--no-mdns] [--list | -l | ls] [--services | -s]",
+      cmd:
+        "lan scan [--no-mac] [--no-mdns] [--list | -l | ls] [--services | -s]",
       description:
         "scan the local network for devices and lookup their mac address vendors. it also does a reverse mDNS lookup on the IP addresses and shows the local domain if there is any.",
       examples: [
@@ -44,9 +45,8 @@ export const help: HelpDocFN = () => ({
     },
     {
       cmd: "lan sync <local> <remote> [--dot] [--node_modules]",
-      description: `syncs a local folder with a remote folder with ${
-        "rsync".green
-      }. it watches for changes and sync them automatically.`,
+      description:
+        `syncs a local folder with a remote folder with ${"rsync".green}. it watches for changes and sync them automatically.`,
       examples: [
         {
           cmd: "lan sync ./src amir@rpi.local:/home/amir/src",

@@ -14,7 +14,7 @@ export const run = async () => {
 
   const maxLength = commandsList.reduce(
     (max, name) => Math.max(max, name.length),
-    0
+    0,
   );
 
   const showSource =

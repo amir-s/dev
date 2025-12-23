@@ -88,8 +88,8 @@ const listServices = (timeout: number): Promise<string[]> => {
           .split("\n")
           .slice(4)
           .map((line) => line.split(/\s+/).slice(-2))
-          .map(([type, name]) => `${name}.${type}`.replace(/\.local\.$/, ""))
-      )
+          .map(([type, name]) => `${name}.${type}`.replace(/\.local\.$/, "")),
+      ),
     );
   };
 
@@ -121,7 +121,7 @@ const listServices = (timeout: number): Promise<string[]> => {
 
 const serviceInstances = (
   service: string,
-  timeout: number
+  timeout: number,
 ): Promise<{
   service: string;
   servers: Server[];
@@ -131,8 +131,8 @@ const serviceInstances = (
 
   const parse = (data: string) => {
     // parser does not like parentheses in names
-    const srv =
-      zonefile.parse(data.trim().replace(/(\(|\))/g, ""))["srv"] || [];
+    const srv = zonefile.parse(data.trim().replace(/(\(|\))/g, ""))["srv"] ||
+      [];
 
     const servers = Array.from(
       new Set(
@@ -142,8 +142,8 @@ const serviceInstances = (
             port: s.port,
             target: s.target,
           });
-        })
-      )
+        }),
+      ),
     ).map((s) => JSON.parse(s)) as Server[];
 
     return {
@@ -184,7 +184,7 @@ const serviceInstances = (
 const serverDetails = (
   service: string,
   server: Server,
-  timeout: number
+  timeout: number,
 ): Promise<{
   service: string;
   server: Server;
@@ -242,16 +242,16 @@ const discoverServices = async (timeout: number) => {
     const services = await listServices(timeout);
 
     const instances = await Promise.all(
-      services.map((service) => serviceInstances(service, timeout))
+      services.map((service) => serviceInstances(service, timeout)),
     );
     const details = await Promise.all(
       instances.map((instance) =>
         Promise.all(
           instance.servers.map((server) =>
             serverDetails(instance.service, server, timeout)
-          )
+          ),
         )
-      )
+      ),
     );
 
     const ip2service = details.reduce(
@@ -277,7 +277,7 @@ const discoverServices = async (timeout: number) => {
           services: { [service: string]: true };
           details: { service: string; server: Server }[];
         };
-      }
+      },
     );
 
     return ip2service;
@@ -296,8 +296,8 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
     const discovery = flags.includes("--services") || flags.includes("-s");
     const skipMDNS = flags.includes("--no-mdns");
     const skipMacLookup = flags.includes("--no-mac");
-    const outputList =
-      flags.includes("--list") || flags.includes("-l") || flags.includes("ls");
+    const outputList = flags.includes("--list") || flags.includes("-l") ||
+      flags.includes("ls");
 
     const timeout = config("lan.scan.lookup.timeout", 3000)!;
 
@@ -322,7 +322,7 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
         console.log(
           `⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
             vendor.padEnd(maxWith, " ").gray
-          } ${domain.yellow}`
+          } ${domain.yellow}`,
         );
       }
     } else {
@@ -358,7 +358,7 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
           let services = "";
           if (ip2service[ip]) {
             const domains = Object.keys(ip2service[ip].domains).filter(
-              (d) => d != domain
+              (d) => d != domain,
             );
             if (domains.length) {
               serviceDomains = `${domains.join(" ")} `;
@@ -370,9 +370,9 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
             }
           }
           console.log(
-            ` ⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
-              domain.green
-            } ${serviceDomains.yellow}${services.blue}`
+            ` ⚡ ${ip.padEnd(15, " ").white} ${
+              `(${mac})`.gray
+            } ${domain.green} ${serviceDomains.yellow}${services.blue}`,
           );
         }
         console.log();

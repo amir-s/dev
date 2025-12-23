@@ -38,17 +38,17 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
   const showPaths = args.includes("-p");
 
   const userFilterIndex = args.findIndex(
-    (arg) => arg === "-u" || arg === "--user"
+    (arg) => arg === "-u" || arg === "--user",
   );
   const orgFilterIndex = args.findIndex(
-    (arg) => arg === "-o" || arg === "--org"
+    (arg) => arg === "-o" || arg === "--org",
   );
   const userFilter = userFilterIndex < 0 ? null : args[userFilterIndex + 1];
   const orgFilter = orgFilterIndex < 0 ? null : args[orgFilterIndex + 1];
 
   const searchIndex = args.findIndex(
     (arg, i) =>
-      !arg.startsWith("-") && (i - 1 < 0 || !args[i - 1].startsWith("-"))
+      !arg.startsWith("-") && (i - 1 < 0 || !args[i - 1].startsWith("-")),
   );
   const search = searchIndex < 0 ? null : args[searchIndex];
 

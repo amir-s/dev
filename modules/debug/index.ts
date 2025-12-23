@@ -16,7 +16,7 @@ const DEBUG_INFO = {
 
 export const run = async ({}: ModuleRunOptions) => {
   const maxKeyLength = Math.max(
-    ...Object.keys(DEBUG_INFO).map((key) => key.length)
+    ...Object.keys(DEBUG_INFO).map((key) => key.length),
   );
 
   let output: string = "\n";

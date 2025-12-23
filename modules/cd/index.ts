@@ -28,11 +28,11 @@ export const calculateCloseness = (repo: RepoData, requestedString: string) => {
 
   const fullPathCloseness = stringCloseness(
     `${repo.user}${repo.repo}`.toLocaleLowerCase(),
-    requestedString
+    requestedString,
   );
   const repoNameCloseness = stringCloseness(
     `${repo.repo}`.toLocaleLowerCase(),
-    requestedString
+    requestedString,
   );
 
   let closeness = Math.max(fullPathCloseness, repoNameCloseness);
@@ -55,7 +55,7 @@ export const findMatch = (allRepos: RepoData[], requestedString: string) => {
     {
       closeness: -Infinity,
       repo: null,
-    }
+    },
   );
 };
 

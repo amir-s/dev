@@ -48,17 +48,17 @@ export const run = async ({}: ModuleRunOptions) => {
           lastCommit: lastCommit.split(" ").slice(1).join(" "),
           ago: timeAgo.format(new Date(date), "mini"),
         };
-      })
+      }),
   );
 
   const agoMaxLen = branches.reduce(
     (max, branch) => Math.max(max, branch.ago.length),
-    0
+    0,
   );
 
   const branchMaxLen = branches.reduce(
     (max, branch) => Math.max(max, branch.branch.length),
-    0
+    0,
   );
 
   if (branches.length === 0) {
@@ -67,7 +67,7 @@ export const run = async ({}: ModuleRunOptions) => {
   }
 
   report.info(
-    `found these branches that are merged into ${mainBranch.green.bold}`
+    `found these branches that are merged into ${mainBranch.green.bold}`,
   );
 
   const { deleteBranches } = await inquirer.prompt<{
@@ -88,9 +88,9 @@ export const run = async ({}: ModuleRunOptions) => {
         ...branches.map((branch) => ({
           name: `${branch.branch.padEnd(branchMaxLen)} ${
             `[${branch.lastHash}`.gray
-          } ${branch.ago.padStart(agoMaxLen).yellow}${"]".gray} ${
-            branch.lastCommit.green
-          }`,
+          } ${
+            branch.ago.padStart(agoMaxLen).yellow
+          }${"]".gray} ${branch.lastCommit.green}`,
           value: branch,
         })),
       ],
@@ -106,7 +106,8 @@ export const run = async ({}: ModuleRunOptions) => {
     {
       type: "confirm",
       name: "confirm",
-      message: `Are you sure you want to delete ${deleteBranches.length} branches?`,
+      message:
+        `Are you sure you want to delete ${deleteBranches.length} branches?`,
     },
   ]);
 
@@ -119,7 +120,7 @@ export const run = async ({}: ModuleRunOptions) => {
     return Promise.all(
       deleteBranches.map(async (branch) => {
         await $`git branch -d ${branch.branch}`;
-      })
+      }),
     );
   });
 

@@ -16,19 +16,17 @@ export const run = () => {
   if (binaryPath === undefined) {
     console.log(
       "\n Shell module is not installed. Some commands do not work without it."
-        .yellow
+        .yellow,
     );
     console.log(
-      ` You can install it by running ${"dev shell install".inverse}.`.yellow
+      ` You can install it by running ${"dev shell install".inverse}.`.yellow,
     );
   }
   console.log(`\n The documentation and this messages are still WIP.`.gray);
   console.log(
-    ` ${"You can check".gray} ${URL.white.underline} ${"to learn more.".gray}`
+    ` ${"You can check".gray} ${URL.white.underline} ${"to learn more.".gray}`,
   );
   console.log(
-    ` ${"You can also run".gray} ${"dev help".yellow} ${
-      "to see a summary of all the available commands.".gray
-    }`
+    ` ${"You can also run".gray} ${"dev help".yellow} ${"to see a summary of all the available commands.".gray}`,
   );
 };

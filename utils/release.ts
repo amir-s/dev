@@ -11,7 +11,7 @@ const decoder = new TextDecoder();
 const runCommand = async (
   cmd: string,
   args: string[],
-  callback: (meta: CommandOutput) => void
+  callback: (meta: CommandOutput) => void,
 ) => {
   const command = new Deno.Command(cmd, {
     args,
@@ -76,22 +76,18 @@ export const ensureUptodateMain = async () => {
 
       if (ahead !== 0) {
         console.error(
-          `Local branch is ahead of remote by ${
-            ahead.toString().red
-          } commits. Please push your changes.`
+          `Local branch is ahead of remote by ${ahead.toString().red} commits. Please push your changes.`,
         );
         Deno.exit(1);
       }
 
       if (behind !== 0) {
         console.error(
-          `Local branch is behind remote by ${
-            behind.toString().red
-          } commits. Please pull the changes.`
+          `Local branch is behind remote by ${behind.toString().red} commits. Please pull the changes.`,
         );
         Deno.exit(1);
       }
-    }
+    },
   );
 };
 
@@ -105,7 +101,7 @@ export const commitAndTag = async (version: string) => {
         console.error(stderr);
         Deno.exit(1);
       }
-    }
+    },
   );
 
   await runCommand(
@@ -118,7 +114,7 @@ export const commitAndTag = async (version: string) => {
         Deno.exit(1);
       }
       console.log(`Tagged version ${version.green}`);
-    }
+    },
   );
 };
 
@@ -133,6 +129,6 @@ export const pushChanges = async () => {
         Deno.exit(1);
       }
       console.log(`Pushed changes to origin`);
-    }
+    },
   );
 };

@@ -82,7 +82,7 @@ describe("parseArgument", () => {
         user: "amir-s",
         repo: "dev",
         remote: "https://github.com/amir-s/dev.git",
-      }
+      },
     );
   });
 });

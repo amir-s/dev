@@ -21,7 +21,7 @@ const CHOICES = [
 
 export const run = async () => {
   const { scripts }: { scripts?: Scripts } = JSON.parse(
-    Deno.readTextFileSync("dev.json")
+    Deno.readTextFileSync("dev.json"),
   );
 
   if (!scripts || !scripts["_cd"]) {
@@ -30,10 +30,10 @@ export const run = async () => {
 
   const script = scripts["_cd"];
 
-  const allowedCommands =
-    kv.read<Record<string, boolean>>("_cd", "allowed") || {};
-  const bannedCommands =
-    kv.read<Record<string, boolean>>("_cd", "banned") || {};
+  const allowedCommands = kv.read<Record<string, boolean>>("_cd", "allowed") ||
+    {};
+  const bannedCommands = kv.read<Record<string, boolean>>("_cd", "banned") ||
+    {};
 
   const isAllowed = (command: string) => {
     const all = kv.read<string>("_cd", "run all _cd commands for this project");

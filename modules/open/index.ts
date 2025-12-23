@@ -31,7 +31,7 @@ const remoteExists = async (branch: string) => {
       } catch (_) {
         return false;
       }
-    }
+    },
   );
 };
 
@@ -75,7 +75,9 @@ export const run = async ({ args }: ModuleRunOptions) => {
   const remoteUrl = await getRemoteUrl();
   if (!remoteUrl) {
     const branch = await getCurrentBranch();
-    report.error('this repository does not have a git remote configured (missing "origin").');
+    report.error(
+      'this repository does not have a git remote configured (missing "origin").',
+    );
     report.info("tip: add a remote and push your branch:".gray);
     report.info(`  ${"git remote add origin URL".bold}`);
     report.info(`  ${`git push -u origin ${branch ?? "BRANCH_NAME"}`.bold}`);
@@ -95,7 +97,7 @@ export const run = async ({ args }: ModuleRunOptions) => {
 
     if (PROTECTED_BRANCHES.includes(branch.toLowerCase())) {
       report.error(
-        `you cannot create a pull request on the ${branch.bold} branch.`
+        `you cannot create a pull request on the ${branch.bold} branch.`,
       );
       return;
     }
@@ -104,8 +106,8 @@ export const run = async ({ args }: ModuleRunOptions) => {
       report.info(`branch "${branch.bold}" does not exist on remote.`);
       const push = yn(
         await report.question(
-          `do you want to push this branch on remote? (y/n)`
-        )
+          `do you want to push this branch on remote? (y/n)`,
+        ),
       );
 
       if (push) {

@@ -82,7 +82,7 @@ export const run = ({ args }: ModuleRunOptions) => {
     } else {
       if (key === "shell.function" && args[2] === "dev-cli") {
         report.error(
-          'cannot set shell.function to "dev-cli". please use some other name.'
+          'cannot set shell.function to "dev-cli". please use some other name.',
         );
         return;
       }

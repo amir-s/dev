@@ -35,7 +35,7 @@ const ensureGhInstalled = async (): Promise<boolean> => {
 
     if (!install) {
       report.info(
-        "Aborted install. You can install gh via Homebrew: `brew install gh`, or see https://cli.github.com/manual/installation"
+        "Aborted install. You can install gh via Homebrew: `brew install gh`, or see https://cli.github.com/manual/installation",
       );
       return false;
     }
@@ -55,7 +55,7 @@ const ensureGhInstalled = async (): Promise<boolean> => {
   }
 
   report.info(
-    "Please install GitHub CLI from https://cli.github.com/manual/installation and re-run the command."
+    "Please install GitHub CLI from https://cli.github.com/manual/installation and re-run the command.",
   );
   return false;
 };
@@ -125,7 +125,7 @@ export const run = async ({
 
   if (!name) {
     report.error(
-      "missing repo name. usage: dev create <name> [--public|--private]"
+      "missing repo name. usage: dev create <name> [--public|--private]",
     );
     return;
   }

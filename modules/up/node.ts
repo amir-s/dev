@@ -23,13 +23,11 @@ const checkVersion = async () => {
     if (semver.satisfies(installedVersion, requiredVersion)) return true;
 
     report.info(
-      `node ${requiredVersion.green} is required ${
-        "(via .nvmrc)".gray
-      }, but you have ${installedVersion.green}`
+      `node ${requiredVersion.green} is required ${"(via .nvmrc)".gray}, but you have ${installedVersion.green}`,
     );
 
     const install = yn(
-      await report.question(`install the dependencies anyway? (y/n)`)
+      await report.question(`install the dependencies anyway? (y/n)`),
     );
 
     return install;
@@ -61,7 +59,7 @@ export const installNodeDependencies = async () => {
           return false;
         }
         return true;
-      }
+      },
     );
     if (!installed) {
       report.error("failed to install node dependencies.");
@@ -77,7 +75,7 @@ export const installNodeDependencies = async () => {
           return false;
         }
         return true;
-      }
+      },
     );
     if (!installed) {
       report.error("failed to install node dependencies.");

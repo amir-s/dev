@@ -14,7 +14,7 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
 
   const useDeno = config(
     "contextual.node.deno",
-    taskInfo.source === "deno.json"
+    taskInfo.source === "deno.json",
   );
   const useYarn = config("contextual.node.yarn", false);
 
@@ -26,8 +26,13 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
     } else {
       await $`npm run ${args}`;
     }
-  } catch (e: any) {
-    if (e.exitCode) process.exit(e.exitCode);
-    else process.exit(1);
+  } catch (e: unknown) {
+    if (typeof e === "object" && e !== null && "exitCode" in e) {
+      const err = e as { exitCode?: number };
+      if (typeof err.exitCode === "number") process.exit(err.exitCode);
+      else process.exit(1);
+    } else {
+      process.exit(1);
+    }
   }
 };

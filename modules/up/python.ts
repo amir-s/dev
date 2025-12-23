@@ -15,7 +15,7 @@ export const installPythonDependencies = async () => {
   if (!(await isInstalled("pip"))) {
     report.error("`requirements.txt` is found but `pip` is not installed.");
     report.info(
-      "follow https://pip.pypa.io/en/stable/installation to install pip."
+      "follow https://pip.pypa.io/en/stable/installation to install pip.",
     );
     return;
   }
@@ -29,7 +29,7 @@ export const installPythonDependencies = async () => {
         return false;
       }
       return true;
-    }
+    },
   );
 
   if (!installed) {

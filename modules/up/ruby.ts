@@ -31,7 +31,7 @@ export const installRubyDependencies = async () => {
         return false;
       }
       return true;
-    }
+    },
   );
   if (!installed) {
     report.error("failed to install ruby dependencies.");

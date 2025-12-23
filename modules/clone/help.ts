@@ -6,9 +6,9 @@ export const description =
 
 export const help = (DEV: string) => ({
   description: [
-    `${`${DEV} clone <repo>`.yellow} clones a git repo locally into ${
-      "~/src/<org>/<user>/<repo>".green
-    } and`,
+    `${
+      `${DEV} clone <repo>`.yellow
+    } clones a git repo locally into ${"~/src/<org>/<user>/<repo>".green} and`,
     `then ${"cd".green}s into that said directory ${
       `(only if shell-module is installed)`.gray
     }.`,
@@ -40,25 +40,20 @@ export const help = (DEV: string) => ({
   configs: [
     {
       key: "clone.path",
-      description: `the directory to clone the repo into. supports ${
-        "<org>".green
-      }, ${"<user>".green}, ${"<repo>".green} placeholders.`,
+      description:
+        `the directory to clone the repo into. supports ${"<org>".green}, ${"<user>".green}, ${"<repo>".green} placeholders.`,
       def: `"~/src/<org>/<user>/<repo>"`,
     },
     {
       key: "clone.cd",
-      description: `whether to ${
-        "cd".green
-      } into the cloned repo directory after cloning.`,
+      description:
+        `whether to ${"cd".green} into the cloned repo directory after cloning.`,
       def: "true",
     },
     {
       key: "clone.ssh",
-      description: `If dev is needs craft the remote url via ${
-        "ssh".green
-      } when a short format repo (example: amir-s/dev) is provided. If set to false, it'll use ${
-        "https".green
-      }.`,
+      description:
+        `If dev is needs craft the remote url via ${"ssh".green} when a short format repo (example: amir-s/dev) is provided. If set to false, it'll use ${"https".green}.`,
       def: "true",
     },
   ],
