@@ -22,6 +22,7 @@ export const modules = {
   clone: {},
   clean: {},
   checkout: {},
+  create: {},
   cd: {},
   shell: {},
   update: {},

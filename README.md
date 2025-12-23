@@ -76,6 +76,19 @@ If `dev` needs to `cd` into the cloned project after it is done.
 
 If `dev` is needs craft the remote url via `ssh` when a short format repo (example: `amir-s/dev`) is provided. If set to `false`, it'll use `https`.
 
+### `dev create <name> [--public|--private]`
+
+Creates a GitHub repository via GitHub CLI (`gh api`) and then clones it locally using `dev clone`.
+
+- If you omit visibility flags, you’ll be prompted to choose `public` or `private`.
+- If `gh` is not installed, `dev` will offer to install it (via Homebrew if available) or show installation instructions.
+
+Examples:
+
+- `dev create my-repo --public`
+- `dev create my-org/cool-repo --private`
+- `dev create my-repo`
+
 ### `dev open`
 
 Opens the remote URL if the current working directory is a git repository.
