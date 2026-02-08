@@ -33,6 +33,7 @@ export const modules = {
   contextual: { indirect: true },
   lan: {},
   ip: {},
+  agent: {},
   help: {},
   debug: {},
   _cd: {},

@@ -17,6 +17,7 @@
     "open": "npm:open@^10.1.0",
     "semver": "npm:semver@^7.3.8",
     "sudo-block": "npm:sudo-block@^5.0.0",
+    "openai": "npm:openai@^4",
     "yn": "npm:yn@^5.0.0",
     "yurnalist": "npm:yurnalist@^2.1.0",
     "zx": "npm:zx@^7.1.1",
