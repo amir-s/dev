@@ -14,6 +14,10 @@ export const help: HelpDocFN = () => ({
       cmd: "agent",
       description: "Start the AI coding assistant.",
     },
+    {
+      cmd: "agent model",
+      description: "Select an OpenAI model from the API.",
+    },
   ],
   configs: [
     {

@@ -4,12 +4,19 @@ import { $ } from "zx";
 
 $.verbose = false;
 
+export interface ToolResult {
+  content: string;
+  success: boolean;
+  exitCode?: number;
+}
+
 export const TOOLS_REQUIRING_APPROVAL = [
   "write_file",
   "edit_file",
   "run_command",
 ];
 
+// Chat Completions format
 export const toolDefinitions = [
   {
     type: "function" as const,
@@ -110,6 +117,15 @@ export const toolDefinitions = [
   },
 ];
 
+// Responses API format (flat: { type, name, description, parameters, strict })
+export const responsesToolDefinitions = toolDefinitions.map((t) => ({
+  type: "function" as const,
+  name: t.function.name,
+  description: t.function.description,
+  parameters: t.function.parameters,
+  strict: false,
+}));
+
 // --- Tool implementations ---
 
 function readFile(args: { path: string }): string {
@@ -175,7 +191,7 @@ function editFile(args: {
   }
 }
 
-async function runCommand(args: { command: string }): Promise<string> {
+async function runCommand(args: { command: string }): Promise<ToolResult> {
   try {
     const result = await $`bash -c ${args.command}`.nothrow();
     let output = "";
@@ -187,30 +203,46 @@ async function runCommand(args: { command: string }): Promise<string> {
     if (output.length > 20000) {
       output = output.slice(0, 20000) + "\n...(output truncated)";
     }
-    return output || "(no output)";
+    return {
+      content: output || "(no output)",
+      success: result.exitCode === 0,
+      exitCode: result.exitCode ?? 0,
+    };
   } catch (err: unknown) {
-    return `Error: ${err instanceof Error ? err.message : String(err)}`;
+    return {
+      content: `Error: ${err instanceof Error ? err.message : String(err)}`,
+      success: false,
+      exitCode: 1,
+    };
   }
 }
 
 export async function executeTool(
   name: string,
   args: Record<string, unknown>,
-): Promise<string> {
+): Promise<ToolResult> {
   switch (name) {
-    case "read_file":
-      return readFile(args as { path: string });
-    case "list_directory":
-      return listDirectory(args as { path: string });
-    case "write_file":
-      return writeFile(args as { path: string; content: string });
-    case "edit_file":
-      return editFile(
+    case "read_file": {
+      const c = readFile(args as { path: string });
+      return { content: c, success: !c.startsWith("Error:") };
+    }
+    case "list_directory": {
+      const c = listDirectory(args as { path: string });
+      return { content: c, success: !c.startsWith("Error:") };
+    }
+    case "write_file": {
+      const c = writeFile(args as { path: string; content: string });
+      return { content: c, success: c.startsWith("Successfully") };
+    }
+    case "edit_file": {
+      const c = editFile(
         args as { path: string; old_string: string; new_string: string },
       );
+      return { content: c, success: c.startsWith("Successfully") };
+    }
     case "run_command":
       return await runCommand(args as { command: string });
     default:
-      return `Error: Unknown tool "${name}"`;
+      return { content: `Error: Unknown tool "${name}"`, success: false };
   }
 }
