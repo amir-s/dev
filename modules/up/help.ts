@@ -1,5 +1,5 @@
 export const cmd = "up";
-export const description = "install depedencies for the current project";
+export const description = "install dependencies for the current project";
 
 export const help = () => ({
   description: [

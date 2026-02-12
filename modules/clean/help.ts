@@ -13,7 +13,7 @@ export const help = (DEV: string) => ({
     {
       cmd: "clean",
       description:
-        "interactively selecte and delete branches that are already merged",
+        "interactively select and delete branches that are already merged",
     },
   ],
 });
