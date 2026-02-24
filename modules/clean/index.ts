@@ -34,6 +34,7 @@ export const run = async ({}: ModuleRunOptions) => {
       .split("\n")
       .map((branch) => branch.replace(/^\* /, "").trim())
       .filter((branch) => branch !== mainBranch && branch !== "")
+      .filter((branch) => !branch.startsWith("+"))
       .map(async (branch) => {
         const lastCommit = (
           await $`git log -1 --pretty=format:"%h %s" ${branch}`
