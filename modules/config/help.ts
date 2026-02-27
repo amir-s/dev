@@ -6,7 +6,7 @@ export const description = "set or read a configuration value";
 export const help = (DEV: string) => ({
   description: [
     `set overrides for the configuration of ${DEV.green} via ${"config".green}.`,
-    `The configuration files lives in ${"~/.dev.config.json".green}.`,
+    `The configuration file lives in ${"~/.dev.config.json".green}.`,
   ],
   commands: [
     {
