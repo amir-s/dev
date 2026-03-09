@@ -1,6 +1,7 @@
 import "colors";
 
 import process from "process";
+import { report, raw } from "../../utils/logger.ts";
 import { getCurrentVersion } from "../../utils/version.ts";
 import { spinner } from "../../utils/spinner.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";
@@ -19,7 +20,7 @@ export const run = async ({}: ModuleRunOptions) => {
     ...Object.keys(DEBUG_INFO).map((key) => key.length),
   );
 
-  let output: string = "\n";
+  let output: string = "";
   await spinner("getting debug info", async () => {
     for (const [key, value] of Object.entries(DEBUG_INFO)) {
       const paddedKey = key.padEnd(maxKeyLength, " ");
@@ -27,6 +28,6 @@ export const run = async ({}: ModuleRunOptions) => {
     }
   });
 
-  console.log(output);
+  raw(output);
   return;
 };

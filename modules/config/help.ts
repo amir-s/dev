@@ -1,5 +1,7 @@
 import "colors";
 
+import { report } from "../../utils/logger.ts";
+
 export const cmd = "config set <key> <value>";
 export const description = "set or read a configuration value";
 
@@ -36,5 +38,5 @@ export const help = (DEV: string) => ({
 });
 
 export const generic = () => {
-  console.log("No command specified.".gray);
+  report.info("No command specified.");
 };

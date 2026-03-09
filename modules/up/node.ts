@@ -1,6 +1,6 @@
 import fs from "fs";
 import { $ } from "zx";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import semver from "semver";
 import yn from "yn";
 

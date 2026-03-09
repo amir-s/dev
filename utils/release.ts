@@ -1,5 +1,7 @@
 import "colors";
 
+import { report } from "./logger.ts";
+
 export interface CommandOutput {
   code: number;
   stdout: string;
@@ -33,12 +35,12 @@ const runCommand = async (
 export const ensureMainBranch = async () => {
   await runCommand("git", ["branch", "--show-current"], ({ stdout }) => {
     if (!stdout) {
-      console.error("Unable to determine current branch".red);
+      report.error("Unable to determine current branch");
       Deno.exit(1);
     }
 
     if (stdout.trim() !== "main") {
-      console.error(`You must be on the ${"main".red} branch to release.`);
+      report.error(`You must be on the ${"main".red} branch to release.`);
       Deno.exit(1);
     }
   });
@@ -47,8 +49,8 @@ export const ensureMainBranch = async () => {
 export const ensureNoUncommitedChanges = async () => {
   await runCommand("git", ["status", "--porcelain"], ({ stdout }) => {
     if (stdout.trim().length > 0) {
-      console.error("There are uncommitted changes in the repository.".red);
-      console.error(stdout.yellow);
+      report.error("There are uncommitted changes in the repository.");
+      report.error(stdout.yellow);
       Deno.exit(1);
     }
   });
@@ -57,8 +59,8 @@ export const ensureNoUncommitedChanges = async () => {
 export const ensureUpdatedOrigin = async () => {
   await runCommand("git", ["fetch", "origin"], ({ code, stderr }) => {
     if (code !== 0 || stderr.trim().length > 0) {
-      console.error(`exit code: ${code}`);
-      console.error(stderr);
+      report.error(`exit code: ${code}`);
+      report.error(stderr);
       Deno.exit(1);
     }
   });
@@ -75,14 +77,14 @@ export const ensureUptodateMain = async () => {
         .map((i) => Number(i.trim()));
 
       if (ahead !== 0) {
-        console.error(
+        report.error(
           `Local branch is ahead of remote by ${ahead.toString().red} commits. Please push your changes.`,
         );
         Deno.exit(1);
       }
 
       if (behind !== 0) {
-        console.error(
+        report.error(
           `Local branch is behind remote by ${behind.toString().red} commits. Please pull the changes.`,
         );
         Deno.exit(1);
@@ -97,8 +99,8 @@ export const commitAndTag = async (version: string) => {
     ["commit", "--allow-empty", "-am", `Release v${version}`],
     ({ code, stderr }) => {
       if (code !== 0 || stderr.trim().length > 0) {
-        console.error(`exit code: ${code}`);
-        console.error(stderr);
+        report.error(`exit code: ${code}`);
+        report.error(stderr);
         Deno.exit(1);
       }
     },
@@ -109,11 +111,11 @@ export const commitAndTag = async (version: string) => {
     ["tag", "-a", `v${version}`, "-m", `Version v${version} release`],
     ({ code, stderr }) => {
       if (code !== 0 || stderr.trim().length > 0) {
-        console.error(`exit code: ${code}`);
-        console.error(stderr);
+        report.error(`exit code: ${code}`);
+        report.error(stderr);
         Deno.exit(1);
       }
-      console.log(`Tagged version ${version.green}`);
+      report.info(`Tagged version ${version.green}`);
     },
   );
 };
@@ -124,11 +126,11 @@ export const pushChanges = async () => {
     ["push", "origin", "main", "--tags"],
     ({ code, stderr }) => {
       if (code !== 0 || stderr.trim().length > 0) {
-        console.error(`exit code: ${code}`);
-        console.error(stderr);
+        report.error(`exit code: ${code}`);
+        report.error(stderr);
         Deno.exit(1);
       }
-      console.log(`Pushed changes to origin`);
+      report.info("Pushed changes to origin");
     },
   );
 };

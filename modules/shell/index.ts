@@ -1,6 +1,6 @@
 import os from "os";
 import path from "path";
-import report from "yurnalist";
+import { report, raw } from "../../utils/logger.ts";
 import inquirer from "inquirer";
 import fs from "fs";
 import process from "process";
@@ -85,14 +85,14 @@ export const run = async ({
         .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
-      console.log(script);
+      raw(script);
     } else if (shellType === "fish") {
       const script = scriptFISH
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
         .replaceAll("<$SHELL_TYPE$>", shellType)
         .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
 
-      console.log(script);
+      raw(script);
     }
 
     return;
@@ -156,30 +156,27 @@ export const run = async ({
     const type = args[1];
 
     if (type !== "local" && type !== "prod") {
-      console.log(
-        `\n Invalid type "${type}". You can use either "local" or "prod".`.red,
+      report.error(
+        `Invalid type "${type}". You can use either "local" or "prod".`,
       );
       return;
     }
 
     if (type === "local") {
       if (!isDevFolder()) {
-        console.log(
-          `\n The current directory (${path.resolve()}) does not seem to be a dev-cli project.`
-            .red,
+        report.error(
+          `The current directory (${path.resolve()}) does not seem to be a dev-cli project.`,
         );
         return;
       }
 
       writeConfig("shell.binary.path", path.resolve("./main.ts"));
-      console.log(`\n Updated config to use LOCAL DEV.`.green);
-      console.log(
-        `\n You may need to restart your terminal for changes to take effect.`
-          .yellow,
+      report.success("Updated config to use LOCAL DEV.");
+      report.warn(
+        "You may need to restart your terminal for changes to take effect.",
       );
-      console.log(
-        ` Verify which version you are using by running "dev" with no arguments`
-          .yellow,
+      report.info(
+        "Verify which version you are using by running \"dev\" with no arguments",
       );
       await source();
 
@@ -188,14 +185,12 @@ export const run = async ({
 
     if (type === "prod") {
       writeConfig("shell.binary.path", undefined);
-      console.log(`\n Updated config to use PRODUCTION.`.green);
-      console.log(
-        `\n You may need to restart your terminal for changes to take effect.`
-          .yellow,
+      report.success("Updated config to use PRODUCTION.");
+      report.warn(
+        "You may need to restart your terminal for changes to take effect.",
       );
-      console.log(
-        ` Verify which version you are using by running "dev" with no arguments`
-          .yellow,
+      report.info(
+        "Verify which version you are using by running \"dev\" with no arguments",
       );
       await source();
 

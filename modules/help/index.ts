@@ -1,6 +1,6 @@
 import "colors";
 
-import report from "yurnalist";
+import { report, raw } from "../../utils/logger.ts";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 
@@ -41,14 +41,14 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
 
       const paddedModule = module.padEnd(padding, " ");
 
-      console.log(
+      raw(
         ` ${paddedModule.green.bold} ${"-".gray} ${CMDS.join(", ")}${
           description ? `\n ${descriptionPad} ${description}` : ""
         }\n`,
       );
     }
 
-    console.log(
+    raw(
       ` ⚠ You can run ${
         `${DEV} help <command>`.green.bold
       } for more information and more examples about any of the listed commands.`,
@@ -60,33 +60,33 @@ export const run = async ({ args, config }: ModuleRunOptions) => {
     if (!fs.existsSync(modulePath)) {
       return report.error(`No help available for ${module}.`);
     }
-    console.log();
+    raw();
     const { help } = await import(modulePath);
     const { description, commands, configs }: HelpDoc = help(DEV);
-    console.log(description.map((i) => `  ${i}`).join("\n"));
-    console.log();
+    raw(description.map((i) => `  ${i}`).join("\n"));
+    raw();
 
     if (commands) {
       commands.forEach(({ cmd, description, examples }) => {
-        console.log(`${"$".yellow} ${DEV.green} ${cmd.green.bold}`);
-        console.log(`  ${description}\n`);
+        raw(`${"$".yellow} ${DEV.green} ${cmd.green.bold}`);
+        raw(`  ${description}\n`);
         if (examples) {
-          console.log("  some examples:\n".blue);
+          raw("  some examples:\n".blue);
           examples.forEach(({ cmd, description }) => {
-            console.log(`  + ${DEV.green} ${cmd.yellow.bold}`);
-            console.log(`    ${description}\n`);
+            raw(`  + ${DEV.green} ${cmd.yellow.bold}`);
+            raw(`    ${description}\n`);
           });
         }
       });
     }
 
     if (configs) {
-      console.log("  configs available:\n".blue);
+      raw("  configs available:\n".blue);
       configs.forEach(({ key, description, def }) => {
-        console.log(
+        raw(
           `  + ${key.yellow} ${def ? `${"default:".gray} ${def.cyan}` : ""}`,
         );
-        console.log(`    ${description}\n`);
+        raw(`    ${description}\n`);
       });
     }
   }

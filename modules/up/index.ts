@@ -1,7 +1,7 @@
 import fs from "fs";
 import { $ } from "zx";
 import path from "path";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 
 import { installNodeDependencies } from "./node.ts";
 import { installRubyDependencies } from "./ruby.ts";

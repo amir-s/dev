@@ -4,7 +4,7 @@ import fs from "fs";
 import { $, sleep } from "zx";
 import path from "path";
 import open from "open";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import yn from "yn";
 
 import { spinner } from "../../utils/spinner.ts";

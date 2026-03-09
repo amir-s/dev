@@ -1,4 +1,6 @@
 import "colors";
+
+import { report } from "../../utils/logger.ts";
 import type { HelpDocFN } from "../help/help.ts";
 
 export const cmd = ["open", "open pr"];
@@ -28,8 +30,5 @@ export const help: HelpDocFN = () => ({
 });
 
 export const generic = () => {
-  console.log(
-    "You can run `dev open pr` to open a browser pointing to the pull request."
-      .gray,
-  );
+  report.info("You can run `dev open pr` to open a browser pointing to the pull request.");
 };

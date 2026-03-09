@@ -1,4 +1,6 @@
 import "colors";
+
+import { report } from "../../utils/logger.ts";
 import type { HelpDocFN } from "../help/help.ts";
 
 export const cmd = ["lan scan", "lan sync <local> <remote>"];
@@ -67,5 +69,5 @@ export const help: HelpDocFN = () => ({
 });
 
 export const generic = () => {
-  console.log("no command specified.".gray);
+  report.info("No command specified.");
 };

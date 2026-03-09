@@ -1,4 +1,6 @@
-import report from "yurnalist";
+import "colors";
+
+import { report, raw } from "../../utils/logger.ts";
 import fetch from "node-fetch";
 import { isIP } from "net";
 import { spinner } from "../../utils/spinner.ts";
@@ -62,12 +64,12 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
     return Math.max(max, key.length);
   }, 0);
 
-  console.log();
+  raw();
 
   for (const key in info) {
     const value = info[key as keyof typeof info];
     if (!value) continue;
-    console.log(
+    raw(
       ` ▸ ${key.padEnd(maxWidth, " ").green}  ${value.toString().bold}`,
     );
   }
