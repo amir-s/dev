@@ -1,5 +1,7 @@
 import "colors";
 
+import { report } from "../../utils/logger.ts";
+
 export const cmd = "clone <repo> <args>";
 export const description =
   "clone a git repository into a new configured directory structure";
@@ -60,5 +62,5 @@ export const help = (DEV: string) => ({
 });
 
 export const generic = () => {
-  console.log("No command specified.".gray);
+  report.info("No command specified.");
 };

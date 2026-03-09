@@ -1,6 +1,6 @@
 import os from "os";
 import { globby } from "zx";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import process from "process";
 import { stringCloseness } from "../../utils/stringCloseness.ts";
 

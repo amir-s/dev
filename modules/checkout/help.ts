@@ -1,5 +1,7 @@
 import "colors";
 
+import { report } from "../../utils/logger.ts";
+
 export const cmd = "checkout <branch name>";
 export const description = [
   "checkout a new branch localy or from remote with tracking.",
@@ -34,5 +36,5 @@ export const help = (DEV: string) => ({
 });
 
 export const generic = () => {
-  console.log("No branch specified.".gray);
+  report.info("No branch specified.");
 };

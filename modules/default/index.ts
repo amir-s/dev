@@ -1,6 +1,7 @@
 import "colors";
 
 import process from "process";
+import { report } from "../../utils/logger.ts";
 import { getCurrentVersion } from "../../utils/version.ts";
 
 const URL = "https://github.com/amir-s/dev";
@@ -9,24 +10,23 @@ export const run = () => {
   const binaryPath = process.env["DEV_CLI_BIN_PATH"];
 
   const version = getCurrentVersion();
-  console.log(`\n Hello!\n This is ${"dev".green} version ${version}.`);
+  report.info(`Hello! This is ${"dev".green} version ${version}.`);
   if (binaryPath && binaryPath !== "dev-cli") {
-    console.log(`\n -> ${"Using LOCAL DEV".inverse} @ ${binaryPath.gray}`);
+    report.info(`Using LOCAL DEV @ ${binaryPath.gray}`);
   }
   if (binaryPath === undefined) {
-    console.log(
-      "\n Shell module is not installed. Some commands do not work without it."
-        .yellow,
+    report.warn(
+      "Shell module is not installed. Some commands do not work without it.",
     );
-    console.log(
-      ` You can install it by running ${"dev shell install".inverse}.`.yellow,
+    report.info(
+      `You can install it by running ${"dev shell install".inverse}.`,
     );
   }
-  console.log(`\n The documentation and this messages are still WIP.`.gray);
-  console.log(
-    ` ${"You can check".gray} ${URL.white.underline} ${"to learn more.".gray}`,
+  report.info(`The documentation and this messages are still WIP.`);
+  report.info(
+    `You can check ${URL.white.underline} to learn more.`,
   );
-  console.log(
-    ` ${"You can also run".gray} ${"dev help".yellow} ${"to see a summary of all the available commands.".gray}`,
+  report.info(
+    `You can also run ${"dev help".yellow} to see a summary of all the available commands.`,
   );
 };

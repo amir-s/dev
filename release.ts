@@ -1,5 +1,6 @@
 import "colors";
 import inquirer from "inquirer";
+import { report } from "./utils/logger.ts";
 import { getCurrentVersion } from "./utils/version.ts";
 import semver from "semver";
 import {
@@ -18,12 +19,8 @@ const denoJsonVersion = `v${denoConfig.version}`;
 const currentVersion = `v${getCurrentVersion()}`;
 
 if (currentVersion !== denoJsonVersion) {
-  console.error(
-    "Version mismatch between current version and deno.json version.",
-    {
-      currentVersion,
-      denoJsonVersion,
-    },
+  report.error(
+    `Version mismatch between current version and deno.json version: ${currentVersion} vs ${denoJsonVersion}`,
   );
 
   Deno.exit(1);
@@ -48,18 +45,18 @@ const { releaseType } = await inquirer.prompt([
 ]);
 
 if (!releaseType) {
-  console.error("Invalid release type");
+  report.error("Invalid release type");
   Deno.exit(1);
 }
 
 const newVersion = semver.inc(denoConfig.version, releaseType);
 
 if (!newVersion) {
-  console.error("Invalid new version");
+  report.error("Invalid new version");
   Deno.exit(1);
 }
 
-console.log(` Releasing version v${newVersion.green}`);
+report.info(`Releasing version v${newVersion.green}`);
 
 // change version in version.ts
 const versionFile = await Deno.readTextFile(VERSION_TS_FILE);
@@ -79,4 +76,4 @@ await Deno.writeTextFile(
 await commitAndTag(newVersion);
 await pushChanges();
 
-console.log(`Successfully tagged and pushed ${newVersion.green}`);
+report.success(`Successfully tagged and pushed ${newVersion.green}`);

@@ -1,5 +1,5 @@
 import fs from "fs";
-import report from "yurnalist";
+import { raw, report } from "../../utils/logger.ts";
 
 const KV_FILE = ".dev.json";
 
@@ -23,7 +23,7 @@ const setupKV = () => {
   Deno.writeTextFileSync(KV_FILE, "{}");
 
   const addedTo = ignoreFile(KV_FILE);
-  console.log();
+  raw();
   if (addedTo.length === 0) {
     report.info(`${KV_FILE.green} was created.`);
   } else {
@@ -37,7 +37,7 @@ const setupKV = () => {
   report.info(
     `You will use this file to store your configuration for dev.json. You can modify it manually!`,
   );
-  console.log();
+  raw();
 };
 
 const readKV = function <T>(scope: string, key: string): T | null {

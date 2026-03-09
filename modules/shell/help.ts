@@ -1,6 +1,6 @@
 import "colors";
 
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 
 export const cmd = ["shell install", "shell use <local|prod>"];
 export const description = "install or use a shell integration";
@@ -22,7 +22,7 @@ export const help = (DEV: string) => ({
 });
 
 export const generic = () => {
-  console.log("No command specified.".gray);
+  report.info("No command specified.");
 };
 
 export const shellInstallSuccess = (installCommand: string, file: string) => {

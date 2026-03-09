@@ -1,6 +1,6 @@
 import "colors";
 import { $ } from "zx";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import inquirer from "inquirer";
 import { kv } from "./kv.ts";
 

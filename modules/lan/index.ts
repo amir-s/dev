@@ -1,5 +1,5 @@
 import { $ } from "zx";
-import report from "yurnalist";
+import { raw, report } from "../../utils/logger.ts";
 import * as help from "./help.ts";
 import { spinner } from "../../utils/spinner.ts";
 import { Writable } from "stream";
@@ -313,13 +313,13 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
     const maxWith = Math.max(...vendors.map((i: string) => (i ? i.length : 0)));
 
     if (outputList || skipMacLookup) {
-      console.log();
+      raw();
       for (let i = 0; i < table.length; i++) {
         const { ip, mac } = table[i];
         const domain = domains[i] || "";
         const vendor = vendors[i] || "";
 
-        console.log(
+        raw(
           `⚡ ${ip.padEnd(15, " ").white} ${`(${mac})`.gray} ${
             vendor.padEnd(maxWith, " ").gray
           } ${domain.yellow}`,
@@ -344,14 +344,14 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
       }
       groups["unknown"] = unknowns;
 
-      console.log();
+      raw();
       for (const vendor in groups) {
         const group = groups[vendor];
         if (!group.length) {
           continue;
         }
 
-        console.log(` 🏢 ${vendor.bold} ${`(${group.length})`.gray}`);
+        raw(` 🏢 ${vendor.bold} ${`(${group.length})`.gray}`);
 
         for (const { ip, mac, domain } of group) {
           let serviceDomains = "";
@@ -369,13 +369,13 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
               services = `(${servicesList.join(" ")})`;
             }
           }
-          console.log(
+          raw(
             ` ⚡ ${ip.padEnd(15, " ").white} ${
               `(${mac})`.gray
             } ${domain.green} ${serviceDomains.yellow}${services.blue}`,
           );
         }
-        console.log();
+        raw();
       }
     }
     process.exit(0);
