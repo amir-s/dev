@@ -1,5 +1,5 @@
 import fs from "fs";
-import { report, raw } from "../../utils/logger.ts";
+import { raw, report } from "../../utils/logger.ts";
 
 const KV_FILE = ".dev.json";
 

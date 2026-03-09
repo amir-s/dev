@@ -1,7 +1,7 @@
 import "colors";
 
 import process from "process";
-import { report, raw } from "../../utils/logger.ts";
+import { raw } from "../../utils/logger.ts";
 import { getCurrentVersion } from "../../utils/version.ts";
 import { spinner } from "../../utils/spinner.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";

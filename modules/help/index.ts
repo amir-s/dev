@@ -1,6 +1,6 @@
 import "colors";
 
-import { report, raw } from "../../utils/logger.ts";
+import { raw, report } from "../../utils/logger.ts";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 

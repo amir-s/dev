@@ -1,6 +1,6 @@
 import os from "os";
 import path from "path";
-import { report, raw } from "../../utils/logger.ts";
+import { raw, report } from "../../utils/logger.ts";
 import inquirer from "inquirer";
 import fs from "fs";
 import process from "process";
@@ -176,7 +176,7 @@ export const run = async ({
         "You may need to restart your terminal for changes to take effect.",
       );
       report.info(
-        "Verify which version you are using by running \"dev\" with no arguments",
+        'Verify which version you are using by running "dev" with no arguments',
       );
       await source();
 
@@ -190,7 +190,7 @@ export const run = async ({
         "You may need to restart your terminal for changes to take effect.",
       );
       report.info(
-        "Verify which version you are using by running \"dev\" with no arguments",
+        'Verify which version you are using by running "dev" with no arguments',
       );
       await source();
 

@@ -30,5 +30,7 @@ export const help: HelpDocFN = () => ({
 });
 
 export const generic = () => {
-  report.info("You can run `dev open pr` to open a browser pointing to the pull request.");
+  report.info(
+    "You can run `dev open pr` to open a browser pointing to the pull request.",
+  );
 };

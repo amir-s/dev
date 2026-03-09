@@ -1,7 +1,7 @@
 import "colors";
 
 import process from "process";
-import { report, raw } from "../../utils/logger.ts";
+import { report } from "../../utils/logger.ts";
 import { getCurrentVersion } from "../../utils/version.ts";
 
 const URL = "https://github.com/amir-s/dev";

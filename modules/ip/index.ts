@@ -1,6 +1,6 @@
 import "colors";
 
-import { report, raw } from "../../utils/logger.ts";
+import { raw, report } from "../../utils/logger.ts";
 import fetch from "node-fetch";
 import { isIP } from "net";
 import { spinner } from "../../utils/spinner.ts";

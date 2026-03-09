@@ -1,5 +1,5 @@
 import { $ } from "zx";
-import { report, raw } from "../../utils/logger.ts";
+import { raw, report } from "../../utils/logger.ts";
 import * as help from "./help.ts";
 import { spinner } from "../../utils/spinner.ts";
 import { Writable } from "stream";
