@@ -1,13 +1,32 @@
 import { $ } from "zx";
 import report from "yurnalist";
 import process from "process";
+import inquirer from "inquirer";
 
 $.verbose = false;
 
 import * as help from "./help.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";
 
-export const run = async ({ args }: ModuleRunOptions) => {
+const findWorktreePath = async (branch: string): Promise<string | null> => {
+  const result = await $`git worktree list --porcelain`;
+  const blocks = result.stdout.trim().split("\n\n");
+  for (const block of blocks) {
+    const lines = block.trim().split("\n");
+    const worktreeLine = lines.find((l) => l.startsWith("worktree "));
+    const branchLine = lines.find((l) => l.startsWith("branch "));
+    if (
+      worktreeLine &&
+      branchLine &&
+      (branchLine.endsWith(`/${branch}`) || branchLine === `branch ${branch}`)
+    ) {
+      return worktreeLine.replace("worktree ", "").trim();
+    }
+  }
+  return null;
+};
+
+export const run = async ({ args, cd }: ModuleRunOptions) => {
   if (args.length === 0) {
     help.generic();
     return;
@@ -28,6 +47,63 @@ export const run = async ({ args }: ModuleRunOptions) => {
 
   const branchExistsLocally = await $`git branch --list ${branch}`;
   if (branchExistsLocally.stdout.trim() !== "") {
+    // Check if the branch is already checked out in a worktree
+    let worktreePath: string | null = null;
+    try {
+      worktreePath = await findWorktreePath(branch);
+    } catch (_) {
+      // ignore, proceed normally
+    }
+
+    if (worktreePath) {
+      report.warn(
+        `Branch ${branch.yellow} is already checked out at ${worktreePath.cyan}`,
+      );
+
+      const { action } = await inquirer.prompt<{ action: string }>([
+        {
+          type: "list",
+          name: "action",
+          message: "What do you want to do?",
+          choices: [
+            { name: `cd into ${worktreePath}`, value: "cd" },
+            {
+              name: "delete and prune the worktree, then checkout here",
+              value: "delete",
+            },
+            { name: "abort", value: "abort" },
+          ],
+          default: "cd",
+        },
+      ]);
+
+      if (action === "abort") {
+        report.info("Aborted.");
+        process.exit(0);
+      }
+
+      if (action === "cd") {
+        report.command(`cd ${worktreePath}`);
+        await cd(worktreePath);
+        process.exit(0);
+      }
+
+      if (action === "delete") {
+        report.command(`git worktree remove ${worktreePath}`);
+        try {
+          await $`git worktree remove ${worktreePath}`;
+        } catch (_) {
+          report.error(
+            `Worktree at ${worktreePath.cyan} has uncommitted changes. cd into it and clean up first.`,
+          );
+          process.exit(1);
+        }
+        report.command(`git worktree prune`);
+        await $`git worktree prune`;
+        report.success(`Worktree at ${worktreePath.cyan} removed.`);
+      }
+    }
+
     report.command(`git checkout ${branch}`);
     await $`git checkout ${branch}`;
     process.exit(0);

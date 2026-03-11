@@ -12,6 +12,10 @@ export const help = (DEV: string) => ({
     } will checkout a new branch locally or from remote with tracking.`,
     "+ if the branch exists locally, it will be checked out.",
     "+ if the branch exists remotely, it will be checked out with tracking.",
+    "+ if the branch is already checked out in a worktree, you will be prompted to:",
+    "  - cd into the worktree (default)",
+    "  - delete and prune the worktree, then checkout here (fails if worktree has uncommitted changes)",
+    "  - abort",
   ],
   commands: [
     {
