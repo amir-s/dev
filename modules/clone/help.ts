@@ -53,7 +53,7 @@ export const help = (DEV: string) => ({
     {
       key: "clone.ssh",
       description:
-        `If dev is needs craft the remote url via ${"ssh".green} when a short format repo (example: amir-s/dev) is provided. If set to false, it'll use ${"https".green}.`,
+        `If dev needs to craft the remote url via ${"ssh".green} when a short format repo (example: amir-s/dev) is provided. If set to false, it'll use ${"https".green}.`,
       def: "true",
     },
   ],
