@@ -1,5 +1,7 @@
 import "colors";
 
+import { report } from "../../utils/logger.ts";
+
 export const cmd = "create <name> [--public|--private]";
 export const description = "create a GitHub repository and clone it locally";
 
@@ -24,5 +26,5 @@ export const help = (DEV: string) => ({
 });
 
 export const generic = () => {
-  console.log("No command specified.".gray);
+  report.info("No command specified.");
 };

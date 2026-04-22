@@ -3,7 +3,7 @@ import "colors";
 import os from "os";
 import path from "path";
 import fs from "fs";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 
 import * as help from "./help.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";

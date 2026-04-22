@@ -1,6 +1,6 @@
 import os from "os";
 import { globby } from "zx";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import { calculateCloseness } from "../cd/index.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";
 

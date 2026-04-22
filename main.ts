@@ -7,6 +7,7 @@ import process from "process";
 
 import sudoBlock from "sudo-block";
 
+import { report } from "./utils/logger.ts";
 import { load } from "./modules/config/index.ts";
 import { stringCloseness } from "./utils/stringCloseness.ts";
 import { list as getContextualCommands } from "./modules/contextual/list.ts";
@@ -48,7 +49,7 @@ const shellExec = (cmd: string): unknown => {
     return fs.appendFileSync(DEV_CLI_CMD_EXEC_FILE, command);
   }
 
-  console.log(
+  report.warn(
     "DEV_CLI_CMD_EXEC_FILE has no value, possibly because shell module is not installed",
   );
 
@@ -131,7 +132,7 @@ const execute = async () => {
   }
 
   if (!module) {
-    console.log(`Module "${args[0]}" not found.`);
+    report.error(`Module "${args[0]}" not found.`);
     return;
   }
 

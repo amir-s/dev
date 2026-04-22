@@ -3,7 +3,7 @@ import "colors";
 import fetch from "node-fetch";
 import { $ } from "zx";
 import { spinner } from "../../utils/spinner.ts";
-import report from "yurnalist";
+import { report } from "../../utils/logger.ts";
 import yn from "yn";
 import { getCurrentVersion } from "../../utils/version.ts";
 import type { ModuleRunOptions } from "../../utils/types.ts";
