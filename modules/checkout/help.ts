@@ -2,7 +2,7 @@ import "colors";
 
 export const cmd = "checkout <branch name>";
 export const description = [
-  "checkout a new branch localy or from remote with tracking.",
+  "checkout a new branch locally or from remote with tracking.",
 ];
 
 export const help = (DEV: string) => ({
