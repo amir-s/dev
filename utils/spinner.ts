@@ -7,11 +7,8 @@ export const spinner = async <T>(
   const spinner = report.activity();
   spinner.tick(title);
   try {
-    const result = await fn();
+    return await fn();
+  } finally {
     spinner.end();
-    return result;
-  } catch (err) {
-    spinner.end();
-    throw err;
   }
 };
