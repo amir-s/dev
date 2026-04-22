@@ -144,19 +144,17 @@ export const run = async ({ config, args, cd }: ModuleRunOptions) => {
 
   if (ssh && !isKnownHost(org)) {
     report.warn(`using ssh but ${org} is not in the known hosts.`);
+    report.command(`ssh-keyscan ${org} >> ~/.ssh/known_hosts`);
     await spinner(`adding ${org} to known hosts`, async () => {
-      report.command(`ssh-keyscan ${org} >> ~/.ssh/known_hosts`);
       await $`ssh-keyscan ${org} >> ~/.ssh/known_hosts`;
     });
   }
 
+  const forwardedArgs = args.slice(1);
+  report.command(`git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`);
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
-      const forwardedArgs = args.slice(1);
-      report.command(
-        `git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`,
-      );
       return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`
         .nothrow();
     },
