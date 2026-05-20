@@ -24,4 +24,12 @@ function <$SHELL_FN_NAME$>
     rm -f $tempfile
     return $exitcode
 end
+
+function cd --wraps=cd
+    builtin cd $argv
+
+    if test -f "dev.json"
+        dev _cd
+    end
+end
 `;
