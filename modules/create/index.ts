@@ -83,7 +83,7 @@ const askVisibility = async (): Promise<"public" | "private"> => {
     visibility: "public" | "private";
   }>([
     {
-      type: "list",
+      type: "select",
       name: "visibility",
       message: "Repository visibility?",
       choices: ["public", "private"],

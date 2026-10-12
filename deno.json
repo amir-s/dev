@@ -11,7 +11,7 @@
     "chokidar": "npm:chokidar@^3.6.0",
     "colors": "npm:colors@^1.4.0",
     "dns-zonefile": "npm:dns-zonefile@^0.3.2",
-    "inquirer": "npm:inquirer@^11.1.0",
+    "inquirer": "npm:inquirer@^14.2.3",
     "javascript-time-ago": "npm:javascript-time-ago@^2.6.4",
     "node-fetch": "npm:node-fetch@^3.3.2",
     "open": "npm:open@^10.2.0",

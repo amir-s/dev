@@ -30,7 +30,7 @@ export const SHELLS = [
 const getShellProfile = async () => {
   const { type } = await inquirer.prompt([
     {
-      type: "list",
+      type: "select",
       name: "type",
       message: "Which shell do you want to install to?",
       choices: SHELLS.map((shell) => {

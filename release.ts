@@ -38,7 +38,7 @@ await ensureReleaseChecks();
 
 const { releaseType } = await inquirer.prompt([
   {
-    type: "list",
+    type: "select",
     name: "releaseType",
     message:
       `What type of release is this? (Current version is ${currentVersion.green})`,

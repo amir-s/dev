@@ -62,7 +62,7 @@ export const run = async ({ args, cd }: ModuleRunOptions) => {
 
       const { action } = await inquirer.prompt<{ action: string }>([
         {
-          type: "list",
+          type: "select",
           name: "action",
           message: "What do you want to do?",
           choices: [

@@ -73,7 +73,7 @@ export const run = async () => {
 
   const { run } = (await inquirer.prompt([
     {
-      type: "list",
+      type: "select",
       name: "run",
       message: "Do you want to run the script?",
       choices: CHOICES,
