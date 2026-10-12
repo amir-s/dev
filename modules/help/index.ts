@@ -1,6 +1,6 @@
 import "colors";
 
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 

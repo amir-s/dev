@@ -18,7 +18,6 @@
     "semver": "npm:semver@^7.8.5",
     "sudo-block": "npm:sudo-block@^5.0.0",
     "yn": "npm:yn@^5.1.0",
-    "yurnalist": "npm:yurnalist@^2.1.0",
     "zx": "npm:zx@^7.2.4",
     "fs": "node:fs",
     "path": "node:path",

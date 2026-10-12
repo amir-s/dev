@@ -1,4 +1,4 @@
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 import fetch from "node-fetch";
 import { isIP } from "net";
 import { spinner } from "../../utils/spinner.ts";

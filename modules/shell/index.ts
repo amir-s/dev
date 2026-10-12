@@ -1,6 +1,6 @@
 import os from "os";
 import path from "path";
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 import inquirer from "inquirer";
 import fs from "fs";
 import process from "process";

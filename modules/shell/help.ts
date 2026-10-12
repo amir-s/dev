@@ -1,6 +1,6 @@
 import "colors";
 
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 
 export const cmd = ["shell install", "shell use <local|prod>"];
 export const description = "install or use a shell integration";

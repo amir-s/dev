@@ -1,4 +1,4 @@
-import report from "yurnalist";
+import report from "./report.ts";
 
 export const spinner = async <T>(
   title: string,

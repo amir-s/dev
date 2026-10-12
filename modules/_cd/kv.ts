@@ -1,5 +1,5 @@
 import fs from "fs";
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 
 const KV_FILE = ".dev.json";
 

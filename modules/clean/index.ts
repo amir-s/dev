@@ -1,5 +1,5 @@
 import { $, fs } from "zx";
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 import process from "process";
 import { spinner } from "../../utils/spinner.ts";
 import inquirer from "inquirer";

@@ -1,5 +1,5 @@
 import { $ } from "zx";
-import report from "yurnalist";
+import report from "../../utils/report.ts";
 import { spinner } from "../../utils/spinner.ts";
 
 const isInstalled = async (name: string) => {

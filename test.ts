@@ -1,5 +1,5 @@
 import path from "path";
-import report from "yurnalist";
+import report from "./utils/report.ts";
 import process from "process";
 
 interface Test {

@@ -80,10 +80,10 @@ repository.
   (auto-added to common ignore files). Approved commands then run
   non-interactively on future cd.
 
-- **Notable utilities:** utils/spinner.ts wraps yurnalist activity spinners.
-  utils/version.ts stores the current version used by main and release.
-  utils/release.ts contains release guardrails. utils/knownhosts.ts supports SSH
-  known_hosts checks used by clone.
+- **Notable utilities:** utils/report.ts provides CLI messages and activity
+  spinners, wrapped by utils/spinner.ts. utils/version.ts stores the current
+  version used by main and release. utils/release.ts contains release
+  guardrails. utils/knownhosts.ts supports SSH known_hosts checks used by clone.
 
 - **Networking and system modules:** modules/lan uses arp, dns-sd, dig,
   chokidar, and a MAC vendor lookup to scan and group devices. modules/ip calls
