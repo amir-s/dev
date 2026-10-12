@@ -33,7 +33,7 @@ jobs:
             target: aarch64-unknown-linux-gnu
             runner: ubuntu-latest
     concurrency:
-      group: release-build-${{ github.ref }}
+      group: release-build-${{ github.ref }}-${{ matrix.target }}
       cancel-in-progress: false
 
     steps:

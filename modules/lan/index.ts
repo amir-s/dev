@@ -42,7 +42,7 @@ const getTable = async () => {
 type IPInfo = Awaited<ReturnType<typeof getTable>>[number];
 
 const reverseMDNS = (ip: string, timeout: number): Promise<string | null> => {
-  let to: number;
+  let to: ReturnType<typeof setTimeout>;
 
   const timeoutPromise = new Promise<null>((resolve) => {
     to = setTimeout(() => {
@@ -78,7 +78,7 @@ const getMacVendors = (table: IPInfo[]) => {
 
 const listServices = (timeout: number): Promise<string[]> => {
   let output = "";
-  let to: number;
+  let to: ReturnType<typeof setTimeout>;
 
   const parse = (data: string) => {
     return Array.from(
@@ -127,7 +127,7 @@ const serviceInstances = (
   servers: Server[];
 }> => {
   let output = "";
-  let to: number;
+  let to: ReturnType<typeof setTimeout>;
 
   const parse = (data: string) => {
     // parser does not like parentheses in names
@@ -191,7 +191,7 @@ const serverDetails = (
   ips: string[];
 }> => {
   let output = "";
-  let to: number;
+  let to: ReturnType<typeof setTimeout>;
 
   const parse = (data: string) => {
     return {
