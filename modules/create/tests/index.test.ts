@@ -34,6 +34,10 @@ exit 1
 
       assert.equal(result.code, 0);
       assert.match(output, /Repository creation failed\. \(HTTP 422\)/);
+      assert.equal(
+        (output.match(/Repository creation failed/g) ?? []).length,
+        1,
+      );
       assert.match(output, /Validation Failed/);
       assert.match(output, /name: already exists/);
     } finally {

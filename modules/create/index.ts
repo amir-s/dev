@@ -203,7 +203,7 @@ export const run = async ({
       "auto_init=true",
     ];
 
-    const result = await $`${cmd}`.nothrow();
+    const result = await $`${cmd}`.quiet().nothrow();
     if (result.exitCode !== 0) {
       const stderr = result.stderr.trim();
       report.error(stderr || `failed to create ${fullName}`);
