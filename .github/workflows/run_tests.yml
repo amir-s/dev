@@ -43,5 +43,8 @@ jobs:
       - name: Test
         run: deno task test
 
+      - name: Installer tests
+        run: bash tests/install.test.sh
+
       - name: Type check
         run: deno check main.ts

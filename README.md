@@ -26,7 +26,7 @@ Restart your terminal. You can use `dev` now.
 
 <details>
 <summary>Show me what this does ^.</summary>
-This script will download [the latest release](https://github.com/amir-s/dev/releases) of `dev` binary according to your OS and architecture, and place it in `~/.local/bin`. It will also add `~/.local/bin` to your `PATH` so you can run `dev` from anywhere.
+This script will download [the latest release](https://github.com/amir-s/dev/releases) of `dev` binary according to your OS and architecture, verify its SHA-256 checksum, and place it in `~/.local/bin`. It will also add `~/.local/bin` to your `PATH` so you can run `dev` from anywhere.
 
 This also installs the shell module by adding this line to your shell profile:
 

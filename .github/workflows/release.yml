@@ -54,11 +54,23 @@ jobs:
           INCLUDES=$(find modules -type f -name "*.ts" -exec echo --include={} \; | xargs)
           deno compile -A $INCLUDES --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
 
+      - name: Checksum
+        shell: bash
+        run: |
+          binary=dev-${{ matrix.os }}-${{ matrix.architecture }}
+          if command -v sha256sum >/dev/null 2>&1; then
+            sha256sum "$binary" > "$binary.sha256"
+          else
+            shasum -a 256 "$binary" > "$binary.sha256"
+          fi
+
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v4
         with:
           name: dev-${{ matrix.os }}-${{ matrix.architecture }}
-          path: dev-${{ matrix.os }}-${{ matrix.architecture }}
+          path: |
+            dev-${{ matrix.os }}-${{ matrix.architecture }}
+            dev-${{ matrix.os }}-${{ matrix.architecture }}.sha256
 
   release:
     needs: build
