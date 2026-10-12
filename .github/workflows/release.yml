@@ -51,7 +51,7 @@ jobs:
 
       - name: Build for ${{ matrix.os }}-${{ matrix.architecture }}
         run: |
-          INCLUDES=$(find modules -type f -name "*.ts" -exec echo --include={} \; | xargs)
+          INCLUDES=$(find modules -type f -name "*.ts" ! -path "*/tests/*" -exec echo --include={} \; | xargs)
           deno compile -A $INCLUDES --target ${{ matrix.target }} --output dev-${{ matrix.os }}-${{ matrix.architecture }} main.ts
 
       - name: Checksum
