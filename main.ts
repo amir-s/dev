@@ -13,6 +13,7 @@ import { list as getContextualCommands } from "./modules/contextual/list.ts";
 
 import { SHELLS } from "./modules/shell/index.ts";
 import { getCurrentVersion } from "./utils/version.ts";
+import report from "./utils/report.ts";
 
 import type { ModuleRunOptions } from "./utils/types.ts";
 
@@ -144,6 +145,7 @@ const execute = async () => {
     cd,
     source,
   } as ModuleRunOptions);
+  if (report.hasErrors()) process.exitCode = 1;
 };
 
 execute();

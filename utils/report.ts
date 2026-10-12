@@ -5,6 +5,7 @@ const message = (value: unknown) =>
   value instanceof Error ? value.stack ?? value.message : String(value);
 
 let stopActivity: (() => void) | undefined;
+let hasErrors = false;
 
 const log = (
   name: string,
@@ -27,7 +28,11 @@ const report = {
     log("warning", "warning".yellow, value, process.stderr);
   },
   error(value: unknown) {
+    hasErrors = true;
     log("error", "error".red, value, process.stderr);
+  },
+  hasErrors() {
+    return hasErrors;
   },
   command(value: unknown) {
     log("command", "command".gray, value, process.stdout);

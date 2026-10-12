@@ -5,6 +5,20 @@ import { describe, test } from "../../../test.ts";
 const main = fileURLToPath(new URL("../../../main.ts", import.meta.url));
 
 describe("create", () => {
+  test("exits nonzero for invalid visibility flags", async () => {
+    const result = await new Deno.Command(Deno.execPath(), {
+      args: ["run", "-A", main, "create", "taken", "--public", "--private"],
+      stdout: "piped",
+      stderr: "piped",
+    }).output();
+
+    assert.equal(result.code, 1);
+    assert.match(
+      new TextDecoder().decode(result.stderr),
+      /cannot specify both --public and --private/,
+    );
+  });
+
   test("shows GitHub validation details when creation fails", async () => {
     const directory = await Deno.makeTempDir();
     try {
@@ -32,7 +46,7 @@ exit 1
       const output = new TextDecoder().decode(result.stdout) +
         new TextDecoder().decode(result.stderr);
 
-      assert.equal(result.code, 0);
+      assert.equal(result.code, 1);
       assert.match(output, /Repository creation failed\. \(HTTP 422\)/);
       assert.equal(
         (output.match(/Repository creation failed/g) ?? []).length,
