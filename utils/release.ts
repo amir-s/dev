@@ -91,6 +91,26 @@ export const ensureUptodateMain = async () => {
   );
 };
 
+export const ensureReleaseChecks = async () => {
+  const checks = [
+    ["lint"],
+    ["fmt", "--check"],
+    ["task", "test"],
+    ["check", "main.ts"],
+  ];
+
+  for (const args of checks) {
+    await runCommand("deno", args, ({ code, stdout, stderr }) => {
+      if (code !== 0) {
+        console.error(`Release check failed: deno ${args.join(" ")}`.red);
+        console.error(stdout);
+        console.error(stderr);
+        Deno.exit(1);
+      }
+    });
+  }
+};
+
 export const commitAndTag = async (version: string) => {
   await runCommand(
     "git",
@@ -118,10 +138,10 @@ export const commitAndTag = async (version: string) => {
   );
 };
 
-export const pushChanges = async () => {
+export const pushChanges = async (version: string) => {
   await runCommand(
     "git",
-    ["push", "origin", "main", "--tags"],
+    ["push", "--atomic", "origin", "main", `v${version}`],
     ({ code, stderr }) => {
       if (code !== 0) {
         console.error(`exit code: ${code}`);

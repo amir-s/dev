@@ -6,6 +6,7 @@ import {
   commitAndTag,
   ensureMainBranch,
   ensureNoUncommitedChanges,
+  ensureReleaseChecks,
   ensureUpdatedOrigin,
   ensureUptodateMain,
   pushChanges,
@@ -33,6 +34,7 @@ await ensureMainBranch();
 await ensureNoUncommitedChanges();
 await ensureUpdatedOrigin();
 await ensureUptodateMain();
+await ensureReleaseChecks();
 
 const { releaseType } = await inquirer.prompt([
   {
@@ -67,6 +69,10 @@ const newVersionFile = versionFile.replace(
   `/**/ "${denoConfig.version}"; /**/`,
   `/**/ "${newVersion}"; /**/`,
 );
+if (newVersionFile === versionFile) {
+  console.error("Could not update version.ts version.");
+  Deno.exit(1);
+}
 await Deno.writeTextFile(VERSION_TS_FILE, newVersionFile);
 
 // change version in deno.json
@@ -77,6 +83,6 @@ await Deno.writeTextFile(
 );
 
 await commitAndTag(newVersion);
-await pushChanges();
+await pushChanges(newVersion);
 
 console.log(`Successfully tagged and pushed ${newVersion.green}`);

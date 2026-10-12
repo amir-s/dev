@@ -19,7 +19,7 @@ navigate different git projects and automate some processes that I do a lot!
 Run the [install script](https://github.com/amir-s/dev/blob/main/install.sh).
 
 ```sh
-curl -o- https://raw.githubusercontent.com/amir-s/dev/refs/heads/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/amir-s/dev/refs/heads/main/install.sh | bash
 ```
 
 Restart your terminal. You can use `dev` now.
@@ -279,9 +279,6 @@ dev shell use prod
 - [ ] Make sure `dev` has correct exit codes and actually fails when it should.
 - [ ] Separate config keys to another method so user can see all possible config
       keys with `dev config list`.
-- [ ] Run project specific commands, reading scripts from `package.json` or some
-      sort of custom scripts file like `.dev.json`, or a `dev` section in
-      package.json.
 - [ ] Make color of the output lines more consistent.
 - [ ] Use [terminal-link](https://github.com/sindresorhus/terminal-link) for
       links in the terminal.

@@ -22,6 +22,7 @@ export const run = async ({ source }: ModuleRunOptions) => {
 
     const version = await spinner(`fetching ${URL}`.gray, async () => {
       const resp = await fetch(URL);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status} fetching ${URL}`);
       const { version } = (await resp.json()) as { version: string };
       return version;
     });
@@ -43,10 +44,10 @@ export const run = async ({ source }: ModuleRunOptions) => {
 
     if (runUpdate) {
       report.info(`updating to ${version.bold}`);
-      report.command(`curl -o- ${INSTALL_SCRIPT} | bash`);
+      report.command(`curl -fsSL ${INSTALL_SCRIPT} | bash`);
 
       await spinner("installing", async () => {
-        await $`curl -o- ${INSTALL_SCRIPT} | bash`;
+        await $`curl -fsSL ${INSTALL_SCRIPT} | bash`;
       });
 
       report.success(`updated to ${version.bold}`);

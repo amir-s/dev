@@ -31,6 +31,9 @@ jobs:
           deno-version: v2.x
           cache: true
 
+      - name: Install dependencies
+        run: deno ci
+
       - name: Lint
         run: deno lint
 

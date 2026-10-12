@@ -4,8 +4,8 @@ GITHUB_USER="amir-s"
 REPO_NAME="dev"
 
 # Fetch the latest version tag from GitHub
-echo -n "🔍 Fetching tha latest version"
-VERSION=$(curl -s "https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+echo -n "🔍 Fetching the latest version"
+VERSION=$(curl -fsSL "https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
 if [ -z "$VERSION" ]; then
   echo "❌ Error: Unable to fetch the latest version information from GitHub."
@@ -54,8 +54,7 @@ DOWNLOAD_URL="https://github.com/${GITHUB_USER}/${REPO_NAME}/releases/download/$
 
 # Download the binary
 echo -n "⬇️  Downloading ${BINARY_NAME} "
-curl -sL -o "${BINARY_NAME}" "${DOWNLOAD_URL}"
-if [ $? -ne 0 ]; then
+if ! curl -fsSL -o "${BINARY_NAME}" "${DOWNLOAD_URL}"; then
     echo "❌ Download failed!"
     exit 1
 fi
@@ -63,11 +62,16 @@ echo -e "\r✅ Downloaded ${BINARY_NAME}               "
 
 # Define the install path in ~/.local/bin
 INSTALL_PATH="$HOME/.local/bin"
-mkdir -p "${INSTALL_PATH}"
+if ! mkdir -p "${INSTALL_PATH}"; then
+    echo "❌ Unable to create install directory!"
+    exit 1
+fi
 
 echo -n "🚚 Moving binaries to ${INSTALL_PATH}"
-mv "${BINARY_NAME}" "${INSTALL_PATH}/dev-cli"
-chmod +x "${INSTALL_PATH}/dev-cli"
+if ! mv "${BINARY_NAME}" "${INSTALL_PATH}/dev-cli" || ! chmod +x "${INSTALL_PATH}/dev-cli"; then
+    echo "❌ Unable to install binary!"
+    exit 1
+fi
 echo -e "\r✅ Moving binaries to ${INSTALL_PATH}"
 
 # Add ~/.local/bin to PATH if it's not already there

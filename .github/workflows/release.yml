@@ -46,6 +46,9 @@ jobs:
           deno-version: v2.x
           cache: true
 
+      - name: Install dependencies
+        run: deno ci
+
       - name: Build for ${{ matrix.os }}-${{ matrix.architecture }}
         run: |
           INCLUDES=$(find modules -type f -name "*.ts" -exec echo --include={} \; | xargs)
