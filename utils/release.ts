@@ -56,7 +56,7 @@ export const ensureNoUncommitedChanges = async () => {
 
 export const ensureUpdatedOrigin = async () => {
   await runCommand("git", ["fetch", "origin"], ({ code, stderr }) => {
-    if (code !== 0 || stderr.trim().length > 0) {
+    if (code !== 0) {
       console.error(`exit code: ${code}`);
       console.error(stderr);
       Deno.exit(1);
@@ -94,9 +94,9 @@ export const ensureUptodateMain = async () => {
 export const commitAndTag = async (version: string) => {
   await runCommand(
     "git",
-    ["commit", "--allow-empty", "-am", `Release v${version}`],
+    ["commit", "--allow-empty", "-am", `chore(release): v${version}`],
     ({ code, stderr }) => {
-      if (code !== 0 || stderr.trim().length > 0) {
+      if (code !== 0) {
         console.error(`exit code: ${code}`);
         console.error(stderr);
         Deno.exit(1);
@@ -108,7 +108,7 @@ export const commitAndTag = async (version: string) => {
     "git",
     ["tag", "-a", `v${version}`, "-m", `Version v${version} release`],
     ({ code, stderr }) => {
-      if (code !== 0 || stderr.trim().length > 0) {
+      if (code !== 0) {
         console.error(`exit code: ${code}`);
         console.error(stderr);
         Deno.exit(1);
@@ -123,7 +123,7 @@ export const pushChanges = async () => {
     "git",
     ["push", "origin", "main", "--tags"],
     ({ code, stderr }) => {
-      if (code !== 0 || stderr.trim().length > 0) {
+      if (code !== 0) {
         console.error(`exit code: ${code}`);
         console.error(stderr);
         Deno.exit(1);
