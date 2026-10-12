@@ -11,6 +11,17 @@ import path from "path";
 import process from "process";
 import type { ModuleRunOptions } from "../../utils/types.ts";
 
+export const watchForSync = (
+  source: string,
+  ignored: string[],
+  onChange: (event: string, path: string) => void,
+  onReady: () => void,
+  options: { usePolling?: boolean } = {},
+) =>
+  chokidar.watch(source, { ignored, ignoreInitial: true, ...options })
+    .on("all", onChange)
+    .on("ready", onReady);
+
 interface Server {
   name: string;
   port: number;
@@ -406,18 +417,17 @@ export const run = async ({ config, args }: ModuleRunOptions) => {
       } -ah ${source} ${target}`;
     };
 
-    chokidar
-      .watch(source, {
-        ignored: ignore,
-        ignoreInitial: true,
-      })
-      .on("all", (event, path) => {
+    watchForSync(
+      source,
+      ignore,
+      (event, path) => {
         report.info(`${event} ${path}`);
         sync();
-      })
-      .on("ready", () => {
+      },
+      () => {
         report.info(`📦 ${source} -> ${target}`);
         sync();
-      });
+      },
+    );
   }
 };
