@@ -35,7 +35,7 @@ const remoteExists = async (branch: string) => {
   );
 };
 
-const getRemoteUrl = async (): Promise<string | null> => {
+export const getRemoteUrl = async (): Promise<string | null> => {
   try {
     const stdout = (await $`git config --get remote.origin.url`).toString();
     const raw = stdout.trim();
