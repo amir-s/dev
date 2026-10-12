@@ -83,12 +83,12 @@ repository.
 - **Notable utilities:** utils/report.ts provides CLI messages and activity
   spinners, wrapped by utils/spinner.ts. utils/version.ts stores the current
   version used by main and release. utils/release.ts contains release
-  guardrails. utils/knownhosts.ts supports SSH known_hosts checks used by clone.
+  guardrails.
 
 - **Networking and system modules:** modules/lan uses arp, dns-sd, dig,
   chokidar, and a MAC vendor lookup to scan and group devices. modules/ip calls
-  ipinfo.io to fetch IP metadata. Several modules rely on git, ssh-keyscan,
-  rsync, and related tools.
+  ipinfo.io to fetch IP metadata. Several modules rely on git, rsync, and
+  related tools.
 
 - **CI and distribution:** GitHub Actions runs tests with Deno 2.x and builds
   multi-OS binaries using deno compile with explicit --include flags. install.sh
@@ -105,5 +105,4 @@ repository.
   Gemfile, or requirements.txt); it errors if multiple are present.
 - dev open pr prevents PRs from protected branches and will offer to push the
   current branch if needed.
-- clone will ssh-keyscan and append unknown hosts to ~/.ssh/known_hosts if
-  clone.ssh is true.
+- clone requires SSH host keys to be trusted before cloning over SSH.

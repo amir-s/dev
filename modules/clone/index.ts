@@ -3,7 +3,6 @@ import fs from "fs";
 import { $ } from "zx";
 import report from "../../utils/report.ts";
 import { spinner } from "../../utils/spinner.ts";
-import { isKnownHost } from "../../utils/knownhosts.ts";
 
 $.verbose = false;
 
@@ -142,19 +141,15 @@ export const run = async ({ config, args, cd }: ModuleRunOptions) => {
     return;
   }
 
-  if (ssh && !isKnownHost(org)) {
-    report.warn(`using ssh but ${org} is not in the known hosts.`);
-    report.command(`ssh-keyscan ${org} >> ~/.ssh/known_hosts`);
-    await spinner(`adding ${org} to known hosts`, async () => {
-      await $`ssh-keyscan ${org} >> ~/.ssh/known_hosts`;
-    });
-  }
-
   const forwardedArgs = args.slice(1);
   report.command(`git clone ${forwardedArgs.join(" ")} ${remote} ${clonePath}`);
   const result = await spinner(
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
+      if (remote.startsWith("git@")) {
+        return await $`GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=yes' git clone ${forwardedArgs} ${remote} ${clonePath}`
+          .nothrow();
+      }
       return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`
         .nothrow();
     },
@@ -163,6 +158,11 @@ export const run = async ({ config, args, cd }: ModuleRunOptions) => {
   if (result.exitCode !== 0) {
     report.error(`failed to clone ${user}/${repo} into ${clonePath}`);
     report.error(result.stderr);
+    if (result.stderr.includes("Host key verification failed")) {
+      report.info(
+        `Verify ${org}'s SSH host key fingerprint with the provider and add it to known_hosts before retrying.`,
+      );
+    }
     return;
   }
 

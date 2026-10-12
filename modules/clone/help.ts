@@ -13,6 +13,7 @@ export const help = (DEV: string) => ({
       `(only if shell-module is installed)`.gray
     }.`,
     `any other provided arguments are forwarded to git clone command.`,
+    `SSH clones require the host key to be verified and trusted in known_hosts.`,
   ],
   commands: [
     {
