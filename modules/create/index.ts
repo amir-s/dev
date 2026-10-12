@@ -103,6 +103,36 @@ const getLogin = async (): Promise<string | null> => {
   }
 };
 
+const getErrorDetails = (output: string): string[] => {
+  if (!output.trim()) return [];
+
+  try {
+    const response = JSON.parse(output) as {
+      message?: string;
+      errors?: Array<
+        string | {
+          field?: string;
+          code?: string;
+          message?: string;
+        }
+      >;
+    };
+
+    const errors = response.errors?.map((error) => {
+      if (typeof error === "string") return error;
+      if (error.message) return error.message;
+      return [error.field, error.code?.replaceAll("_", " ")]
+        .filter(Boolean)
+        .join(": ");
+    }) ?? [];
+
+    const details = [response.message, ...errors].filter(Boolean) as string[];
+    return details.length > 0 ? details : [output.trim()];
+  } catch (_) {
+    return [output.trim()];
+  }
+};
+
 export const run = async ({
   args,
   config,
@@ -175,7 +205,11 @@ export const run = async ({
 
     const result = await $`${cmd}`.nothrow();
     if (result.exitCode !== 0) {
-      report.error(result.stderr);
+      const stderr = result.stderr.trim();
+      report.error(stderr || `failed to create ${fullName}`);
+      for (const detail of getErrorDetails(result.stdout)) {
+        report.error(detail);
+      }
       return false;
     }
     return true;
