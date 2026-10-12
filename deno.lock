@@ -8,7 +8,7 @@
     "npm:inquirer@^14.2.3": "14.2.3",
     "npm:javascript-time-ago@^2.6.4": "2.6.4",
     "npm:node-fetch@^3.3.2": "3.3.2",
-    "npm:open@^10.2.0": "10.2.0",
+    "npm:open@^11.0.4": "11.0.4",
     "npm:semver@^7.8.5": "7.8.5",
     "npm:sudo-block@5": "5.0.0",
     "npm:yn@^5.1.0": "5.1.0",
@@ -231,6 +231,9 @@
       "integrity": "sha512-eljcgEDlEns/7AXFosB5K/2nCM4P7FQPkGc/DWLy5rmFEWvZayGrik1d9/QIY5nJ4f9YsVvBkA6kJpHn9rISdQ==",
       "bin": true
     },
+    "is-in-ssh@1.0.0": {
+      "integrity": "sha512-jYa6Q9rH90kR1vKB6NM7qqd1mge3Fx4Dhw5TVlK1MUBqhEOuCagrEHMevNuCcbECmXZ0ThXkRm+Ymr51HwEPAw=="
+    },
     "is-inside-container@1.0.0": {
       "integrity": "sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA==",
       "dependencies": [
@@ -268,14 +271,19 @@
         "formdata-polyfill"
       ]
     },
-    "open@10.2.0": {
-      "integrity": "sha512-YgBpdJHPyQ2UE5x+hlSXcnejzAvD0b22U2OuAP+8OnlJT+PjWPxtgmGqKKc+RgTM63U9gN0YzrYc71R2WT/hTA==",
+    "open@11.0.4": {
+      "integrity": "sha512-++Zlftm0kVLPmzC06t6epuWmcRMDbI4z5P3NNX979WA/k23+NtSOynEGzsVfZwguKw2mi5umVgnBlJQMwRz4Pg==",
       "dependencies": [
         "default-browser",
         "define-lazy-prop",
+        "is-in-ssh",
         "is-inside-container",
+        "powershell-utils",
         "wsl-utils"
       ]
+    },
+    "powershell-utils@0.2.1": {
+      "integrity": "sha512-C+y9x90UElAddDZmV4qOx9W53B61PO7cIqWz2dQsWlwswuq4mr8NEwytdGKboYbQlGZ3awrkTeNvcZiZNHnQ8A=="
     },
     "readdirp@5.1.1": {
       "integrity": "sha512-Kko+Y5XQ6fM+Ce3dq3m9YGxnacYZYl9cA1wZjaF3Vbry2L3i1qVg8+CAgNPsXRArPMUMCaOR7oa9Nqntc43JKA=="
@@ -310,10 +318,11 @@
     "web-streams-polyfill@3.3.3": {
       "integrity": "sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw=="
     },
-    "wsl-utils@0.1.0": {
-      "integrity": "sha512-h3Fbisa2nKGPxCpm89Hk33lBLsnaGBvctQopaBSOW/uIs6FTe1ATyAnKFJrzVs9vpGdsTe73WF3V4lIsk4Gacw==",
+    "wsl-utils@1.0.1": {
+      "integrity": "sha512-c16PKLIRxBYpR3jSWsdS7SFp0COm5SOQdiFjY818dYFHJbMGuLBszpF07LBWmOS1uzrHa9VGdynsEgoeKy0oOQ==",
       "dependencies": [
-        "is-wsl"
+        "is-wsl",
+        "powershell-utils"
       ]
     },
     "yn@5.1.0": {
@@ -333,7 +342,7 @@
       "npm:inquirer@^14.2.3",
       "npm:javascript-time-ago@^2.6.4",
       "npm:node-fetch@^3.3.2",
-      "npm:open@^10.2.0",
+      "npm:open@^11.0.4",
       "npm:semver@^7.8.5",
       "npm:sudo-block@5",
       "npm:yn@^5.1.0",
