@@ -1,6 +1,6 @@
 import assert from "assert";
 import path from "path";
-import { describe, test } from "../../../test.ts";
+import { describe, test } from "node:test";
 import { watchForSync } from "../index.ts";
 
 describe("lan sync watcher", () => {

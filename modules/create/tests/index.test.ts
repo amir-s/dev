@@ -1,6 +1,6 @@
 import assert from "assert";
 import { fileURLToPath } from "url";
-import { describe, test } from "../../../test.ts";
+import { describe, test } from "node:test";
 
 const main = fileURLToPath(new URL("../../../main.ts", import.meta.url));
 

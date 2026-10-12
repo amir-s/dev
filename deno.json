@@ -3,7 +3,7 @@
   "exports": "./main.ts",
   "version": "1.4.0",
   "tasks": {
-    "test": "deno run -A test.ts modules/*/tests/*.test.ts",
+    "test": "deno test -A",
     "release": "deno run -A release.ts"
   },
   "imports": {

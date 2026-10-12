@@ -1,7 +1,7 @@
 import assert from "assert";
 import path from "path";
 import { parseArgument, run } from "../index.ts";
-import { describe, test } from "../../../test.ts";
+import { describe, test } from "node:test";
 
 interface Testcase {
   org: string;

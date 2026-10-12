@@ -22,7 +22,7 @@ repository.
 
 - Run a single test file:
   ```bash
-  deno run -A test.ts modules/{module}/tests/{file}.test.ts
+  deno test -A modules/{module}/tests/{file}.test.ts
   ```
 
 - Format and lint:
@@ -58,8 +58,7 @@ repository.
 
 - **Module pattern:** Each module resides under modules/NAME. index.ts exports
   run(), and help.ts exports help metadata. Tests live in
-  modules/NAME/tests/*.test.ts and are invoked by the custom test runner
-  (test.ts).
+  modules/NAME/tests/*.test.ts and run with deno test.
 
 - **Configuration:** modules/config loads and persists ~/.dev.config.json,
   exposing config(key, default?) and writeConfig(). Notable keys: clone.path,
