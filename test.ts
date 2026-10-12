@@ -62,4 +62,7 @@ runFiles()
       process.exit(1);
     }
   })
-  .catch(console.error);
+  .catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
