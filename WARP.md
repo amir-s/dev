@@ -75,9 +75,9 @@ repository.
   package.json scripts.
 
 - **_cd hooks:** If a project's dev.json defines scripts._cd, modules/_cd
-  prompts on first run and records allow/deny in a project-local .dev.json
-  (auto-added to common ignore files). Approved commands then run
-  non-interactively on future cd.
+  prompts on first run and records allow/deny in ~/.dev/trust/, keyed by the
+  canonical project path. Project-local .dev.json files are never trusted.
+  Approved commands then run non-interactively on future cd.
 
 - **Notable utilities:** utils/report.ts provides CLI messages and activity
   spinners, wrapped by utils/spinner.ts. utils/version.ts stores the current

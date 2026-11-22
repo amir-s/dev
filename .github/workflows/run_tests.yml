@@ -34,6 +34,14 @@ jobs:
       - name: Install dependencies
         run: deno ci
 
+      - name: Install shells for integration tests
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y fish zsh
+
+      - name: Audit dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: deno audit
+
       - name: Lint
         run: deno lint
 

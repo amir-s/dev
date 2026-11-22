@@ -19,6 +19,19 @@ describe("open remote URL", () => {
 
       Deno.env.set("DEV_OPEN_TEST_URL", "https://github.com/amir-s/dev.git");
       assert.equal(await getRemoteUrl(), "https://github.com/amir-s/dev");
+
+      for (
+        const remote of [
+          "file:///tmp/application.app",
+          "/tmp/application.app",
+          "javascript:alert(1)",
+          "vscode://file/tmp/project",
+          "ext::sh -c command",
+        ]
+      ) {
+        Deno.env.set("DEV_OPEN_TEST_URL", remote);
+        assert.equal(await getRemoteUrl(), null, remote);
+      }
     } finally {
       if (previousPath === undefined) Deno.env.delete("PATH");
       else Deno.env.set("PATH", previousPath);

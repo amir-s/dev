@@ -7,15 +7,15 @@
     "release": "deno run -A release.ts"
   },
   "imports": {
-    "@network-utils/vendor-lookup": "npm:@network-utils/vendor-lookup@^1.0.14",
+    "@network-utils/vendor-lookup": "npm:@network-utils/vendor-lookup@^1.0.15",
     "chokidar": "npm:chokidar@^5.0.0",
     "colors": "npm:colors@^1.4.0",
-    "dns-zonefile": "npm:dns-zonefile@^0.3.2",
+    "dns-zonefile": "npm:dns-zonefile@^0.3.3",
     "inquirer": "npm:inquirer@^14.2.3",
     "javascript-time-ago": "npm:javascript-time-ago@^2.6.4",
     "node-fetch": "npm:node-fetch@^3.3.2",
     "open": "npm:open@^11.0.4",
-    "semver": "npm:semver@^7.8.5",
+    "semver": "npm:semver@^7.8.6",
     "sudo-block": "npm:sudo-block@^5.0.0",
     "yn": "npm:yn@^5.1.0",
     "zx": "npm:zx@^8.8.5",

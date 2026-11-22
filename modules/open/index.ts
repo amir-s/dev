@@ -40,12 +40,13 @@ export const getRemoteUrl = async (): Promise<string | null> => {
     const stdout = (await $`git config --get remote.origin.url`).toString();
     const raw = stdout.trim();
     if (!raw) return null;
-    if (raw.startsWith("git@")) {
-      const hostPath = raw.replace(":", "/").replace(/^git@/, "");
-      const withoutGit = hostPath.replace(/\.git$/, "");
-      return `https://${withoutGit}`;
-    }
-    return raw.replace(/\.git$/, "");
+    const remote = raw.startsWith("git@")
+      ? `https://${raw.replace(":", "/").replace(/^git@/, "")}`
+      : raw;
+    const url = new URL(remote);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+    url.pathname = url.pathname.replace(/\.git\/?$/, "");
+    return url.toString();
   } catch (_) {
     // No remote configured (or git returned non-zero)
     return null;
@@ -76,7 +77,7 @@ export const run = async ({ args }: ModuleRunOptions) => {
   if (!remoteUrl) {
     const branch = await getCurrentBranch();
     report.error(
-      'this repository does not have a git remote configured (missing "origin").',
+      'this repository needs an HTTP(S) or Git SSH "origin" remote to open in a browser.',
     );
     report.info("tip: add a remote and push your branch:".gray);
     report.info(`  ${"git remote add origin URL".bold}`);

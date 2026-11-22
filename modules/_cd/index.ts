@@ -2,7 +2,7 @@ import "colors";
 import { $ } from "zx";
 import report from "../../utils/report.ts";
 import inquirer from "inquirer";
-import { kv } from "./kv.ts";
+import { createKV } from "./kv.ts";
 
 interface Scripts {
   _cd?: string;
@@ -29,6 +29,7 @@ export const run = async () => {
   }
 
   const script = scripts["_cd"];
+  const kv = createKV();
 
   const allowedCommands = kv.read<Record<string, boolean>>("_cd", "allowed") ||
     {};
@@ -46,11 +47,16 @@ export const run = async () => {
       return true;
     }
 
-    if (bannedCommands[command]) {
+    if (
+      Object.hasOwn(bannedCommands, command) && bannedCommands[command] === true
+    ) {
       return false;
     }
 
-    if (allowedCommands[command]) {
+    if (
+      Object.hasOwn(allowedCommands, command) &&
+      allowedCommands[command] === true
+    ) {
       return true;
     }
 

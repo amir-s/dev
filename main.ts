@@ -1,6 +1,5 @@
 #!/usr/bin/env -S deno run -A
 
-import fs from "fs";
 import os from "os";
 import path from "path";
 import process from "process";
@@ -14,6 +13,7 @@ import { list as getContextualCommands } from "./modules/contextual/list.ts";
 import { SHELLS } from "./modules/shell/index.ts";
 import { getCurrentVersion } from "./utils/version.ts";
 import report from "./utils/report.ts";
+import { shellExec } from "./utils/shell.ts";
 
 import type { ModuleRunOptions } from "./utils/types.ts";
 
@@ -41,22 +41,7 @@ export const modules = {
 
 const { config, writeConfig } = load();
 
-const shellExec = (cmd: string): unknown => {
-  const { DEV_CLI_CMD_EXEC_FILE } = process.env;
-  const command = `${cmd}\n`;
-
-  if (DEV_CLI_CMD_EXEC_FILE) {
-    return fs.appendFileSync(DEV_CLI_CMD_EXEC_FILE, command);
-  }
-
-  console.log(
-    "DEV_CLI_CMD_EXEC_FILE has no value, possibly because shell module is not installed",
-  );
-
-  return null;
-};
-
-const cd = (path: string): unknown => shellExec(`cd:${path}`);
+const cd = (path: string): unknown => shellExec("cd", path);
 
 const source = (): unknown => {
   const currentShellType = (
@@ -66,7 +51,7 @@ const source = (): unknown => {
   const shell = SHELLS.find((shell) => shell.name === currentShellType);
   if (!shell) return;
 
-  return shellExec(`source:${path.resolve(os.homedir(), shell.profile)}`);
+  return shellExec("source", path.resolve(os.homedir(), shell.profile));
 };
 
 const findModule = (name: string) => {

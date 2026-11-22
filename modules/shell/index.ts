@@ -79,18 +79,35 @@ export const run = async ({
     const functionName = config("shell.function", "dev")!;
     const binaryPath: string = config("shell.binary.path", "dev-cli")!;
 
+    if (
+      typeof functionName !== "string" ||
+      !/^[a-zA-Z_][a-zA-Z0-9_-]*$/.test(functionName)
+    ) {
+      report.error("shell.function must be a valid shell function name.");
+      return;
+    }
+    if (
+      typeof binaryPath !== "string" || !binaryPath || binaryPath.includes("\0")
+    ) {
+      report.error("shell.binary.path must be a nonempty executable path.");
+      return;
+    }
+    const quotedBinary = shellType === "fish"
+      ? `'${binaryPath.replaceAll("\\", "\\\\").replaceAll("'", "\\'")}'`
+      : `'${binaryPath.replaceAll("'", "'\\''")}'`;
+
     if (shellType === "bash" || shellType === "zsh") {
       const script = scriptSH
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
         .replaceAll("<$SHELL_TYPE$>", shellType)
-        .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
+        .replaceAll("<$SHELL_BIN_PATH$>", () => quotedBinary);
 
       console.log(script);
     } else if (shellType === "fish") {
       const script = scriptFISH
         .replaceAll("<$SHELL_FN_NAME$>", functionName)
         .replaceAll("<$SHELL_TYPE$>", shellType)
-        .replaceAll("<$SHELL_BIN_PATH$>", binaryPath);
+        .replaceAll("<$SHELL_BIN_PATH$>", () => quotedBinary);
 
       console.log(script);
     }

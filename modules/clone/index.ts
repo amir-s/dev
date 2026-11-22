@@ -43,7 +43,7 @@ const parseUrl = (urlString: string) => {
 };
 
 const GIT_SSH_REGEX =
-  /git@(?<org>[\w.]+):(?:\/\/)?(?<user>[\w.-]+)\/(?<repo>[\w.-]+)(?:\.git)(?:\/)?/i;
+  /^git@(?<org>[\w.-]+):(?:\/\/)?(?<user>[\w.-]+)\/(?<repo>[\w.-]+)\/?$/i;
 
 const isSsh = (string: string) => {
   return GIT_SSH_REGEX.test(string);
@@ -60,7 +60,7 @@ const parseSsh = (str: string) => {
   };
 };
 
-const GIT_SHORT_REGEX = /(?<user>[\w.-]+)\/(?<repo>[\w.-]+)/i;
+const GIT_SHORT_REGEX = /^(?<user>[\w.-]+)\/(?<repo>[\w.-]+)$/i;
 
 const isShort = (string: string) => {
   return GIT_SHORT_REGEX.test(string);
@@ -92,19 +92,23 @@ export const parseArgument = (
     ssh: boolean;
   },
 ) => {
-  if (isUrl(str)) {
-    return parseUrl(str);
-  }
+  if (/[\r\n\0]/.test(str)) return null;
 
-  if (isSsh(str)) {
-    return parseSsh(str);
-  }
+  const parts = isUrl(str)
+    ? parseUrl(str)
+    : isSsh(str)
+    ? parseSsh(str)
+    : isShort(str)
+    ? parseShort(str, ssh)
+    : null;
 
-  if (isShort(str)) {
-    return parseShort(str, ssh);
-  }
-
-  return null;
+  if (!parts) return null;
+  if (parts.org === "." || parts.org === "..") return null;
+  // These values become path components, so never accept traversal segments.
+  const safeComponent = (value: string) =>
+    /^[\w.-]+$/.test(value) && value !== "." && value !== "..";
+  if (!safeComponent(parts.user) || !safeComponent(parts.repo)) return null;
+  return parts;
 };
 
 export const run = async ({ config, args, cd }: ModuleRunOptions) => {
@@ -147,10 +151,10 @@ export const run = async ({ config, args, cd }: ModuleRunOptions) => {
     `cloning ${user}/${repo} into ${clonePath}`,
     async () => {
       if (remote.startsWith("git@")) {
-        return await $`GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=yes' git clone ${forwardedArgs} ${remote} ${clonePath}`
+        return await $`GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=yes' git clone ${forwardedArgs} -- ${remote} ${clonePath}`
           .nothrow();
       }
-      return await $`git clone ${forwardedArgs} ${remote} ${clonePath}`
+      return await $`git clone ${forwardedArgs} -- ${remote} ${clonePath}`
         .nothrow();
     },
   );

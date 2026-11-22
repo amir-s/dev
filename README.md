@@ -239,9 +239,9 @@ script in your `dev.json` file like this:
 ```
 
 Once you `cd` into the project, `dev` will ask for permission to run the script.
-If you want to persist the permission for this project, a `.dev.json` file will
-be created in the project root. This file should not be committed to the
-repository and is only for local use.
+Saved permissions live in `~/.dev/trust/`, keyed by the project's canonical
+path. Project-local `.dev.json` files are ignored for security. Previously saved
+permissions must be approved again; moving a project also requires new approval.
 
 ### `dev update`
 

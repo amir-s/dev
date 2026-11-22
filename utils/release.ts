@@ -93,6 +93,7 @@ export const ensureUptodateMain = async () => {
 
 export const ensureReleaseChecks = async () => {
   const checks = [
+    ["audit"],
     ["lint"],
     ["fmt", "--check"],
     ["task", "test"],

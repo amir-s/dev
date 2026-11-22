@@ -64,6 +64,30 @@ const tests: {
 };
 
 describe("parseArgument", () => {
+  test("rejects traversal, control characters, and partially matched inputs", () => {
+    for (
+      const input of [
+        "../repo",
+        "owner/..",
+        "owner/..git",
+        "owner/.git",
+        "prefix owner/repo suffix",
+        "owner/repo/extra",
+        "git@github.com:../repo.git",
+        "git@..:owner/repo.git",
+        "git@github.com:owner/..git",
+        "-flag git@github.com:owner/repo.git",
+        "https://github.com/owner/.git",
+        "https://../owner/repo.git",
+        "https://github.com/owner/%2e%2e",
+        "https://github.com/owner/%2fetc",
+        "https://github.com/owner/repo\nsource:payload",
+      ]
+    ) {
+      assert.equal(parseArgument(input, { ssh: true }), null, input);
+    }
+  });
+
   Object.keys(tests).forEach((url) => {
     const testcase = tests[url];
     test(url, () => {
